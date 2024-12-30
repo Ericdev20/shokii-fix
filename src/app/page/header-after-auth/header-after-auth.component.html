@@ -1,0 +1,125 @@
+<header class="header-section">
+  <div class="container">
+    <div class="header-wrapper">
+      <div class="logo">
+        <a href="/">
+          <img src="assets/images/logo/shokii.png" alt="logo" class="logo1" />
+        </a>
+      </div>
+      <ul class="menu" id="monDiv1">
+        <li *ngFor="let menuItem of menuItems">
+          <a
+            [routerLink]="menuItem.link"
+            (click)="removeClass(menuItem.label)"
+            routerLinkActive="active"
+            >{{ menuItem.label }}
+            <ng-container *ngIf="menuItem.label === 'Messagerie'">
+              <span
+                *ngIf="newMsg === '1'"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              >
+                +1<span class="visually-hidden">unread messages</span>
+              </span>
+            </ng-container>
+          </a>
+        </li>
+        <li class="user-profile menu-item-has-children">
+          <a>
+            <img
+              [defaultImage]="default"
+              [lazyLoad]="profileImage"
+              style="
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                object-fit: cover;
+              "
+            />
+          </a>
+
+          <ul class="submenu">
+            <li>
+              <a (click)="goSuscrib()" translate="no" style="color: fuchsia"
+                >wallet : {{ wallet }} KISS
+                <i
+                  class="fas fa-donate"
+                  style="display: flex; align-items: center"
+                ></i
+              ></a>
+            </li>
+            <li *ngFor="let subMenuItem of subMenuItems">
+              <a
+                (click)="removeClass(subMenuItem.label)"
+                [routerLink]="subMenuItem.link"
+                [style.color]="subMenuItem?.color"
+              >
+                <em class="clr"
+                  >{{ subMenuItem.label }} <i [class]="subMenuItem?.icon"></i
+                ></em>
+              </a>
+            </li>
+            <li>
+              <a href="/myprofile"
+                >Mon Profil
+                <i class="" style="display: flex; align-items: center"></i
+              ></a>
+            </li>
+            <li>
+              <a style="cursor: pointer" (click)="logout()"
+                >Déconnecter
+                <i
+                  class="fas fa-sign-out-alt"
+                  style="display: flex; align-items: center"
+                ></i
+              ></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="ml-auto d-lg-none">
+        <div
+          class="serch-icon"
+          (click)="goSuscrib()"
+          translate="no"
+          style="color: darkgoldenrod"
+        >
+          <b>{{ wallet }}</b> KISS <i class="fas fa-coins"></i><br />
+        </div>
+      </div>
+      <div class="spacer d-lg-none"></div>
+
+      <div class="header-bar d-lg-none" id="monDiv2">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 d-lg-none okki">
+    <a routerLink="accueil"
+      ><span class="ic"><i class="fas fa-home"></i></span
+      ><span class="ictext">Accueil</span></a
+    >
+    <a routerLink="chat" (click)="readMsg()">
+      <span class="ic"
+        ><i class="fas fa-envelope"></i>
+        <span
+          *ngIf="newMsg === '1'"
+          style="
+            width: 0.5px;
+            display: flex;
+            top: -25px !important;
+            position: relative;
+          "
+          class="position-relative top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"
+        >
+        </span></span
+      ><span class="ictext">Messagerie </span>
+    </a>
+    <a href="myprofile">
+      <span class="ic"><i class="fas fa-user"></i></span
+      ><span class="ictext">Mon Profil</span>
+    </a>
+  </div>
+</header>

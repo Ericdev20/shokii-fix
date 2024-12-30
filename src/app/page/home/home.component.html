@@ -1,0 +1,702 @@
+<section class="community-section inner-page">
+  <div class="container" style="margin-top: 22px">
+    <div class="mb-4">
+      <span
+        style="
+          font-weight: 700;
+          font-size: 17px;
+          background: linear-gradient(
+            to right,
+            var(--pink),
+            #ff6b08,
+            var(--purple),
+            var(--pink-700)
+          );
+          -webkit-text-fill-color: transparent;
+          -webkit-background-clip: text;
+          height: 33px;
+          line-height: 2;
+        "
+        class="pseudo"
+      >
+        {{ greetingMessage }}
+      </span>
+      <img
+        style="height: 31px; margin-top: -12px"
+        src="../../../assets/images/care-emoji.webp"
+      />
+    </div>
+
+    <div
+      *ngIf="role === 3 && profil === 1"
+      class="alert alert-danger"
+      role="alert"
+      style="
+        background: linear-gradient(166deg, var(--indigo) 0%, var(--pink) 100%);
+        color: #fff;
+      "
+    >
+      <strong>
+        Pour compléter la vérification, veuillez ajouter au moins une image de
+        vous dans votre galerie ,puis passez par le processus de reconnaissance
+        faciale
+        <a [href]="checkLink" target="_blank" class="alert-link"
+          >en cliquant ici</a
+        >.
+      </strong>
+    </div>
+
+    <div
+      *ngIf="role === 3 && profil === 2"
+      class="alert alert-info"
+      role="alert"
+      style="
+        background: linear-gradient(166deg, var(--blue) 0%, var(--purple) 100%);
+        color: #fff;
+      "
+    >
+      Votre compte est actuellement en cours de vérification. Notre équipe
+      procède à l'examen des informations que vous avez fournies.
+    </div>
+
+    <div class="row" *ngIf="noRecentFound">
+      <div class="col-lg-12">
+        <div
+          class="top-filter d-grid"
+          style="align-items: flex-start !important"
+        >
+          <span
+            style="
+              font-weight: 700;
+              font-size: 17px;
+              background: linear-gradient(
+                to right,
+                var(--pink),
+                #ff6b08,
+                var(--purple),
+                var(--pink-700)
+              );
+              -webkit-text-fill-color: transparent;
+              -webkit-background-clip: text;
+              height: 33px;
+              line-height: 2;
+            "
+            class="pseudo pb-5"
+          >
+            Derniers inscrits :
+          </span>
+          <div class="stories-container">
+            <div class="story" *ngFor="let member of recent_users">
+              <div class="story-avatar-container">
+                <a [routerLink]="generateProfileLink(member.id)">
+                  <img
+                    [alt]="member.pseudo"
+                    class="story-avatar"
+                    [defaultImage]="default"
+                    [lazyLoad]="getImageProfil(member.photo_profil.path)"
+                  />
+                </a>
+              </div>
+              <span class="story-name">
+                <ng-container [ngSwitch]="member?.account_type">
+                  <ng-template ngSwitchCase="srx">💍</ng-template>
+                  <ng-template ngSwitchCase="fun">💋</ng-template>
+                  <ng-template ngSwitchCase="fun_pro"
+                    >🍑
+                  </ng-template> </ng-container
+                >{{ member.pseudo }}
+              </span>
+              <span class="story-loca">{{ member.localisation }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- storie -->
+
+    <div class="row d-none d-lg-block">
+      <div class="col-lg-12">
+        <div class="top-filter">
+          <div class="left">
+            <a (click)="reset()" style="cursor: pointer">
+              <i class="fas fa-undo"></i> Réinitialiser les filtres
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="top-filter gap-2">
+          <div class="right">
+            <form
+              (input)="searchByUsername()"
+              [formGroup]="searchForm"
+              action="#"
+              method="get"
+            >
+              <div
+                class="search-formm"
+                style="border-radius: 3cm; height: 1.3cm; width: auto"
+              >
+                <input
+                  type="text"
+                  class="intext"
+                  name="search"
+                  style="border-color: rgba(0, 0, 0, 0.02)"
+                  placeholder="Recherche..."
+                  formControlName="searchTerm"
+                />
+                <button type="submit" class="search-btnn">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="left">
+            <a
+              href="#"
+              style="height: 90%; align-items: center"
+              class="d-flex text-center gap-2"
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+            >
+              <i
+                class="fas fa-sliders-h"
+                style="line-height: inherit !important"
+              ></i>
+              <span class="d-none d-lg-block"> Filtrer vos recherches</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ici -->
+    <div class="row" *ngIf="members.length > 0; else noUsers">
+      <div
+        class="col-lg-6"
+        *ngFor="
+          let member of members
+            | paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index
+        "
+      >
+        <a
+          class="single-friend"
+          [pTooltip]="member?.description"
+          tooltipPosition="bottom"
+          [routerLink]="generateProfileLink(member.id)"
+        >
+          <div class="image-container">
+            <div *ngIf="!premium" class="blur-overlay pet"></div>
+            <img [defaultImage]="default" [lazyLoad]="member.profileImage" />
+          </div>
+
+          <div class="content">
+            <a class="name">
+              <a class="a"> {{ member.pseudo }}</a
+              >&nbsp;
+              <span class="isvarify px-2">
+                <!-- <i class="fas fa-check-circle"></i> -->
+                <ng-container [ngSwitch]="member?.account_type">
+                  <ng-template ngSwitchCase="srx">💍</ng-template>
+                  <ng-template ngSwitchCase="fun">💋</ng-template>
+                  <ng-template ngSwitchCase="fun_pro">🍑 </ng-template>
+                </ng-container>
+              </span>
+              <span *ngIf="member.Onlinestatus" class="status-span"
+                >(🟢 Actif)</span
+              >
+              <span *ngIf="!member.Onlinestatus" class="status-span"
+                >(🔴 Actif récemment)</span
+              >
+            </a>
+            <p class="date">{{ calculateAge(member.date_naissance) }} ans</p>
+            <div class="review-area">
+              <div class="stars">
+                <i
+                  class="fas fa-star filled"
+                  *ngFor="
+                    let star of getFilledStarArray(
+                      member.average_received_roses
+                    )
+                  "
+                ></i>
+                <i
+                  class="fas fa-star-half-alt half"
+                  *ngIf="member.starRating % 1 >= 0.5"
+                ></i>
+                <i
+                  class="far fa-star empty"
+                  *ngFor="
+                    let star of getEmptyStarArray(member.average_received_roses)
+                  "
+                ></i>
+              </div>
+
+              <span class="review-content">
+                {{ member.localisation }}, Benin
+              </span>
+            </div>
+
+            <a
+              [routerLink]="generateProfileLink(member.id)"
+              class="connnect-btn"
+            >
+              Joindre
+            </a>
+          </div>
+        </a>
+      </div>
+    </div>
+    <ng-template #noUsers>
+      <div class="row" *ngIf="!noUsersFound">
+        <div class="col-lg-6" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+          <div class="single-friend">
+            <div class="image-container">
+              <div class=""></div>
+              <p-skeleton
+                width="110px"
+                styleClass="mx-3"
+                height="181px"
+                borderRadius="16px"
+              ></p-skeleton>
+            </div>
+            <div class="content">
+              <a class="name">
+                <p-skeleton
+                  width="9rem"
+                  styleClass="mb-2 mx-3"
+                  borderRadius="16px"
+                ></p-skeleton
+              ></a>
+              <p class="date">
+                <p-skeleton
+                  width="6rem"
+                  styleClass="mb-5 mx-3"
+                  borderRadius="16px"
+                ></p-skeleton>
+              </p>
+              <div class="review-area">
+                <span class="review-content">
+                  <p-skeleton
+                    width="5rem"
+                    styleClass="mb-2 mx-3"
+                    borderRadius="16px"
+                  ></p-skeleton>
+                </span>
+              </div>
+              <a
+                class="connnect-btn d-none d-lg-block"
+                style="width: 3cm; border: none; margin-left: -20px"
+              >
+                <p-skeleton
+                  height="2rem"
+                  width="100%"
+                  styleClass=""
+                  borderRadius="16px"
+                ></p-skeleton>
+              </a>
+              <a class="connnect-btn" style="width: 3cm; border: none">
+                <p-skeleton
+                  height="2rem"
+                  width="100%"
+                  styleClass=""
+                  borderRadius="16px"
+                ></p-skeleton>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="noUsersFound"
+        class="bg-body text-center text-danger py-3 rounded-4"
+      >
+        <p>
+          <img
+            style="width: 3cm"
+            src="https://i.giphy.com/wJOXhSAlyJFUTV4mPf.webp"
+            alt=""
+          />
+        </p>
+        <p><b>Aucun utilisateur trouvé !</b></p>
+      </div>
+    </ng-template>
+
+    <!-- <div class="row">
+      <div class="col-lg-12">
+        <div class="pagination-area text-center">
+          <a href="#"><i class="fas fa-angle-double-left"></i><span></span></a>
+          <a href="#">1</a>
+          <a href="#">2</a>
+          <a href="#" class="active">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#"><i class="fas fa-angle-double-right"></i></a>
+        </div>
+      </div>
+    </div> -->
+    <pagination-controls
+      previousLabel="Pre"
+      nextLabel="Suiv"
+      class="my-5"
+      (pageChange)="onTableDataChange($event)"
+      style="display: flex; justify-content: center"
+    >
+    </pagination-controls>
+    <!-- <div class="new-profil">
+      <h1>Simple brand slider using flickity</h1>
+      <div class="brands-wrap">
+        <div class="brand-carousel" id="brandCarousel">
+          <div class="gallery-cell">
+            <img
+              src="https://raw.githubusercontent.com/rexxars/react-hexagon/HEAD/logo/react-hexagon.png"
+            />
+          </div>
+          <div class="gallery-cell">
+            <img
+              src="https://avatars3.githubusercontent.com/u/22247014?s=400&v=4"
+            />
+          </div>
+          <div class="gallery-cell">
+            <img src="https://worldvectorlogo.com/logos/sass-1.svg" />
+          </div>
+          <div class="gallery-cell">
+            <img
+              src="http://maffrigby.com/wp-content/uploads/2014/07/angularjs-logo-trans.png"
+            />
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div
+    class="modal fade filter-p"
+    id="exampleModalCenter"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header justify-content-between">
+          <h1 class="modal-title" id="exampleModalCenterTitle">
+            Filtrer votre recherche
+          </h1>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="join-now-box">
+            <div class="single-option online">
+              <p class="title">Utilisateur en ligne:</p>
+
+              <div class="mt-2 d-flex">
+                <div class="option" style="margin-bottom: 10px">
+                  <div class="s-input mr-3">
+                    <select
+                      class="nice-select"
+                      (change)="filterByUserOnline()"
+                      [(ngModel)]="Onlinestatus"
+                    >
+                      <option value="" selected disabled>status</option>
+                      <option value="true">Oui</option>
+                      <option value="false">Non</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="role !== 3">
+              <div class="single-option">
+                <p class="title">Teint:</p>
+
+                <div class="mt-2 d-flex">
+                  <div class="option" style="margin-bottom: 10px">
+                    <div class="s-input mr-3">
+                      <select
+                        style="width: 100%"
+                        class="nice-select"
+                        (change)="searchByTeint()"
+                        [(ngModel)]="selectedTeint"
+                      >
+                        <option value="" selected>Choissisez un teint</option>
+                        <option value="Tclaire" selected>Très Claire</option>
+                        <option value="claire">Claire</option>
+                        <option value="moyenne">Moyenne</option>
+                        <option value="olive">Olive</option>
+                        <option value="foncee">Foncée (chocolat)</option>
+                        <option value="brun">
+                          Très Foncée(brun foncé ou noir)
+                        </option>
+                        <option value="ebene">Ebène</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="single-option gender">
+                <p class="title d-flex align-items-center">Corpulence:</p>
+
+                <div class="option">
+                  <div class="s-input mr-4">
+                    <input
+                      type="radio"
+                      name="corpulence"
+                      id="skinni"
+                      value="mince"
+                      [(ngModel)]="selectedCorpulence"
+                      (change)="searchByCorpulence()"
+                    />
+                    <label for="skinni">
+                      <img
+                        src="../../../assets/images/skinni.png"
+                        style="margin: 0; height: 12%; width: 22%"
+                      />
+                      Skinny
+                    </label>
+                  </div>
+                  <div class="s-input my-4">
+                    <input
+                      type="radio"
+                      name="corpulence"
+                      id="intermediaire"
+                      value="intermediaire"
+                      [(ngModel)]="selectedCorpulence"
+                      (change)="searchByCorpulence()"
+                    />
+                    <label for="intermediaire">
+                      <img
+                        src="../../../assets/images/normal.png"
+                        style="margin: 0; height: 12%; width: 22%"
+                      />
+                      Intermediaire
+                    </label>
+                  </div>
+                  <div class="s-input">
+                    <input
+                      type="radio"
+                      name="corpulence"
+                      id="apoutchou"
+                      value="grosse"
+                      [(ngModel)]="selectedCorpulence"
+                      (change)="searchByCorpulence()"
+                    />
+                    <label for="apoutchou">
+                      <img
+                        src="../../../assets/images/apch.png"
+                        style="margin: 0; height: 12%; width: 22%"
+                      />
+                      Apoutchou
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="single-option gender">
+              <p class="title d-flex align-items-center">Trier par Profil:</p>
+
+              <div class="option">
+                <div class="s-input mr-4">
+                  <input
+                    type="radio"
+                    name="profil"
+                    id="srx"
+                    value="srx"
+                    [(ngModel)]="selectedProfil"
+                    (change)="searchByProfil()"
+                  />
+                  <label for="srx"> 💍 Rélation sérieuse </label>
+                </div>
+                <div class="s-input mr-4">
+                  <input
+                    type="radio"
+                    name="profil"
+                    id="fun"
+                    value="fun"
+                    [(ngModel)]="selectedProfil"
+                    (change)="searchByProfil()"
+                  />
+                  <label for="fun"> 💋 fun </label>
+                </div>
+                <div class="s-input mr-4" *ngIf="role == 2">
+                  <input
+                    type="radio"
+                    name="profil"
+                    id="fun_pro"
+                    value="fun_pro"
+                    [(ngModel)]="selectedProfil"
+                    (change)="searchByProfil()"
+                  />
+                  <label for="fun_pro"> 🍑 Escorte </label>
+                </div>
+              </div>
+            </div>
+            <div class="single-option age" style="display: grid">
+              <p class="title">Age :</p>
+              <div class="row">
+                <mat-slider
+                  min="19"
+                  max="65"
+                  step="1"
+                  showTickMarks
+                  discrete
+                  class="width-100pc"
+                  [displayWith]="formatLabel"
+                >
+                  <input
+                    value="19"
+                    (input)="searchByAge()"
+                    matSliderStartThumb
+                    [(ngModel)]="minAge"
+                  />
+                  <input
+                    value="65"
+                    (input)="searchByAge()"
+                    matSliderEndThumb
+                    [(ngModel)]="maxAge"
+                    style="width: 1cm"
+                  />
+                </mat-slider>
+              </div>
+            </div>
+            <div class="single-option last">
+              <p class="title">Villes :</p>
+              <div class="col-8">
+                <ng-select
+                  class="w-100"
+                  [placeholder]="'Chercher par ville'"
+                  notFoundText="Aucune ville trouvée"
+                  [(ngModel)]="selectedVille"
+                  (change)="searchByVille()"
+                >
+                  <ng-option
+                    *ngFor="let ville of villes | orderBy : 'name'"
+                    [value]="ville.name"
+                    >{{ ville.name }}</ng-option
+                  >
+                </ng-select>
+              </div>
+            </div>
+            <div class="joun-button d-flex justify-content-center">
+              <button
+                (click)="reset()"
+                class="custom-button"
+                style="
+                  background-image: linear-gradient(
+                    166deg,
+                    rgba(0, 0, 0, 0.12) 0%,
+                    #000 100%
+                  );
+                  font-size: 9px;
+                "
+              >
+                Renitialiser
+              </button>
+
+              <button
+                class="custom-button ml-2"
+                data-dismiss="modal"
+                aria-label="Close"
+                style="
+                  background-image: linear-gradient(
+                    166deg,
+                    #1d4ed8 0%,
+                    rgb(148, 45, 217) 100%
+                  );
+                  font-size: 9px;
+                "
+              >
+                Afficher les résultats
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #content let-modal style="z-index: 1050 !important">
+  <div class="bg-content text-white">
+    <div>
+      <div class="modal-header" style="border-radius: 1cm 1cm 0 0">
+        <p class="h2 modal-title text-white text-center" id="myModalLabel">
+          Félicitations <b>{{ name }}</b> pour votre inscription !
+        </p>
+        <button
+          (click)="closePopup()"
+          type="button"
+          class="close d-flex"
+          data-dismiss="modal"
+          aria-label="Close"
+          style="color: #fff; font-size: xx-large; outline: none"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img
+          src="https://shokii.com/assets/images/welcome.gif"
+          alt="Graphic"
+          class="img-fluid mb-3"
+        />
+        <p>
+          Nous sommes super excités de vous accueillir sur SHOKII. 🎉
+          <br />
+          Et en guise de remerciement pour avoir rejoint cette super communauté,
+          nous vous offrons gratuitement
+          <b class="text-primary">4 KISS. 🥳🥳</b>
+        </p>
+        <p>
+          Vous pouvez utiliser ces KISS pour débloquer les profils de votre
+          choix ou pour entamer des discussions avec les filles de votre choix.
+          💋💬
+        </p>
+        <p>
+          <a routerLink="kiss-info" target="_blank" rel="noopener noreferrer">
+            Découvrez-en plus sur l'utilisation et le fonctionnement des KISS.
+          </a>
+        </p>
+        <br />
+      </div>
+      <div
+        class="modal-footer d-flex justify-content-center"
+        style="border-radius: 0 0 1cm 1cm; border: none"
+      >
+        <button
+          type="button"
+          class="custom-button my-2"
+          style="
+            background-image: linear-gradient(
+              166deg,
+              var(--bs-red) 0%,
+              var(--danger) 100%
+            );
+          "
+          (click)="closePopup()"
+        >
+          Continuer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+  <!-- </div>
+  </div> -->
+</ng-template>

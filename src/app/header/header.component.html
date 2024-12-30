@@ -1,0 +1,54 @@
+<header class="header-section">
+  <div class="container">
+    <div class="header-wrapper">
+      <div class="logo">
+        <a hreu="/">
+          <img src="assets/images/logo/shokii.png" alt="logo" class="logo1" />
+        </a>
+      </div>
+      <ul class="menu" id="monDiv1">
+        <!-- Contenu du menu -->
+        <li class="user-profile d-none d-md-block d-lg-block">
+          <a
+            routerLink="login"
+            class="custom-button"
+            (click)="removeClass()"
+            style="
+              flex-direction: column-reverse;
+              color: #fff;
+              border: none;
+              background-image: linear-gradient(
+                166deg,
+                rgb(255 48 128) 0%,
+                rgb(238 165 198) 100%
+              );
+            "
+            >Connectez-vous</a
+          >
+        </li>
+        <li class="user-profile d-block d-lg-none d-md-none">
+          <a
+            routerLink="login"
+            class="custom-button auth"
+            (click)="removeClass()"
+            style="flex-direction: column-reverse; color: #fff; border: none"
+            >Connectez-vous</a
+          >
+        </li>
+      </ul>
+
+      <div class="ml-auto d-lg-none">
+        <!-- <div class="serch-icon">
+          <i class="fas fa-search"></i>
+        </div> -->
+      </div>
+      <div class="spacer d-lg-none"></div>
+
+      <div class="header-bar d-lg-none" id="monDiv2">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</header>

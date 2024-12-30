@@ -1,0 +1,35 @@
+{
+  "/staging": {
+    "target": "https://adm.shokii.com/api/",
+    "secure": false,
+    "pathRewrite": {
+      "^/staging": ""
+    },
+    "changeOrigin": true
+  },
+
+  "/staging-file": {
+    "target": "https://adm.shokii.com/api/get_image/",
+    "secure": false,
+    "pathRewrite": {
+      "^/staging-file": ""
+    },
+    "changeOrigin": true
+  },
+  "/prod": {
+    "target": "https://admin-v1.shokii.com/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/prod": ""
+    },
+    "changeOrigin": true
+  },
+  "/prod-file": {
+    "target": "https://admin-v1.shokii.com/api",
+    "secure": false,
+    "pathRewrite": {
+      "^/prod": ""
+    },
+    "changeOrigin": true
+  }
+}

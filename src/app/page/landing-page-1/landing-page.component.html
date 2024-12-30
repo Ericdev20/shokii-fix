@@ -1,0 +1,200 @@
+<div class="preloader" *ngIf="visible">
+  <div class="body">
+    <div class="relative">
+      <div class="corazon">❤️</div>
+      <div class="absolute aura1"></div>
+      <div class="absolute aura2"></div>
+      <div class="absolute aura3"></div>
+      <div class="absolute aura4"></div>
+    </div>
+  </div>
+</div>
+<!-- ==========Join-now-Section========== -->
+
+<section class="join-now-section" #joinNowSection>
+  <img class="shape1" src="assets/images/join/heartshape.png" alt="" />
+  <!--<img class="shape2" src="assets/images/join/img.png" alt=""> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="content">
+          <div class="section-header white-color" style="height: 5cm">
+            <h1
+              id="text"
+              style="text-align: center !important"
+              class="d title text-white wow fadeInUp h2"
+            >
+              <br />
+              {{ displayText }}&nbsp;
+            </h1>
+          </div>
+          <br />
+          <!--Afichage sur mobile -->
+
+          <div class="bou d-block d-lg-none d-md-none">
+            <div class="child" *ngIf="!isLoggedIn" style="padding-left: 2cm">
+              <a routerLink="/signup" class="regis custom-button inscrire"
+                >S'inscrire Maintenant !</a
+              >
+            </div>
+            <div class="child" *ngIf="isLoggedIn" style="padding-left: 2cm">
+              <a routerLink="/accueil" class="regis custom-button inscrire"
+                >Explorer les membres !</a
+              >
+            </div>
+          </div>
+          <!--Afichage sur pc & tablette -->
+          <div class="bou d-none d-md-block d-lg-block">
+            <div class="child" *ngIf="!isLoggedIn" style="padding-left: 2cm">
+              <a routerLink="/signup" class="custom-button inscrire"
+                >S'inscrire Maintenant !</a
+              >
+            </div>
+            <div class="child" *ngIf="isLoggedIn" style="padding-left: 2cm">
+              <a routerLink="/accueil" class="custom-button inscrire"
+                >Explorer les membres !</a
+              >
+            </div>
+          </div>
+
+          <div class="bou d-block d-lg-none d-md-none">
+            <div class="child" *ngIf="!isLoggedIn" style="padding-left: 2cm">
+              <a routerLink="/login" class="auth custom-button inscrire"
+                >Connexion</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==========How it work Section========== -->
+<section class="how-it-work-section" style="padding-top: 1cm">
+  <img class="shape1" src="assets/images/h-it-w/circle-shape.png" alt="" />
+  <img class="shape2" src="assets/images/h-it-w/bird.png" alt="" />
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content">
+          <div class="section-header">
+            <h2 class="title wow fadeInUp" style="font-size: 35px">
+              Comment ça fonctionne ?
+            </h2>
+            <p class="text wow fadeInUp">
+              Vous êtes à 4 étapes d'un excellent rendez-vous !
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-6" *ngFor="let step of steps">
+        <div
+          class="single-work-box wow fadeInUp"
+          [attr.data-wow-delay]="'0.' + step.number + 's'"
+        >
+          <div class="icon">
+            <img [src]="step.icon" alt="" />
+            <div class="number">{{ step.number }}</div>
+          </div>
+          <h4 class="title">{{ step.title }}</h4>
+          <div *ngIf="!isLoggedIn">
+            <a class="custom-button" id="pad" [routerLink]="step.signupLink">{{
+              step.buttonLabel
+            }}</a>
+            <a
+              class="regis custom-button"
+              id="pad"
+              style="margin: 20px"
+              [routerLink]="step.loginLink"
+              >Se connecter !</a
+            >
+          </div>
+          <div *ngIf="isLoggedIn">
+            <a
+              class="regis custom-button"
+              id="pad"
+              style="margin: 20px"
+              routerLink="/accueil"
+              >Retour à l'accueil !</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========How it work Section========== -->
+
+<!-- ==========Feature-Section========== -->
+<section class="feature-section" style="margin-top: 0">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.1s">
+          <div class="icon">
+            <img src="assets/images/feature/icon01.png" alt="" />
+          </div>
+          <br />
+          <h4>100% Verifié</h4>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.2s">
+          <div class="icon">
+            <img src="assets/images/feature/icon02.png" alt="" />
+          </div>
+          <h4>Le plus sécurisé</h4>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.3s">
+          <div class="icon">
+            <img src="assets/images/feature/icon03.png" alt="" />
+          </div>
+          <h4>100% Confidentiel</h4>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.4s">
+          <div class="icon">
+            <img src="assets/images/feature/icon04.png" alt="" />
+          </div>
+          <h4>Correspondance précise</h4>
+        </div>
+      </div>
+      <div class="text-center col-lg-3 col-sm-6 my-5">
+        <a
+          routerLink="about-us"
+          style="
+            background-image: linear-gradient(
+              166deg,
+              rgb(242, 40, 118) 0%,
+              #ffd740 100%
+            );
+          "
+          class="custom-button"
+          >En savoir plus <i class="flaticon-right"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <script>
+  $(window).on("load", function () {
+    // Code à exécuter lorsque le navigateur a fini de charger la page
+    $(".preloader").fadeOut(1000);
+    var img = $(".bg_img");
+    img.css("background-image", function () {
+      var bg = "url(" + $(this).data("background") + ")";
+      return bg;
+    });
+  });
+
+  // Faire disparaître la classe ".preloader" après trois secondes
+  setTimeout(function () {
+    $(".preloader").fadeOut(1000);
+  }, 3000);
+</script> -->

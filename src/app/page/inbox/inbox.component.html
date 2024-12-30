@@ -1,0 +1,364 @@
+<div class="content-chat">
+  <div class="content-chat-message-user">
+    <ng-container *ngIf="sender?.role_id !== 1; else adminHeader">
+      <!-- Header for non-admin users -->
+      <div class="head-chat-message-user">
+        <!-- Your header content here -->
+        <div
+          class="d-flex text-white align-items-center"
+          (click)="goback()"
+          style="cursor: pointer"
+        >
+          <strong><i class="fas fa-arrow-left"></i></strong>
+        </div>
+        <a [routerLink]="profileLink(sender?.id)">
+          <img
+            [defaultImage]="default"
+            [lazyLoad]="getImage(sender?.profile_photo)"
+            alt=""
+          />
+        </a>
+        <div class="message-user-profile">
+          <p class="mt-0 mb-0 text-white">
+            <strong>{{ sender?.pseudo }}</strong>
+          </p>
+          <small class="text-white" *ngIf="isCurrentUserOnline">
+            <p class="online mt-3 mb-0" style="margin-left: -26px"></p>
+            &nbsp;&nbsp;&nbsp;En ligne
+          </small>
+          <small class="text-white" *ngIf="!isCurrentUserOnline">
+            <p class="offline mt-3 mb-0" style="margin-left: -26px"></p>
+            &nbsp;&nbsp;&nbsp;Hors ligne
+          </small>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #adminHeader>
+      <div class="head-chat-message-user">
+        <!-- Your header content here -->
+        <div
+          class="d-flex text-white align-items-center"
+          (click)="goback()"
+          style="cursor: pointer"
+        >
+          <strong><i class="fas fa-arrow-left"></i></strong>
+        </div>
+        <img
+          [defaultImage]="default"
+          [lazyLoad]="getImage(sender?.profile_photo)"
+          alt=""
+        />
+        <div class="message-user-profile">
+          <p class="mt-0 mb-0 text-white">
+            <strong>Assistant SHOKII</strong>
+          </p>
+          <small class="text-white">
+            <p class="online mt-3 mb-0" style="margin-left: -26px"></p>
+            &nbsp;&nbsp;&nbsp;
+            <i>Impossible de répondre à cette conversation</i>
+          </small>
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="div-container" style="margin-top: 1.8cm">
+      <div class="div-1">
+        <div class="body-chat-message-user" id="myDiv" #messageContainer>
+          <div *ngFor="let message of conversations" class="message-container">
+            <div
+              class="message-user-left"
+              [hidden]="message.to_id !== loggedInUserId"
+            >
+              <!-- MSG REçU -->
+              <div *ngIf="message.send">
+                <div class="message-user-left-img">
+                  <img
+                    [defaultImage]="default"
+                    [lazyLoad]="getImage(sender?.profile_photo)"
+                    alt=""
+                  />
+                </div>
+                <!-- MSG TEXTE REçU-->
+                <div
+                  class="message-user-left-text d-grid"
+                  *ngIf="message.attachment === null && message.body.length > 0"
+                >
+                  <strong> {{ message.body }}</strong>
+                  <div style="display: flex; justify-content: flex-end">
+                    <i
+                      *ngIf="message.seen"
+                      class="fas fa-check-double"
+                      style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                    ></i>
+                    <i
+                      *ngIf="!message.seen"
+                      class="fas fa-check"
+                      style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                    ></i>
+                  </div>
+                </div>
+                <!-- MSG IMAGE REçU-->
+                <div
+                  class="message-user-left-text image-message d-grid"
+                  *ngIf="
+                    message.attachment !== null &&
+                    message.body.trim().length === 0
+                  "
+                >
+                  <p-image
+                    [src]="getImage(message.attachment)"
+                    alt="Image"
+                    [defaultImage]="defaultMsgImg"
+                    [lazyLoad]="getImage(message.attachment)"
+                    width="100"
+                    [preview]="true"
+                  >
+                  </p-image>
+
+                  <!-- <img [src]="getImage(message.attachment)" alt="" /> -->
+                  <div style="display: flex; justify-content: flex-end">
+                    <i
+                      *ngIf="message.seen"
+                      class="fas fa-check-double"
+                      style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                    ></i>
+                    <i
+                      *ngIf="!message.seen"
+                      class="fas fa-check"
+                      style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                    ></i>
+                  </div>
+                </div>
+                <!-- MSG INDISPONIBLE REçU -->
+                <div
+                  class="message-user-left-text image-message d-grid"
+                  *ngIf="
+                    message.attachment === null &&
+                    message.body.trim().length === 0
+                  "
+                >
+                  <strong> <i>Message indisponible !</i></strong>
+                  <!-- <img [src]="getImage(message.attachment)" alt="" /> -->
+                  <div style="display: flex; justify-content: flex-end">
+                    <i
+                      *ngIf="message.seen"
+                      class="fas fa-check-double"
+                      style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                    ></i>
+                    <i
+                      *ngIf="!message.seen"
+                      class="fas fa-check"
+                      style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                    ></i>
+                  </div>
+                </div>
+
+                <!-- <small *ngIf="message.send" style="max-width: 98px">
+                  <i *ngIf="message.seen" class="fas fa-check-double"></i>
+                  Vu</small
+                > -->
+              </div>
+            </div>
+            <!-- MSG ENVOYé -->
+            <div
+              class="message-user-right"
+              [hidden]="message.from_id !== loggedInUserId"
+            >
+              <div class="message-user-right-img">
+                <img
+                  [defaultImage]="default"
+                  [lazyLoad]="profileImage"
+                  alt=""
+                />
+              </div>
+              <!-- MSG TEXTE ENVOYé -->
+              <div
+                class="message-user-right-text d-grid"
+                *ngIf="message.attachment === null && message.body.length > 0"
+              >
+                <strong> {{ message.body }}</strong>
+                <div style="display: flex; justify-content: flex-end">
+                  <i
+                    *ngIf="message.seen"
+                    class="fas fa-check-double"
+                    style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                  ></i>
+                  <i
+                    *ngIf="!message.seen && !echec"
+                    class="fas fa-check"
+                    style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                  ></i>
+                </div>
+              </div>
+
+              <!-- MSG IMAGE ENVOYé -->
+              <div
+                class="message-user-right-text image-message d-grid"
+                *ngIf="
+                  message.attachment !== null &&
+                  message.body.trim().length === 0
+                "
+              >
+                <p-image
+                  [src]="getImage(message.attachment)"
+                  alt="Image"
+                  [defaultImage]="defaultMsgImg"
+                  [lazyLoad]="getImage(message.attachment)"
+                  width="100"
+                  [preview]="true"
+                >
+                </p-image>
+
+                <!-- <img [src]="getImage(message.attachment)" alt="" /> -->
+                <div style="display: flex; justify-content: flex-end">
+                  <i
+                    *ngIf="message.seen"
+                    class="fas fa-check-double"
+                    style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                  ></i>
+                  <i
+                    *ngIf="!message.seen"
+                    class="fas fa-check"
+                    style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                  ></i>
+                </div>
+              </div>
+              <!-- MSG INDISPONIBLE ENVOYé -->
+              <div
+                class="message-user-right-text image-message d-grid"
+                *ngIf="
+                  message.attachment === null &&
+                  message.body.trim().length === 0
+                "
+              >
+                <strong> <i>Message indisponible !</i></strong>
+                <!-- <img [src]="getImage(message.attachment)" alt="" /> -->
+                <div style="display: flex; justify-content: flex-end">
+                  <i
+                    *ngIf="message.seen"
+                    class="fas fa-check-double"
+                    style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                  ></i>
+                  <i
+                    *ngIf="!message.seen"
+                    class="fas fa-check"
+                    style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+                  ></i>
+                </div>
+              </div>
+
+              <small *ngIf="message.send" style="max-width: 98px">
+                <div *ngIf="message.seen">
+                  <i class="fas fa-check-double"></i> Vu
+                </div>
+                <div *ngIf="!message.seen">
+                  <i class="fas fa-check"></i> envoyé le
+                  {{ formatDate(message.created_at) }}
+                </div>
+              </small>
+              <small *ngIf="!message.send && !echec"
+                >envoie en cours ...
+              </small>
+              <small *ngIf="!send && echec"><b></b></small>
+              <small class="text-danger" *ngIf="!message.send && echec"
+                ><i class="fas fa-exclamation-circle"></i> Echec.</small
+              >
+            </div>
+          </div>
+          <!-- IMAGE EN COURS D'envoi -->
+          <div *ngIf="!dataLoad">
+            <div *ngFor="let imageUrl of selectedImageUrls">
+              <div class="message-user-right">
+                <div class="message-user-right-text image-message">
+                  <img [src]="imageUrl" alt="" />
+                </div>
+                <small *ngIf="send"> envoyé </small>
+                <small *ngIf="!send">envoie en cours ... </small>
+                <small *ngIf="!send && echec"><b>message non envoyé.</b></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ZONE DE SAISIE -->
+        <!-- Footer for non-admin users -->
+        <div class="footer-chat-message-user">
+          <ng-container *ngIf="sender?.role_id !== 1; else adminFooter">
+            <div class="message-user-send">
+              <textarea
+                class="textarea-box rounded"
+                type="text"
+                placeholder="Aa"
+                [(ngModel)]="messageText"
+                [rows]="calculateTextareaRows()"
+                (ngModelChange)="scrollToBottom()"
+                (focus)="scrollToBottom()"
+                [disabled]="!reply"
+              ></textarea>
+            </div>
+            <button
+              *ngIf="reply"
+              type="button"
+              (click)="sendAttachment()"
+              style="background-color: #1d4ed8"
+              [disabled]="reply"
+            >
+              <i class="fas fa-images"></i>
+            </button>
+            <button
+              *ngIf="reply"
+              type="button"
+              (click)="sendMessage()"
+              [disabled]="messageText.trim().length === 0"
+            >
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </ng-container>
+          <ng-template #adminFooter
+            ><strong class="text-center text-secondary"
+              >La réponse à ce message n'est pas autorisée. Pour toute autre
+              question ou préoccupation, veuillez cliquer <a
+                style="font-size: 13px"
+                routerLink="/contact"
+                >ici</a
+              >.
+            </strong>
+          </ng-template>
+        </div>
+      </div>
+      <div class="div-2" *ngIf="!reply">
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          style="
+            background-color: rgb(148, 45, 217);
+            color: #fff;
+            font-size: 13px;
+          "
+        >
+          <strong>
+            <ul>
+              <li class="my-1">
+                🔑 Si vous rencontrez des difficultés pour poursuivre cette
+                conversation, c'est probablement parce que
+                <i>{{ sender?.pseudo }}</i
+                >n'a pas encore débloqué votre profil, ou que la période de
+                déblocage précédemment accordée est expirée. Vous pouvez
+                relancer <i>{{ sender?.pseudo }}</i> et l'inviter à debloquer à
+                nouveau votre profil en cliquant ici.
+              </li>
+            </ul>
+          </strong>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

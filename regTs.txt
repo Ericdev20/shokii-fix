@@ -1,0 +1,763 @@
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Renderer2,
+  ViewChild,
+} from "@angular/core";
+import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
+import Swal from "sweetalert2";
+import { ActivatedRoute, Router } from "@angular/router";
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from "@angular/animations";
+import { AuthService } from "src/app/core/_services/auth.service";
+import { Masculin } from "src/app/_utilities/interfaces/profil/masculin";
+import { DatePipe } from "@angular/common";
+import { Feminin } from "src/app/_utilities/interfaces/profil/Feminin";
+import { of } from "rxjs";
+import { Socket, io } from "socket.io-client";
+import { UtilitiesService } from "src/app/core/_services/utilities.service";
+import { villes } from "src/app/_utilities/villes-data";
+import { ImageCroppedEvent, ImageCropperComponent } from "ngx-image-cropper";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+@Component({
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.scss"],
+  animations: [
+    trigger("fadeIn", [
+      state("void", style({ opacity: 0 })),
+      transition(":enter", animate("1500ms ease-in-out")),
+    ]),
+  ],
+})
+export class RegisterComponent implements OnInit {
+  @ViewChild("content", { static: true }) contentRef!: ElementRef;
+  //initialisation
+
+  /* private url = environment.nodeUrl;
+
+  private socket!: Socket;*/
+  villes: any;
+  emailExists: boolean = false;
+  imageUrl: string | null = null;
+  imageSelected = false;
+  gallery: any = [];
+  selectedValue!: string;
+  isMasculin: boolean = true;
+  showButtons: boolean = false;
+  stepMat: boolean = false;
+  phone_number!: string;
+  photoProfil: any;
+  role: any = 2;
+  id: any;
+  descriptions: any;
+  // showPart1 = true;
+  showPart1 = false;
+  motif: any;
+  dateError: boolean = false;
+  visibility: any[] = [];
+  fileChoose: any = [];
+  visible = true;
+  formData = new FormData();
+  constructor(
+    private authService: AuthService,
+    private _formBuilder: FormBuilder,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private router: Router,
+    private utilitiesService: UtilitiesService,
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private datePipe: DatePipe
+  ) {
+    //this.socket = io(this.url);
+    this.villes = villes;
+    const currentYear = new Date().getFullYear();
+    const maxYear = currentYear - 19;
+    this.minDate = new Date(maxYear - 40, 0, 1);
+    this.maxDate = new Date(maxYear, 11, 31);
+
+    const city = this.firstFormGroup?.get("selectedCity");
+    city?.setValidators(Validators.required);
+
+    /*Etape 2 : Password confimation */
+
+    this.secondFormGroup = this._formBuilder.group(
+      {
+        nom: ["", Validators.required],
+        prenom: ["", Validators.required],
+        password: ["", [Validators.required]],
+        confirmPassword: ["", [Validators.required]],
+        photoProfil: [""],
+        termsAndConditions: ["", [Validators.requiredTrue]],
+        privacyPolicy: ["", [Validators.requiredTrue]],
+      },
+      { validator: this.passwordMatchValidator }
+    );
+  }
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(["/accueil"]);
+    }
+    this.route.queryParams?.subscribe((params) => {
+      this.phone_number = params["phoneNumber"];
+    });
+    console.log(this.phone_number);
+    this.utilitiesService.textesDescription().subscribe(
+      (res: any) => {
+        console.log("text récupére", res);
+        this.descriptions = res;
+        // res.forEach((ani: any) => {
+        //   this.anim.push(ani.texte)
+        // });
+        // console.log('text' ,this.anim)
+      },
+      (error) => {
+        console.error(
+          "Erreur lors de la récupération des informations  :",
+          error
+        );
+      }
+    );
+    // Récupérer les données du formulaire depuis le local storage
+
+    /* const formData = localStorage.getItem('formData');
+    if (formData !== null) {
+      const parsedFormData = JSON.parse(formData);
+      if (parsedFormData) {
+        this.firstFormGroup.patchValue(parsedFormData);
+        this.setStatus(parsedFormData.sexe);
+
+        // Initialiser la variable isMasculin en fonction de la valeur de sexe
+        this.isMasculin = parsedFormData.sexe === 'M';
+      }
+    }
+    // Ajouter un écouteur pour stocker les données du formulaire à chaque modification
+    this.firstFormGroup.valueChanges.subscribe((data) => {
+      localStorage.setItem('formData', JSON.stringify(data));
+    }); */
+  }
+  goToPart2(motif: any) {
+    this.motif = motif;
+    this.showPart1 = false;
+    console.log("showPart2 actualisé", this.showPart1);
+  }
+  hide = true;
+  //choix du corpulence ...
+  onRadioChange(value: string) {
+    const radios = document.querySelectorAll(".radio");
+    radios.forEach((radio) => {
+      radio.addEventListener("click", () => {
+        radios.forEach((r) => r.classList.remove("selected"));
+        radio.classList.add("selected");
+        const value = radio.getAttribute("data-value");
+        this.thirdFormGroup.get("body")?.setValue(value);
+      });
+    });
+  }
+
+  updatebody(bodyValue: string) {
+    this.thirdFormGroup.get("body")?.setValue(bodyValue);
+  }
+
+  /* Etape 1*/
+  firstFormGroup = this._formBuilder.group({
+    pseudo: ["", Validators.required],
+    sexe: ["", Validators.required],
+    statut: [""],
+    mail: ["", [Validators.required, Validators.email]],
+    naissance: ["", Validators.required],
+    selectedCity: [],
+  });
+
+  secondFormGroup: any;
+
+  //Suppression des validations pour les profils masculin
+  public setStatus(choix: string = "") {
+    const stat = this.firstFormGroup?.get("statut");
+    const profil = this.secondFormGroup?.get("photoProfil");
+    const term = this.secondFormGroup?.get("termsAndConditions");
+    const policy = this.secondFormGroup?.get("privacyPolicy");
+
+    this.isMasculin = choix === "M";
+
+    if (choix === "F") {
+      this.role = 3;
+
+      profil?.setValidators(Validators.required);
+      term?.clearValidators();
+      policy?.clearValidators();
+      if (this.motif === "fun") {
+        stat?.setValidators(Validators.required);
+      } else {
+        stat?.clearValidators();
+      }
+    } else if (choix === "M") {
+      this.role = 2;
+      stat?.clearValidators();
+      profil?.clearValidators();
+      term?.setValidators(Validators.requiredTrue);
+      policy?.setValidators(Validators.requiredTrue);
+    }
+    stat?.updateValueAndValidity();
+    profil?.updateValueAndValidity();
+    policy?.updateValueAndValidity();
+    term?.updateValueAndValidity();
+  }
+  /* step 2 */
+
+  /*secondFormGroup = this._formBuilder.group({
+    password: ['', [Validators.required]],
+  });
+
+  //* Date */
+
+  minDate: Date;
+  maxDate: Date;
+
+  /*Etape 3*/
+
+  // fifthFormGroup = this._formBuilder.group({ profileImage: [''] });
+
+  thirdFormGroup = this._formBuilder.group({
+    teint: ["", Validators.required],
+    cheveux: ["", Validators.required],
+    poids: ["", Validators.required],
+    taille: ["", Validators.required],
+    description: ["", Validators.required],
+    body: ["", Validators.required],
+  });
+  isEditable = false;
+
+  /*password confirm */
+  passwordMatchValidator(control: AbstractControl) {
+    const password = control.get("password");
+    const confirmPassword = control.get("confirmPassword");
+
+    if (password?.value !== confirmPassword?.value) {
+      return { passwordMismatch: true };
+    }
+
+    return null;
+  }
+
+  // /* profil picture choose*/
+  profils = [
+    {
+      imageSelected: false,
+      imageUrl: "",
+      fileInput: null,
+    },
+  ];
+  //5 others pic
+  boxes = [
+    {
+      imageSelected: false,
+      imageUrl: "",
+      fileInput: null,
+    },
+    {
+      imageSelected: false,
+      imageUrl: "",
+      fileInput: null,
+    },
+    {
+      imageSelected: false,
+      imageUrl: "",
+      fileInput: null,
+    },
+    {
+      imageSelected: false,
+      imageUrl: "",
+      fileInput: null,
+    },
+    {
+      imageSelected: false,
+      imageUrl: "",
+      fileInput: null,
+    },
+  ];
+  //profil file function choose
+
+  onFileSelected1(event: any, profil: any) {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        if (e.target && e.target.result) {
+          profil.imageSelected = true;
+          profil.imageUrl = e.target.result;
+          profil.fileInput = file;
+          this.photoProfil = file;
+
+          // Ouvrir le cropper lorsque l'image est chargée
+          // this.openCropper(e.target.result, profil);
+        } else {
+          // Gérer le cas où reader.result est null
+          console.error("Erreur de lecture du fichier.");
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  //filles choose for gallery
+  onFileSelected2(event: any, profil: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      profil.imageSelected = true;
+      profil.imageUrl = e.target.result;
+      profil.fileInput = file;
+      // this.gallery.push(file);
+      this.fileChoose = profil;
+      this.openModal(this.contentRef);
+    };
+    reader.readAsDataURL(file);
+    console.log("photo galerie", this.gallery);
+  }
+
+  removeImage(formControl: AbstractControl<any, any> | null, box: any) {
+    box.imageSelected = false;
+    box.imageUrl = "";
+    formControl?.patchValue("");
+  }
+  //image cropping
+
+  /*
+description
+*/
+  /*descriptions = [
+    'Je suis une personne aventureuse qui cherche à explorer de nouveaux plaisirs sans lendemain avec des partenaires passionnés.',
+    "Je suis ouvert d'esprit et à la recherche d'un(e) partenaire qui veut vivre des moments intenses sans s'engager dans une relation sérieuse.",
+    "Je suis quelqu'un de passionné et j'aime les rencontres sans tabou où les désirs sont explorés sans retenue.",
+    'Je cherche des rencontres sans lendemain pour des moments de plaisir intense avec des personnes ayant la même vision de la sexualité que moi.',
+    "Je suis à la recherche d'un(e) partenaire passionné(e) pour explorer ensemble des fantasmes et des plaisirs sans limites.",
+    "Je suis un(e) aventurier(ère) à la recherche d'une expérience sexuelle passionnée et sans engagement avec un(e) partenaire qui partage cette même envie.",
+    'Autres ...',
+  ];*/
+
+  //body weigth choose
+
+  /*Etape 3*/
+
+  fourthFormGroup = this._formBuilder.group({
+    album0: [""],
+    album1: [""],
+    album2: [""],
+    album3: [""],
+    album4: [""],
+    termsAndConditions: ["", [Validators.requiredTrue]],
+    privacyPolicy: ["", [Validators.requiredTrue]],
+  });
+
+  test() {
+    this.stepMat = true;
+    if (!this.isMasculin) {
+      Swal.fire({
+        title: "Verifier votre identité !",
+        text: "Un contrôle d'identité par la reconnaissance faciale est requis!",
+        icon: "question",
+        backdrop: "static",
+
+        showCancelButton: true,
+        confirmButtonText: "Commencer",
+        cancelButtonText: "Plus tard",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "verification.shokii.com";
+          // L'utilisateur a cliqué sur "Commencer"
+          // Ajoutez ici le code à exécuter lorsque l'utilisateur clique sur "Commencer"
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // L'utilisateur a cliqué sur "Plus tard"
+          // Ajoutez ici le code à exécuter lorsque l'utilisateur clique sur "Plus tard"
+          this.router.navigate(["login"]);
+        }
+      });
+    } else {
+    }
+  }
+
+  RegisterY() {
+    if (!this.secondFormGroup.valid) {
+      Swal.fire({
+        icon: "error",
+        title: "Attention",
+        text: "Veuillez accepter nos conditions d'utilisations et la politique de confidentialité  ...",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      const selectedCity: any = this.firstFormGroup.value.selectedCity;
+      const localisation: string = selectedCity ? selectedCity : "";
+      const dateNaissance: string = this.firstFormGroup.value.naissance
+        ? this.firstFormGroup.value.naissance
+        : "";
+      const Data: Masculin = {
+        name: this.secondFormGroup.value.nom,
+        prenom: this.secondFormGroup.value.prenom,
+        email: this.firstFormGroup.value.mail,
+        sexe: this.firstFormGroup.value.sexe,
+        date_naissance: this.formatDate(dateNaissance),
+        photoProfil: this.photoProfil,
+        pseudo: this.firstFormGroup.value.pseudo,
+        password: this.secondFormGroup.value.password,
+        phone_number: this.phone_number,
+        localisation: localisation,
+        role_id: this.role,
+      };
+      // const formData = new FormData();
+      this.formData.append("name", Data.name || "");
+      this.formData.append("prenom", Data.prenom || "");
+      this.formData.append("email", Data.email || "");
+      this.formData.append("photoProfil", Data.photoProfil || "");
+      this.formData.append("date_naissance", Data.date_naissance || "");
+      this.formData.append("pseudo", Data.pseudo || "");
+      this.formData.append("password", Data.password || "");
+      this.formData.append("phone_number", Data.phone_number || "");
+      this.formData.append("localisation", Data.localisation || "");
+      this.formData.append("role_id", Data.role_id || "");
+
+      console.log("role_id", Data.role_id);
+
+      this.authService.register(this.formData).subscribe(
+        (response) => {
+          // this.socket.emit('message', response);
+
+          console.log("compte créé", response);
+
+          Swal.fire({
+            icon: "success",
+            title: "Compte créé avec succès",
+            text: "Veuillez vous connecter ...",
+            confirmButtonText: "OK",
+          }).then(() => {
+            this.router.navigate(["login"]);
+          });
+        },
+        (error) => {
+          console.error(error);
+          if (error === 500) {
+            Swal.fire({
+              icon: "error",
+              title: "Echec d'inscription.",
+              text: "Verifiez tous les champs et reessayez ...",
+              confirmButtonText: "OK",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Echec d'inscription.",
+              text: "Service indisponible . Ressayez plus tard ...",
+              confirmButtonText: "OK",
+            });
+          }
+        }
+      );
+
+      // this.router.navigate(['login']);
+    }
+
+    // Le reste du code pour soumettre le formulaire si les cases à cocher sont cochées
+    // ...
+  }
+  formatDate(dateString: string): string {
+    const dateObj = new Date(dateString);
+
+    const year = dateObj.getFullYear();
+    const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+    const day = ("0" + dateObj.getDate()).slice(-2);
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+
+  checkMail() {
+    const email = this.firstFormGroup.get("mail");
+    if (email?.value) {
+      this.authService.checkEmail(email?.value).subscribe(
+        (response) => {
+          if (response.success) {
+            this.emailExists = false;
+            console.log("email disponible");
+          } else {
+            console.log("Email already exists:", response.email);
+            Swal.fire({
+              icon: "error",
+              title: "Email déjà pris.",
+              text: "Cette adresse e-mail est déjà utilisée par un autre utilisateur.",
+            });
+            this.emailExists = true;
+          }
+        },
+        (error) => {
+          console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Erreur lors de la vérification de l'email.",
+            text: "Une erreur s'est produite lors de la vérification de l'email. Veuillez réessayer plus tard.",
+          });
+        }
+      );
+    }
+    console.log("emailExists", this.emailExists);
+  }
+  checkPseudo() {
+    const pseudo = this.secondFormGroup.get("pseudo");
+    console.log(pseudo?.value);
+    if (pseudo?.value) {
+      this.authService.checkPseudo(pseudo?.value).subscribe(
+        (response) => {
+          if (response.success) {
+            console.log("pseudo disponible");
+          } else {
+            console.log("pseudo already exists:", response.pseudo);
+            Swal.fire({
+              icon: "error",
+              title: "Pseudo déjà pris.",
+              text: "Ce Pseudo est déjà utilisé par un autre utilisateur.",
+            });
+          }
+        },
+        (error) => {
+          console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Erreur lors de la vérification du pseudo.",
+            text: "Une erreur s'est produite lors de la vérification du Pseudo. Veuillez réessayer plus tard.",
+          });
+        }
+      );
+    }
+  }
+
+  check() {
+    if (!this.secondFormGroup?.get("photoProfil")?.valid) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention",
+        text: "Vous devez definir une photo deprofil... ",
+        confirmButtonText: "OK",
+      });
+    } else if (this.secondFormGroup.invalid) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention",
+        text: "Remplissez tous les champs avant de continuer ...",
+        confirmButtonText: "OK",
+      });
+    }
+  }
+
+  RegisterX() {
+    if (!this.fourthFormGroup.valid) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention",
+        text: "Veuillez accepter nos conditions d'utilisations et la politique de confidentialité  ...",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      const selectedCity: any = this.firstFormGroup.value.selectedCity;
+      const localisation: string = selectedCity ? selectedCity : "";
+      const dateNaissance: string = this.firstFormGroup.value.naissance
+        ? this.firstFormGroup.value.naissance
+        : "";
+
+      const Data: Feminin = {
+        name: this.secondFormGroup.value.nom,
+        prenom: this.secondFormGroup.value.prenom,
+        email: this.firstFormGroup.value.mail,
+        sexe: this.firstFormGroup.value.sexe,
+        date_naissance: this.formatDate(dateNaissance),
+        photoProfil: this.photoProfil,
+        pseudo: this.firstFormGroup.value.pseudo,
+        password: this.secondFormGroup.value.password,
+        phone_number: this.phone_number,
+        localisation: localisation,
+        role_id: this.role,
+        description: this.thirdFormGroup.value.description,
+        poids: this.thirdFormGroup.value.poids,
+        taille: this.thirdFormGroup.value.taille,
+        corpulence: this.thirdFormGroup.value.body,
+        cheveux: this.thirdFormGroup.value.cheveux,
+        teint: this.thirdFormGroup.value.teint,
+        verify_profil: 0,
+        status_id: this.firstFormGroup.value.statut,
+      };
+
+      const formData = new FormData();
+      formData.append("name", Data.name || "");
+      formData.append("prenom", Data.prenom || "");
+      formData.append("email", Data.email || "");
+      formData.append("photoProfil", Data.photoProfil || "");
+      formData.append("date_naissance", Data.date_naissance || "");
+      formData.append("pseudo", Data.pseudo || "");
+      formData.append("password", Data.password || "");
+      formData.append("phone_number", Data.phone_number || "");
+      formData.append("localisation", Data.localisation || "");
+      formData.append("role_id", Data.role_id || "");
+      formData.append("description", Data.description || "");
+      formData.append("poids", Data.poids || "");
+      formData.append("taille", Data.taille || "");
+      formData.append("corpulence", Data.corpulence || "");
+      formData.append("cheveux", Data.cheveux || "");
+      formData.append("teint", Data.teint || "");
+      formData.append("verify_profil", String(Data.verify_profil) || "");
+      if (Data.status_id !== "") {
+        formData.append("status_id", Data.status_id || "");
+      } else {
+        formData.append("status_id", "1");
+      }
+
+      if (this.gallery.length !== 0) {
+        for (let i = 0; i < this.gallery.length; i++) {
+          const file = this.gallery[i];
+          const visible = this.visibility[i];
+          formData.append("files[]", file);
+          // formData.append('visibility[]', visible);
+        }
+      }
+
+      this.authService.register(formData).subscribe(
+        (response) => {
+          console.log("compte créé", response);
+          this.id = response.user.id;
+
+          Swal.fire({
+            icon: "success",
+            title: "Compte créé avec succès",
+            text: "Veuillez vous connecter ...",
+            confirmButtonText: "OK",
+          }).then(() => {
+            this.stepMat = true;
+
+            Swal.fire({
+              title: "Verifier votre identité !",
+              text: "Un contrôle d'identité par la reconnaissance faciale est requis!",
+              icon: "question",
+              backdrop: "static",
+
+              showCancelButton: true,
+              confirmButtonText: "Commencer",
+              cancelButtonText: "Plus tard",
+              confirmButtonColor: "#d63384",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.open(
+                  "https://verification.shokii.com/?id=" + this.id,
+                  "_blank"
+                );
+              } else {
+                this.router.navigate(["login"]);
+              }
+            });
+          });
+        },
+        (error) => {
+          console.error(error);
+          if (error.status === 500) {
+            Swal.fire({
+              icon: "error",
+              title: "Echec d'inscription.",
+              text: "Verifiez tous les champs et reessayez ...",
+              confirmButtonText: "OK",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Echec d'inscription.",
+              text: "Service indisponible . Ressayez plus tard ...",
+              confirmButtonText: "OK",
+            });
+          }
+        }
+      );
+    }
+  }
+  setVisibiliy(key: number, value: boolean) {
+    this.visibility[key] = value;
+  }
+
+  subform1() {
+    if (this.firstFormGroup.invalid) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention",
+        text: "Veuillez remplir correctement tous les champs avant de continuer  ...",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+  }
+  subform2() {
+    if (this.thirdFormGroup.invalid) {
+      Swal.fire({
+        icon: "warning",
+        title: "Attention",
+        text: "Veuillez remplir correctement tous les champs avant de continuer  ...",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+  }
+
+  calculateAge(birthdate: any): number {
+    const today = new Date();
+    const birth = new Date(birthdate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
+  valideDate() {
+    const birthdate = this.firstFormGroup.get("naissance")?.value;
+
+    console.log("birthdate", birthdate);
+
+    if (birthdate) {
+      const age = this.calculateAge(birthdate);
+      console.log("voici l'age :", age);
+      if (age < 19 || age > 59) {
+        this.dateError = true;
+      } else {
+        this.dateError = false;
+      }
+    }
+
+    // return null;
+  }
+
+  openModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: "modal-title" });
+  }
+  closePopup() {
+    this.modalService.dismissAll();
+  }
+  setVisibility(arg0: any) {
+    console.log(arg0);
+    // arg0.visibility = this.visible;
+    this.gallery.push(arg0);
+    this.visibility.push(this.visible);
+    this.closePopup();
+  }
+}

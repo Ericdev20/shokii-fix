@@ -1,0 +1,212 @@
+<section class="membership-section ackiss" style="margin-top: 3cm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content">
+          <div class="section-header">
+            <h6 class="color size sub-title extra-padding text-uppercase color">
+              Souscrire à un abonnement
+            </h6>
+
+            <p class="text">Profitez de SHOKII au maximum !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="pricing-plan-wrapper">
+          <img
+            class="left-img"
+            src="assets/images/membership/left-img.png"
+            alt=""
+          />
+          <img
+            class="right-img"
+            src="assets/images/membership/right-img.png"
+            alt=""
+          />
+          <div class="row">
+            <div class="col-lg-3 col-md-6" *ngFor="let Subscrip of Subscrips">
+              <div class="single-plan">
+                <p class="duration">
+                  {{ Subscrip?.duree }}
+                </p>
+                <h4 class="number">{{ Subscrip?.prix }} <sup>fcfa</sup></h4>
+                <p class="stamet">{{ Subscrip?.nombreKiss }} KISS</p>
+                <a
+                  routerLink="/subcription-checkout/{{ Subscrip.id }}"
+                  class="custom-button"
+                  >Payer !</a
+                >
+                <img
+                  class="shape"
+                  src="assets/images/membership/plan-bg.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing-plans">
+    <img class="shape1" src="assets/images/join/heartshape.png" alt="" />
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section
+  class="membership-section ackiss"
+  style="padding: 0px; position: relative; top: -289px"
+>
+  <div class="log-reg ng-tns-c1476067269-0" style="height: 17px; top: 72px">
+    <div class="log-reg-inner ng-tns-c1476067269-0" style="padding-top: 0px">
+      <div class="main-content ng-tns-c1476067269-0">
+        <div class="or ng-tns-c1476067269-0">
+          <p class="ng-tns-c1476067269-0">Ou</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="pricing-plan-wrapper">
+          <!-- <img class="left-img" src="assets/images/membership/left-img.png" alt="">
+          <img class="right-img" src="assets/images/membership/right-img.png" alt=""> -->
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 col-md-6">
+              <div
+                class="single-plan"
+                style="
+                  background: linear-gradient(
+                    to bottom,
+                    #bfdbfe,
+                    #898989,
+                    #673ab7,
+                    rgb(148, 45, 217)
+                  );
+                  top: 110px;
+                "
+              >
+                <!-- <div
+                class="single-plan"
+                style="background-color: #af8ec5; top: 110px"
+              > -->
+                <p class="duration text-white">Paiement à l'unité</p>
+                <h4 class="number" style="color: #bfdbfe">
+                  200 <sup>fcfa</sup>
+                </h4>
+                <p class="stamet text-white">1 KISS</p>
+                <!--                   href="/checkout"
+<a onclick="alert('clique deteted')">check</a> -->
+
+                <a class="custom-button-ackiss" routerLink="/checkout">
+                  Payer !
+                </a>
+
+                <img
+                  class="shape"
+                  src="assets/images/membership/plan-bg.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing-plans">
+    <img class="shape1" src="assets/images/join/heartshape.png" alt="" />
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12"></div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row m-s-top">
+    <div class="col-lg-4 col-md-6">
+      <div class="plan-info">
+        <div class="icon">
+          <img src="assets/images/membership/icon1.png" alt="" />
+        </div>
+        <h4 class="title">Plus de message</h4>
+        <p class="text">
+          Activer beaucoup plus de boites de discussion selon votre plan
+          d'abonnement .
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="plan-info">
+        <div class="icon">
+          <img src="assets/images/membership/icon2.png" alt="" />
+        </div>
+        <h4 class="title">Badge Vérifé</h4>
+        <p class="text">Mettre en avant votreprofil.</p>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="plan-info">
+        <div class="icon">
+          <img src="assets/images/membership/icon3.png" alt="" />
+        </div>
+        <h4 class="title">Accès aux Profil</h4>
+        <p class="text">
+          Consulter et entrer en contact avec tous les profils de votre choix.
+        </p>
+      </div>
+    </div>
+  </div> -->
+</section>
+
+<!-- <div class="log-reg" style="height: 90px;">
+  <div class="log-reg-inner" style="
+        padding-top: 0px;">
+    <div class="main-content">
+      <div class="or">
+        <p>Ou</p>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+
+<!-- <section class="membership-section ackiss">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="pricing-plan-wrapper" style="padding: 100px 0px 20px !important;z-index : 0;">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pricing-plans ackiss" style="margin:1cm;
+padding: 40px 0px 40px ! important;display: flex;align-items: center; ">
+    <img class="shape1" src="assets/images/join/heartshape.png" alt="">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p class="contact-link">
+            Préféreriez-vous acheter des KISS à l'unité plutôt que de souscrire un abonnement ?&nbsp; <a
+              routerLink="/checkout">Cliquez ICI</a>. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- ==========Membership-Section========== -->

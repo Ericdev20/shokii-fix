@@ -1,0 +1,129 @@
+.no-users-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #555;
+}
+
+span[class^="dot-"] {
+  opacity: 0;
+}
+.dot-one {
+  animation: dot-one 4s infinite linear;
+}
+.dot-two {
+  animation: dot-two 4s infinite linear;
+}
+.dot-three {
+  animation: dot-three 4s infinite linear;
+}
+@keyframes dot-one {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dot-two {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dot-three {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+p {
+  -webkit-animation: color-change 2s infinite;
+  -moz-animation: color-change 2s infinite;
+  -o-animation: color-change 2s infinite;
+  -ms-animation: color-change 2s infinite;
+  animation: color-change 2s infinite;
+}
+
+@-webkit-keyframes color-change {
+  0% {
+    color: red;
+  }
+  50% {
+    color: greenyellow;
+  }
+  100% {
+    color: red;
+  }
+}
+@-moz-keyframes color-change {
+  0% {
+    color: greenyellow;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: greenyellow;
+  }
+}
+@-ms-keyframes color-change {
+  0% {
+    color: red;
+  }
+  50% {
+    color: greenyellow;
+  }
+  100% {
+    color: red;
+  }
+}
+@-o-keyframes color-change {
+  0% {
+    color: greenyellow;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: greenyellow;
+  }
+}
+@keyframes color-change {
+  0% {
+    color: red;
+  }
+  50% {
+    color: greenyellow;
+  }
+  100% {
+    color: red;
+  }
+}

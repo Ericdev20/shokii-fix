@@ -1,0 +1,167 @@
+<section class="user-setting-section" style="margin-top: 3cm !important">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-md-12">
+        <div class="page-title d-flex justify-content-center">Achat KISS</div>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <div
+            class="input-info-box mt-30"
+            style="margin-bottom: 1cm !important"
+          >
+            <div
+              style="color: #1dd71d"
+              class="header mb-4 text-center text-success"
+            >
+              <i>
+                <b
+                  >Veuillez fournir les informations neccessaires pour le
+                  paiement .
+                </b></i
+              >
+            </div>
+            <div class="content">
+              <div class="row">
+                <div class="col-md-12 my-4">
+                  <div class="row">
+                    <!-- Label -->
+                    <div
+                      class="my-input-box col-12 col-md-4 d-flex align-items-center my-2"
+                    >
+                      <label for="" class=""
+                        >Mode de Paiement :<sup class="text-danger">
+                          &nbsp;(Choisissez une option de paiement )*
+                        </sup></label
+                      >
+                    </div>
+
+                    <!-- Options de paiement -->
+                    <div
+                      class="col-12 gap-2 col-md-8 d-flex flex-wrap justify-content-around"
+                    >
+                      <!-- Option 1 -->
+                      <div
+                        class="img-box gap-1 d-flex flex-row align-items-center"
+                      >
+                        <input
+                          class="radio my-2"
+                          type="radio"
+                          formControlName="network"
+                          value="mtn_open"
+                          checked
+                        />
+                        <img
+                          src="../../../assets/images/mtn.png"
+                          alt="MTN"
+                          class="img-fluid"
+                          style="max-width: 80px"
+                        />
+                      </div>
+
+                      <!-- Option 2 -->
+                      <div
+                        class="img-box gap-2 d-flex flex-row align-items-center"
+                      >
+                        <input
+                          type="radio"
+                          class="radio my-2"
+                          formControlName="network"
+                          value="moov"
+                        />
+                        <img
+                          src="../../../assets/images/moov.png"
+                          alt="Moov"
+                          class="img-fluid"
+                          style="max-width: 80px"
+                        />
+                      </div>
+
+                      <!-- Option 3 -->
+                      <div
+                        class="img-box gap-2 d-flex flex-row align-items-center"
+                      >
+                        <input
+                          type="radio"
+                          class="radio my-2"
+                          formControlName="network"
+                          value="sbin"
+                        />
+                        <img
+                          src="../../../assets/images/sbin.jpg"
+                          alt="SBIN"
+                          class="img-fluid"
+                          style="max-width: 80px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for=""
+                      >Nombre de Kiss<span class="text-danger"> *</span></label
+                    >
+                    <input
+                      type="number"
+                      formControlName="kiss"
+                      (input)="calculateAmount()"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for="">Montant à Payer</label>
+                    <input
+                      type="text"
+                      formControlName="montantAPayer"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="my-input-box">
+                    <label for=""
+                      >Numéro de téléphone<span class="text-danger"> *</span>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="numeroTelephone"
+                      minlength="14"
+                      maxlength="14"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-secondary">
+            <span>
+              <b><u>NB </u>:</b> En procédant au paiement, vous acceptez
+              nos&nbsp;
+              <a routerLink="/terms-of-use">conditions d'utilisation</a>&nbsp;
+              et confirmez que vous avez lu notre &nbsp;<a
+                routerLink="/privacy-policy"
+                >politique de confidentialité.</a
+              >
+              &nbsp;</span
+            >
+          </div>
+
+          <div
+            class="buttons mt-30"
+            style="display: flex; justify-content: center"
+          >
+            <button
+              type="submit"
+              class="custom-button"
+              [disabled]="formGroup.invalid"
+            >
+              Payer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

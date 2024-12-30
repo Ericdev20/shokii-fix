@@ -1,0 +1,887 @@
+<section class="user-setting-section" id="myDiv" style="margin-top: 3cm">
+  <div class="container">
+    <div
+      *ngIf="!isMasculin && verify === 1"
+      class="alert alert-danger"
+      role="alert"
+      style="
+        background: linear-gradient(166deg, var(--indigo) 0%, var(--pink) 100%);
+        color: #fff;
+      "
+    >
+      <strong>
+        Pour compléter la vérification, veuillez ajouter au moins une image de
+        vous dans votre galerie ,puis passez par le processus de reconnaissance
+        faciale
+        <a [href]="checkLink" target="_blank" class="alert-link"
+          >en cliquant ici</a
+        >.
+      </strong>
+    </div>
+
+    <div
+      *ngIf="!isMasculin && verify === 2"
+      class="alert alert-info"
+      role="alert"
+      style="
+        background: linear-gradient(166deg, var(--blue) 0%, var(--purple) 100%);
+        color: #fff;
+      "
+    >
+      Votre compte est actuellement en cours de vérification. Notre équipe
+      procède à l'examen des informations que vous avez fournies.
+    </div>
+
+    <div class="row">
+      <div class="col-xl-4 col-md-5">
+        <!-- <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <button class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                aria-controls="collapseOne">
+                <div class="icon">
+                  <i class="fas fa-wallet"></i>
+                </div>
+                <span>KISS WALLET</span>
+                <div class="t-icon">
+                  <i class="fas fa-plus"></i>
+                  <i class="fas fa-minus"></i>
+                </div>
+              </button>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="single-plan">
+                  <p class="duration">
+                    Kiss Disponible :
+                  </p>
+                  <h4 class="number">
+                    <sup></sup>{{wallet}}
+                  </h4>
+                  <p class="stamet">
+                    KISS
+                  </p>
+                  <a routerLink="/checkout" class="custom-button">Recharger</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="faq-area mb-5">
+          <div class="faq-wrapper bg-white">
+            <div class="faq-item py-4">
+              <div class="faq-title">
+                <h6 class="title" style="display: flex; align-items: center">
+                  <div class="start-icon">
+                    <i class="fas fa-wallet"></i>
+                  </div>
+                  <span class="color" style="font-weight: 900; font-size: 19px"
+                    >KISS WALLET</span
+                  >
+                </h6>
+                <span class="right-icon"></span>
+              </div>
+              <div class="faq-content" style="display: none">
+                <div class="card-body">
+                  <div class="single-plan">
+                    <p class="duration">Kiss Disponible :</p>
+                    <h4 class="number"><sup></sup>{{ this.wallet }}</h4>
+                    <p class="stamet">KISS</p>
+                    <b class="text-info my-4"
+                      >Valide jusqu'au :
+                      <span *ngIf="wallet?.nombreKiss !== 0; else noKiss">
+                        {{ formatDateTime(validite) }}</span
+                      >
+                      <ng-template #noKiss>
+                        <span> --/--/---- </span></ng-template
+                      > </b
+                    ><br /><br />
+                    <a routerLink="/checkout" class="custom-button"
+                      >Recharger</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8 col-md-7">
+        <div class="page-title">
+          <span style="font-size: unset" class="color">Profil</span>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="profile-about-box">
+              <div class="top-bg"></div>
+              <div class="p-inner-content">
+                <div class="profile-img">
+                  <!-- <img class="pp" [src]="profileImage" alt="" /> -->
+                  <!-- <img
+                    class="pp"
+                    [defaultImage]="default"
+                    [lazyLoad]="profileImage"
+                    alt=""
+                  /> -->
+                  <div class="ppx-container">
+                    <!-- <img
+                      class="ppx"
+                      [defaultImage]="default"
+                      [lazyLoad]="profileImage"
+                      alt=""
+                    /> -->
+                    <p-image
+                      [src]="profileImage"
+                      alt="Image"
+                      appendTo="body"
+                      [preview]="true"
+                      loading="lazy"
+                      previewImageSizes="width:90vh"
+                      styleClass="pp"
+                      [imageStyle]="{
+                        'border-radius': '57px',
+                        'border-style': 'none',
+                        'object-fit': 'cover',
+                        width: '120px',
+                        height: '120px'
+                      }"
+                    ></p-image>
+                  </div>
+
+                  <!-- <p-image
+                    [src]="profileImage"
+                    alt="Image"
+                    [defaultImage]="default"
+                    [lazyLoad]="profileImage"
+                    width="100"
+                    class="pp"
+                    [preview]="true"
+                  >
+                  </p-image> -->
+                  <!-- <ng-image-slider
+                    #nav
+                    [defaultImage]="default"
+                    [lazyLoad]="profileImage"
+                    [images]="profileImageObj"
+                    [infinite]="false"
+                    [autoSlide]="1"
+                    [imageSize]="{ width: '100%' }"
+                    slideImage="1"
+                    class="pp"
+                  ></ng-image-slider> -->
+
+                  <div class="active-online"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 mt-lg-5" style="cursor: pointer">
+            <br />
+            <div class="up-photo-card mb-30" (click)="fileInput.click()">
+              <div class="icon">
+                <i class="fas fa-user-circle"></i>
+              </div>
+              <div class="content">
+                <h4>Modifier la Photo de Profil</h4>
+                <span> 120px x 120px size minimum </span>
+              </div>
+            </div>
+            <input
+              type="file"
+              accept="image/*"
+              (change)="changeProfilePhoto($event)"
+              #fileInput
+              style="display: none"
+            />
+            <!--    <div class="d-flex justify-content-center">
+              <button *ngIf="ProfilphotoSelected" type="submit" class="custom-buttonn" style="    background-color: rgb(148, 45, 217);
+        color: #fff;
+        outline: none;
+        border: none; ">Enregistrer nouvelle Photo Profile</button>
+            </div> -->
+          </div>
+        </div>
+
+        <form [formGroup]="profileForm">
+          <div class="input-info-box mt-30">
+            <div class="header">
+              <span class="start-icon">
+                <i class="fas fa-user-circle"></i>
+              </span>
+
+              &nbsp;&nbsp;<span class="color" style="font-size: unset"
+                >Informations Personnelles</span
+              >
+            </div>
+            <div class="content">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for="Name">Nom</label>
+                    <input
+                      type="text"
+                      id="Name"
+                      formControlName="name"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for="firstName">Prenom</label>
+                    <input
+                      type="text"
+                      id="fistName"
+                      formControlName="prenom"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for="username">Pseudo</label>
+                    <input type="text" id="username" formControlName="pseudo" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for="email">Email</label>
+                    <input
+                      type="text"
+                      readonly
+                      id="email"
+                      formControlName="email"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label
+                      for="phone_number
+"
+                      >Numero de téléphone</label
+                    >
+                    <input
+                      type="text"
+                      id="phone_number
+"
+                      formControlName="phone_number"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="my-input-box">
+                    <label for="dateOfBirth">Date de Naissance</label>
+                    <input
+                      type="date"
+                      id="dateOfBirth"
+                      formControlName="date_naissance"
+                      readonly
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="my-input-box">
+                    <label for="city" class="mx-2">Ville : </label>
+                    <ng-select
+                      formControlName="localisation"
+                      class="w-100"
+                      [placeholder]="'Entrer votre ville'"
+                      notFoundText="Aucune ville trouvée"
+                    >
+                      <ng-option
+                        *ngFor="let ville of villes | orderBy : 'name'"
+                        [value]="ville.name"
+                        >{{ ville.name }}</ng-option
+                      >
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="my-input-box box1">
+                    <label for="city" class="mx-2">Type de Profil : </label>
+                    <select formControlName="account_type">
+                      <option value="" disabled>
+                        Choisissez votre profil*
+                      </option>
+                      <option value="srx">Rélation sérieuse 💍</option>
+                      <option value="fun">Juste du fun 💋</option>
+                      <option value="fun_pro" *ngIf="!this.isMasculin">
+                        Escorte 🍑
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="my-notification-box">
+                    <div class="left">
+                      <div class="top">
+                        <div class="icon">
+                          <i class="far fa-closed-captioning"></i>
+                        </div>
+                        <h5>Je suis joignable par whatsApp :</h5>
+                      </div>
+                      <div
+                        class="bottom"
+                        [hidden]="!this.profileForm.value.whatsapp_allowed"
+                      >
+                        <input
+                          type="text"
+                          placeholder="Numéro whatsApp"
+                          #phoneInput
+                          id="phone"
+                          style="
+                            border: 1px solid var(--bs-border-color-translucent);
+                          "
+                          id="whatsapp_number"
+                          formControlName="whatsapp_number"
+                        />
+                      </div>
+                    </div>
+                    <div class="right">
+                      <div class="toggle-button">
+                        <input
+                          type="checkbox"
+                          checked=""
+                          formControlName="whatsapp_allowed"
+                          id="switch"
+                        /><label for="switch">Toggle</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-12">
+                  <div class="my-input-box">
+                    <label for="whatsapp_allowed" class="mx-2"
+                      >Je suis joignable par whatsApp :</label
+                    >
+                    <input type="checkbox" formControlName="whatsapp_allowed" />
+                  </div>
+                  <div
+                    class="my-input-box"
+                    *ngIf="this.profileForm.value.whatsapp_allowed"
+                  >
+                    <label for="whatsapp_number" class="mx-2"
+                      >Numéro whatsApp :</label
+                    >
+                    <input
+                      type="text"
+                      id="whatsapp_number
+"
+                      formControlName="whatsapp_number"
+                    />
+                  </div>
+                </div> -->
+                <div *ngIf="!isMasculin" class="p-0">
+                  <!-- <div class="col-md-12">
+                    <label for="city" class="mx-2">Description (Bio) : </label>
+                    <div class="my-input-box box1">
+                      <textarea
+                        name="description"
+                        formControlName="description"
+                        placeholder="Ecrivez une petite description à propos de vous..."
+                      ></textarea>
+                      <i
+                        class="fas fa-pencil-alt edit-icon"
+                        (click)="toggleDescriptionEdit()"
+                      ></i>
+                    </div>
+                  </div> -->
+                  <div class="col-md-12 mt-4">
+                    <div class="my-input-box box1">
+                      <label for="city" class="mx-2"
+                        >Description (Bio) :
+                      </label>
+                      <textarea
+                        name="description"
+                        formControlName="description"
+                        placeholder="Ecrivez une petite description à propos de vous..."
+                        readonly
+                        style="line-height: 2"
+                        >{{ profileForm.get("description")?.value }}</textarea
+                      >
+                      <i
+                        *ngIf="!afficherDescription"
+                        class="fas fa-pencil-alt edit-icon"
+                        (click)="toggleDescriptionEdit()"
+                      ></i>
+                      <select
+                        *ngIf="afficherDescription"
+                        formControlName="description"
+                        (change)="
+                          updateTextAreaValue(
+                            this.profileForm.get('description')?.value
+                          )
+                        "
+                      >
+                        <option value="" disabled>
+                          Choisissez une description *
+                        </option>
+                        <option
+                          [value]="description.texte"
+                          *ngFor="let description of descriptions"
+                        >
+                          {{ description.texte }}
+                        </option>
+                        <option value="Autres...">Autres ...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="my-input-box">
+                      <label for="city" class="mx-2">Taille : </label>
+                      <p-inputNumber
+                        [showButtons]="true"
+                        buttonLayout="horizontal"
+                        inputId="horizontal1"
+                        spinnerMode="horizontal"
+                        [step]="1"
+                        placeholder="00"
+                        [min]="25"
+                        [max]="200"
+                        decrementButtonClass="p-button-danger"
+                        formControlName="taille"
+                        incrementButtonClass="p-button-primary"
+                        incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus"
+                        mode="decimal"
+                        [suffix]="' cm'"
+                      ></p-inputNumber>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="my-input-box">
+                      <label for="city" class="mx-2">Poids : </label>
+                      <p-inputNumber
+                        [showButtons]="true"
+                        formControlName="poids"
+                        buttonLayout="horizontal"
+                        inputId="horizontal"
+                        spinnerMode="horizontal"
+                        [step]="1"
+                        decrementButtonClass="p-button-danger"
+                        incrementButtonClass="p-button-primary"
+                        incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus"
+                        mode="decimal"
+                        [suffix]="' kg'"
+                        placeholder="00"
+                        [min]="00"
+                      ></p-inputNumber>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- section gallerie -->
+        <div class="faq-area my-5" *ngIf="!isMasculin">
+          <div class="faq-wrapper bg-white" style="max-width: none">
+            <div class="faq-item">
+              <div class="faq-title">
+                <h6 class="title" style="display: flex; align-items: center">
+                  <div class="start-icon">
+                    <i class="fas fa-image"></i>
+                  </div>
+                  <span class="color" style="font-weight: 900; font-size: 19px"
+                    >Ma gallerie Photo</span
+                  >
+                </h6>
+                <span class="right-icon"></span>
+              </div>
+              <div class="faq-content" style="display: none">
+                <div class="card-body">
+                  <div class="input-info-box mt-30">
+                    <div class="content">
+                      <form [formGroup]="galleryForm">
+                        <div class="row">
+                          <div
+                            class="col-lg-6"
+                            *ngFor="let box of boxes; let i = index"
+                          >
+                            <div class="my-input-box">
+                              <div class="box">
+                                <div class="button-container">
+                                  <button
+                                    class="add-button"
+                                    *ngIf="!box.imageSelected"
+                                    (click)="fileInput.click()"
+                                  >
+                                    <span>+</span>
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      #fileInput
+                                      formControlName="album{{ i }}"
+                                      style="display: none"
+                                      (change)="onFileSelected2($event, box)"
+                                    />
+                                  </button>
+                                  <button
+                                    class="add-button remove"
+                                    *ngIf="box.imageSelected"
+                                    (click)="
+                                      removeImage(
+                                        galleryForm.get('album' + i),
+                                        box,
+                                        box.id
+                                      )
+                                    "
+                                  >
+                                    <span
+                                      ><i class="fas fa-pencil-alt"></i
+                                    ></span>
+                                  </button>
+                                </div>
+                                <div class="profile-picture">
+                                  <img
+                                    [src]="box.imageUrl"
+                                    *ngIf="box.imageSelected"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- section mot de passe -->
+
+        <div>
+          <div class="faq-area my-5">
+            <div class="faq-wrapper bg-white" style="max-width: none">
+              <div class="faq-item">
+                <div class="faq-title">
+                  <h6 class="title" style="display: flex; align-items: center">
+                    <div class="start-icon">
+                      <i class="fas fa-lock"></i>
+                    </div>
+                    <span
+                      class="color"
+                      style="font-weight: 900; font-size: 19px"
+                      >Changement de Mot de Passe
+                    </span>
+                  </h6>
+                  <span class="right-icon"></span>
+                </div>
+                <div class="faq-content" style="display: none">
+                  <div class="card-body">
+                    <div class="input-info-box mt-30">
+                      <div class="content">
+                        <form
+                          [formGroup]="passwordForm"
+                          (ngSubmit)="onSubmit()"
+                        >
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="my-input-box">
+                                <!-- <input
+                                  type="password"
+                                  placeholder="Mot de passe actuel"
+                                  formControlName="currentPassword"
+                                /> -->
+                                <p-password
+                                  placeholder="Mot de passe actuel"
+                                  class="pass"
+                                  formControlName="currentPassword"
+                                  [feedback]="false"
+                                  [toggleMask]="true"
+                                ></p-password>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="my-input-box">
+                                <p-password
+                                  promptLabel="Très Faible"
+                                  placeholder="Nouveau mot de passe"
+                                  class="pass"
+                                  weakLabel="Faible"
+                                  mediumLabel="Moyen"
+                                  strongLabel="Fort"
+                                  formControlName="newPassword"
+                                  [toggleMask]="true"
+                                ></p-password>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="my-input-box">
+                                <p-password
+                                  promptLabel="Très Faible"
+                                  placeholder="Confirmer le mot de passe"
+                                  weakLabel="Faible"
+                                  mediumLabel="Moyen"
+                                  strongLabel="Fort"
+                                  class="pass"
+                                  formControlName="confirmPassword"
+                                  [toggleMask]="true"
+                                ></p-password>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div
+                            *ngIf="passwordForm.valid"
+                            class="buttons mt-30"
+                            style="
+                              font-size: 12px;
+                              display: flex;
+                              justify-content: center;
+                            "
+                          >
+                            <button
+                              type="submit"
+                              class="custom-buttonn"
+                              style="
+                                background-color: rgb(242 40 118);
+                                color: #fff;
+                              "
+                            >
+                              Changer
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- section suppresion compte -->
+          <div class="faq-area my-5">
+            <div class="faq-wrapper bg-white" style="max-width: none">
+              <div class="faq-item">
+                <div class="faq-title">
+                  <h6 class="title" style="display: flex; align-items: center">
+                    <div class="start-icon">
+                      <i class="fas fa-trash-alt"></i>
+                    </div>
+                    <span style="font-weight: 900; font-size: 19px; color: red"
+                      >Suppression de compte
+                    </span>
+                  </h6>
+                  <span class="right-icon"></span>
+                </div>
+                <div class="faq-content" style="display: none">
+                  <div class="card-body">
+                    <form
+                      [formGroup]="deleteAccountForm"
+                      (ngSubmit)="onDelete()"
+                    >
+                      <div class="card-body">
+                        <div class="input-info-box mt-30">
+                          <div class="header">Attention:</div>
+                          <div class="content">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <p>
+                                  Si vous supprimez votre compte, vous perdrez
+                                  l'accès pour toujours.
+                                </p>
+                                <div class="my-input-box">
+                                  <label
+                                    class="my-2 mb-4 text-justify"
+                                    style="line-height: 27px"
+                                    >Entrer votre mot de passe
+                                  </label>
+                                  <input
+                                    type="password"
+                                    placeholder="Mot de passe"
+                                    formControlName="password"
+                                    (blur)="afficherChampRaison()"
+                                  />
+                                </div>
+
+                                <div
+                                  class="my-input-box"
+                                  *ngIf="afficherRaison"
+                                >
+                                  <label
+                                    class="my-2 mb-4 text-justify"
+                                    style="line-height: 27px"
+                                  >
+                                    Quelle est la raison de votre départ
+                                    ?(Aidez-nous à nous améliorer)
+                                  </label>
+                                  <textarea formControlName="reason"></textarea>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="buttons mt-30">
+                          <button
+                            type="submit"
+                            class="custom-buttonn"
+                            style="background-color: red"
+                          >
+                            Supprimer mon compte
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- section suppresion compte -->
+
+          <!-- <div class="accordion" id="accordionExample" style="margin-top: 0.5cm;">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <button class="" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                  aria-controls="collapseFour">
+                  <div class="icon">
+                    <i class="fas fa-trash-alt"></i>
+                  </div>
+                  <span style="color: red;">Suppression de compte</span>
+                  <div class="t-icon">
+                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-minus"></i>
+                  </div>
+                </button>
+              </div>
+
+              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                <form [formGroup]="deleteAccountForm" (ngSubmit)="onDelete()">
+                  <div class="card-body">
+                    <div class="input-info-box mt-30">
+                      <div class="header">Attention:</div>
+                      <div class="content">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <p>Si vous supprimez votre compte, vous perdrez l’accès pour toujours.</p>
+                            <div class="my-input-box">
+                              <input type="password" placeholder="Entrer votre mot de passe"
+                                formControlName="password" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="buttons mt-30">
+                      <button type="submit" class="custom-buttonn" style="background-color: red;">
+                        Supprimer mon compte
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div
+          class="buttons mt-30"
+          style="font-size: 12px; display: flex; justify-content: center"
+        >
+          <button
+            type="submit"
+            (click)="onUpdate()"
+            class="custom-button"
+            style="margin-left: 0; width: 220px"
+          >
+            Enregistrer les Changements
+          </button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button
+            class="custom-buttonn"
+            style="background-color: #fff; color: #000"
+            routerLink="/accueil"
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #content let-modal style="z-index: 1050 !important">
+  <div
+    class="card rounded border-2 align-content-center pt-3 d-flex"
+    style="background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)"
+  >
+    <div class="card-body" style="border-radius: 2cm; padding: 20px">
+      <p class="d-flex justify-content-center text-uppercase">
+        <b>Retoucher votre photo .</b>
+      </p>
+
+      <div class="d-flex justify-content-center">
+        <div class="profile-picture">
+          <!-- <img [src]="fileChoose?.imageUrl" /> -->
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 5"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            output="base64"
+            (imageLoaded)="imageLoaded($event)"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+          ></image-cropper>
+        </div>
+      </div>
+
+      <!-- <img [src]="croppedImage" /> -->
+
+      <!-- <div class="row">
+        <div class="col-6 py-4"><b>VISIBILITE : </b></div>
+        <div class="col-6">
+          <div class="form-group">
+            <div class="option">
+              <div class="s-input py-2 mr-3">
+                <input
+                  type="radio"
+                  name="visible"
+                  [(ngModel)]="visible"
+                  [value]="1"
+                  id="males"
+                />
+                <label for="males"><b>&nbsp; Public </b></label>
+              </div>
+              <div class="s-input">
+                <input
+                  type="radio"
+                  name="visible"
+                  [(ngModel)]="visible"
+                  [value]="0"
+                  id="females"
+                />
+                <label for="females"><b>&nbsp; Moi uniquement </b></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-dark text-white me-3" (click)="cancelChoose()">
+          &nbsp; Annuler
+        </button>
+
+        <button
+          class="btn btn-default"
+          style="background-color: rgb(242 40 118); color: #fff"
+          (click)="savePP()"
+        >
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

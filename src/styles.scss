@@ -1,0 +1,283 @@
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: auto;
+  }
+}
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeng/resources/themes/viva-light/theme.css";
+@import "primeicons/primeicons.css";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+/* @import "./assets/"; */
+/* @import "./assets/css/all.min.css";
+@import "./assets/css/owl.carousel.min.css";
+@import "./assets/css/owl.theme.default.min.css";
+@import "./assets/css/nice-select.css";
+@import "./assets/css/jquery.animatedheadline.css"; */
+
+html,
+body {
+  height: 100%;
+  font-family: Poppins !important;
+  margin: 0;
+  overflow-x: hidden !important;
+}
+
+body {
+  margin: 0;
+  font-family: Poppins !important;
+}
+a {
+  text-decoration: none !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.p-password {
+  width: 100%;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 55px !important;
+}
+// p-cascadeSelect ul li {
+//   font-size: 5px;
+//   width: auto;
+// }
+.p-overlay {
+  top: -350px !important;
+}
+.p-cascadeselect {
+  min-width: 15rem;
+  padding: 10px;
+  margin-bottom: 1cm;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+p-cascadeselectsub.p-cascadeselect-sublist.ng-star-inserted {
+  top: 150px !important;
+}
+.p-inputtext {
+  width: 2cm !important;
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  font-family: "Poppins";
+}
+.mat-mdc-option .mdc-list-item__primary-text {
+  padding-bottom: 30px !important;
+}
+mat-radio-group .mat-mdc-radio-group {
+  display: grid !important;
+}
+.pass .p-inputtext {
+  width: 100% !important;
+  height: 1.5cm;
+  border-color: #cecece !important;
+  border: solid 1px;
+  letter-spacing: 4px;
+}
+
+.modal-content {
+  // margin-top: 3cm;
+  border-radius: 1cm !important;
+}
+
+.mat-mdc-slider {
+  width: 80% !important;
+  min-width: 312px !important;
+}
+.pagination-previous,
+.pagination-next {
+  color: red;
+}
+.custom-pagination {
+  background-color: #37dd2b;
+  /* Changez la couleur d'arrière-plan ici */
+  /* Autres styles CSS que vous souhaitez appliquer */
+}
+.width-100pc,
+mat-slider.width-100pc {
+  width: 1cm;
+}
+mat-slider {
+  width: 1cm;
+}
+.hero-mobile-greeting {
+  font-size: 31px;
+  font-weight: 800;
+  line-height: 68px;
+  margin-bottom: 40px;
+  padding-left: 12px;
+}
+.font-p {
+  font-size: large;
+  line-height: 2;
+  /*font-weight: 501;*/
+}
+.color {
+  font-size: 40px;
+  background: linear-gradient(to right, #f32170, #ff6b08, #cf23cf, #eedd44);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+.size {
+  letter-spacing: 7px;
+  font-family: "Poppins";
+  font-weight: bold !important;
+}
+.colors {
+  font-size: 40px;
+  background: linear-gradient(to right, #3b82f6, #fff, #495057, #673ab7);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+::ng-deep .modal-content {
+  background-color: yellow;
+}
+.form-check-input:checked {
+  background-color: rgb(242, 40, 118) !important;
+  border-color: rgb(242, 40, 118) !important;
+  outline: none;
+}
+// .invalid-button {
+//   padding: 16px 40px;
+//   margin-top: 20px;
+//   background-color: #898989;
+//   box-shadow: 0.872px 9.962px 20px 0px rgba(12, 78, 165, 0.3);
+//   padding: 17px 45px;
+//   font-weight: 600;
+//   color: #ffffff;
+//   border-radius: 50px;
+//   display: inline-block;
+//   border: 0px;
+//   cursor: pointer;
+//   width: auto;
+//   height: auto;
+//   cursor: pointer;
+// }
+.ppx-container {
+  width: 120px; /* Définissez la largeur souhaitée */
+  height: 120px; /* Définissez la hauteur souhaitée */
+  overflow: hidden;
+  background-image: url("https://blog.lulu.com/wp-content/uploads/2022/05/Archived-4.png");
+  border-radius: 50%; /* Créez un effet de cercle */
+  background-size: cover;
+}
+
+.ppx {
+  width: 100%; /* Remplissez le conteneur parent */
+  height: 100%; /* Remplissez le conteneur parent */
+  object-fit: cover; /* Assurez-vous que l'image remplit complètement le conteneur sans déformation */
+
+  border-radius: inherit; /* Héritez du bord arrondi du conteneur parent */
+}
+
+/* * {
+  box-sizing: border-box;
+}
+html {
+  font-family: "verdana";
+} */
+.body {
+  /* position: fixed; */
+
+  /* width: 100%;
+  height: 100%; */
+  margin: 0;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  /* height: 100vh; */
+  overflow: hidden;
+  background: radial-gradient(circle, rgb(148, 45, 217), #ff08a0, #fff);
+}
+.ng-image-slider .ng-image-slider-container .main .main-inner .img-div img,
+.ng-image-slider .ng-image-slider-container .main .main-inner .img-div video {
+  object-fit: cover !important;
+}
+.relative {
+  position: relative;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 2.5rem;
+  height: 5rem;
+  width: 5rem;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+
+.absolute {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 2.5rem;
+}
+
+.aura1 {
+  box-shadow: 0px 0px 10px 0px red;
+  animation: escalar 2.75s infinite linear;
+}
+
+.aura2 {
+  box-shadow: 0px 0px 10px 0px ORANGE;
+  animation: escalar 1.75s infinite linear;
+}
+
+.aura3 {
+  box-shadow: 0px 0px 10px 0px WHITE;
+  animation: escalar 1.25s infinite linear;
+}
+
+.aura4 {
+  box-shadow: 0px 0px 10px 0px yellow;
+  animation: escalar 1s infinite linear;
+}
+
+.corazon {
+  font-size: 2rem;
+  animation: latido 1s infinite linear;
+}
+
+@keyframes escalar {
+  0% {
+  }
+  100% {
+    transform: scale(10);
+    opacity: 0;
+  }
+}
+
+@keyframes latido {
+  0% {
+    transform: scale(0.75);
+  }
+  20% {
+    transform: scale(1.5);
+  }
+  40% {
+    transform: scale(0.75);
+  }
+  60% {
+    transform: scale(1.5);
+  }
+  80% {
+    transform: scale(0.75);
+  }
+  100% {
+    transform: scale(0.75);
+  }
+}
+.iti {
+  width: 100% !important;
+}

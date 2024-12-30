@@ -1,0 +1,121 @@
+.mat-mdc-slider {
+  width: 65%;
+}
+.no-users-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #555;
+}
+.width-100pc,
+mat-slider.width-100pc {
+  width: 1cm;
+}
+mat-slider {
+  width: 1cm;
+}
+.status-span {
+  font-size: 7px;
+  top: 0px;
+  position: absolute;
+}
+
+.announce {
+  background-color: #dd3333;
+  color: #fff;
+  padding: 20px 20px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.bg-content {
+  background: linear-gradient(
+    166deg,
+    var(--red-300) 0%,
+    var(--surface-900) 100%
+  ) !important;
+  border-radius: 20px;
+  // line-height: 1cm;
+}
+/* .custom-class {
+  background-color: red;
+} */
+.my-class .modal-content {
+  background-color: aquamarine !important;
+}
+// @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+.width-100pc {
+  width: 100%;
+}
+.stories-container {
+  display: flex;
+  overflow-x: auto;
+  // background-color: white;
+  border-radius: 8px;
+  // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.story-avatar-container {
+  position: relative;
+  padding: 3px;
+  background: linear-gradient(
+    to right,
+    var(--pink),
+    #ff6b08,
+    var(--purple),
+    var(--pink-700)
+  );
+  border-radius: 50%;
+}
+.story-avatar-container a {
+  display: inherit !important;
+}
+.story-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: block;
+  background-clip: content-box;
+  object-fit: cover;
+}
+
+.story-name {
+  font-size: 12px;
+  text-align: center;
+  max-width: 70px;
+  overflow: hidden;
+  font-weight: 700;
+  color: var(--pink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stories-container::-webkit-scrollbar {
+  display: none;
+}
+.stories-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.name .a {
+  // font-size: 12px;
+  text-align: center;
+  max-width: 105px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.story-loca {
+  font-size: 9px;
+}
+.community-section.inner-page .single-friend .content .name .isvarify {
+  position: relative !important;
+  top: -10px !important;
+}

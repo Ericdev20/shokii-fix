@@ -1,0 +1,270 @@
+<!-- ==========Preloader========== -->
+
+<!-- ========== Login & Registation Section ========== -->
+<section
+  class="log-reg bg-section"
+  style="
+    background-repeat: no-repeat;
+    /* overflow: hidden !important; */
+    height: auto;
+    background-image: url('../../../assets/test-bg.jpg');
+    background-size: cover;
+  "
+>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6" style="">
+        <div class="log-reg-inner">
+          <div class="card rounded border-2 align-content-center d-flex">
+            <div class="card-body">
+              <div
+                class="section-header inloginp"
+                style="display: grid; color: #3b368c"
+              >
+                <h2 class="title">
+                  <a href="/">
+                    <img
+                      src="assets/images/logo/shokii.png"
+                      alt="logo"
+                      style="width: 140px"
+                  /></a>
+                </h2>
+                <b class="h2 my-3">Bon Retour 👋</b>
+
+                <small>Authentifiez vous !</small>
+              </div>
+              <div class="main-content inloginp">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <!-- <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <div
+                      class="input-wrapper d-flex justify-content-between"
+                      [ngClass]="{
+                        'invalid-input':
+                          loginForm.get('phone')?.invalid &&
+                          (loginForm.get('phone')?.dirty ||
+                            loginForm.get('phone')?.touched),
+                        'valid-input':
+                          loginForm.get('phone')?.valid &&
+                          (loginForm.get('phone')?.dirty ||
+                            loginForm.get('phone')?.touched)
+                      }"
+                    >
+                      <input
+                        type="number"
+                        class="pass w-100"
+                        formControlName="phone"
+                        required
+                        autofocus
+                        style="
+                          border: 1px solid rgba(0, 0, 0, 0.2) !important;
+                          font-size: 18px;
+                          height: 57px;
+                          font-family: 'Poppins';
+                          letter-spacing: 4px;
+                          color: #495057;
+                        "
+                        placeholder="Ex : 96000000"
+                        min="40000000"
+                        max="99999999"
+                        minlength="8"
+                        maxlength="10"
+                      />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        loginForm.get('phone')?.invalid &&
+                        (loginForm.get('phone')?.dirty ||
+                          loginForm.get('phone')?.touched)
+                      "
+                      style="
+                        color: rgb(220, 70, 11) !important;
+                        margin-top: 5px !important;
+                        font-size: 11px !important;
+                      "
+                    >
+                      <div
+                        class="d-flex mt-3 mb-4"
+                        *ngIf="loginForm.get('phone')?.errors?.['required']"
+                      >
+                        &nbsp;<mat-icon>danger</mat-icon> Ce champs est requis.
+                      </div>
+                      <div
+                        class="d-flex mt-3 mb-4"
+                        *ngIf="loginForm.get('phone')?.errors?.['max'] || loginForm.get('phone')?.errors?.['min']"
+                      >
+                        &nbsp; * &nbsp; Veuillez entrer un numéro de telephone
+                        valide.
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div class="form-group">
+                    <label for="phone">Numéro de téléphone</label>
+                    <div
+                      class="input-wrapper d-flex justify-content-between"
+                      [ngClass]="{
+                        'invalid-input':
+                          loginForm.get('phone')?.invalid &&
+                          (loginForm.get('phone')?.dirty ||
+                            loginForm.get('phone')?.touched),
+                        'valid-input':
+                          loginForm.get('phone')?.valid &&
+                          (loginForm.get('phone')?.dirty ||
+                            loginForm.get('phone')?.touched)
+                      }"
+                    >
+                      <input
+                        type="text"
+                        class="pass w-100"
+                        formControlName="phone"
+                        required
+                        autofocus
+                        style="
+                          border: 1px solid rgba(0, 0, 0, 0.2) !important;
+                          font-size: 18px;
+                          height: 57px;
+                          font-family: 'Poppins';
+                          letter-spacing: 4px;
+                          color: #495057;
+                        "
+                        placeholder="Ex : 0196969696"
+                        pattern="01[0-9]{8}"
+                        minlength="10"
+                        maxlength="10"
+                      />
+                    </div>
+
+                    <!-- Messages d'erreur -->
+                    <div
+                      *ngIf="
+                        loginForm.get('phone')?.invalid &&
+                        (loginForm.get('phone')?.dirty ||
+                          loginForm.get('phone')?.touched)
+                      "
+                      style="
+                        color: rgb(220, 70, 11) !important;
+                        margin-top: 5px;
+                        font-size: 11px;
+                      "
+                    >
+                      <!-- Champ requis -->
+                      <div
+                        class="d-flex mt-3 mb-4"
+                        *ngIf="loginForm.get('phone')?.errors?.['required']"
+                      >
+                        <mat-icon>danger</mat-icon> Ce champ est requis.
+                      </div>
+
+                      <!-- Format incorrect -->
+                      <div
+                        class="d-flex align-items-center mt-3 mb-4"
+                        *ngIf="loginForm.get('phone')?.errors?.['pattern']"
+                      >
+                        <mat-icon>danger</mat-icon
+                        ><i class="fa fa-exclamation-triangle"></i>&nbsp; Numéro
+                        invalide. Votre numéro de téléphone doit commencer par
+                        '01'.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <!--
+                      <input
+                        type="password"
+                        class="my-form-control"
+                        formControlName="password"
+                      />
+                   -->
+
+                    <div
+                      class="input-wrapper"
+                      [ngClass]="{
+                        'invalid-input':
+                          loginForm.get('password')?.invalid &&
+                          (loginForm.get('password')?.dirty ||
+                            loginForm.get('password')?.touched),
+                        'valid-input':
+                          loginForm.get('password')?.valid &&
+                          (loginForm.get('password')?.dirty ||
+                            loginForm.get('password')?.touched)
+                      }"
+                    >
+                      <p-password
+                        promptLabel="Très Faible"
+                        placeholder="Votre mot de passe"
+                        class="w-100 pass ng-invalid"
+                        [ngClass]="{
+                          'ng-invalid':
+                            loginForm.get('password')?.invalid &&
+                            (loginForm.get('password')?.dirty ||
+                              loginForm.get('password')?.touched),
+                          'ng-valid':
+                            loginForm.get('password')?.valid &&
+                            (loginForm.get('password')?.dirty ||
+                              loginForm.get('password')?.touched)
+                        }"
+                        formControlName="password"
+                        [toggleMask]="true"
+                        [feedback]="false"
+                      ></p-password>
+                    </div>
+
+                    <div
+                      *ngIf="
+                        loginForm.get('password')?.invalid &&
+                        (loginForm.get('password')?.dirty ||
+                          loginForm.get('password')?.touched)
+                      "
+                      style="
+                        color: rgb(220, 70, 11) !important;
+                        margin-top: 5px !important;
+                        font-size: 11px !important;
+                      "
+                    >
+                      <div
+                        class="d-flex mt-3 mb-4"
+                        *ngIf="loginForm.get('password')?.errors?.['required']"
+                      >
+                        &nbsp; * &nbsp; Mot de passe est requis.
+                      </div>
+                    </div>
+                  </div>
+                  <p
+                    class="f-pass"
+                    style="display: flex; justify-content: space-between"
+                  >
+                    &nbsp;&nbsp;&nbsp;
+                    <a routerLink="/password-recover">Mot de Passe Oublié?</a>
+                  </p>
+                  <div class="button-wrapper mb-4">
+                    <button
+                      type="submit"
+                      [ngClass]="{
+                        'invalid-button': !loginForm.valid,
+                        'custom-button': loginForm.valid
+                      }"
+                      [disabled]="!loginForm.valid"
+                    >
+                      Connexion
+                    </button>
+                  </div>
+                  <div class="or-content">
+                    <p class="or-signup mt-lg-5">
+                      N'avez-vous pas encore un compte ?
+                      <a routerLink="/signup"> S'inscrire ici</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br /><br /><br /><br />
+</section>

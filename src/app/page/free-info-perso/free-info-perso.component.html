@@ -1,0 +1,900 @@
+<section class="profile-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-4 col-lg-5 col-md-7" style="margin-top: 1cm">
+        <!-- <a
+          *ngIf="role == 2"
+          (click)="unlock()"
+          style="
+            background-image: linear-gradient(
+              166deg,
+              rgb(148, 45, 217) 0%,
+              #f44336 100%
+            ) !important;
+          "
+          class="text-white custom-button d-none d-md-block"
+        >
+          <i class="fas fa-arrow-left"></i> Retour à l'accueil
+        </a> -->
+        <div class="left-profile-area">
+          <div class="profile-about-box">
+            <div class="top-bg"></div>
+            <div class="p-inner-content">
+              <div class="profile-img">
+                <div
+                  *ngIf="!premium"
+                  class="blur-overlay"
+                  style="width: 100% !important; border-radius: 50%; z-index: 1"
+                ></div>
+                <!-- <img [src]="profileImage" class="pp" alt="" /> -->
+                <p-image
+                  [src]="profileImage"
+                  alt="Image"
+                  appendTo="body"
+                  [preview]="true"
+                  previewImageSizes="width:100vh"
+                  styleClass="pp"
+                  [imageStyle]="{
+                    'border-radius': '57px',
+                    'border-style': 'none',
+                    'object-fit': 'cover',
+                    width: '120px',
+                    height: '120px'
+                  }"
+                  class="ppx"
+                ></p-image>
+                <div
+                  *ngIf="isCurrentUserOnline"
+                  class="active-online"
+                  style="z-index: 9999"
+                ></div>
+              </div>
+              <h5 class="name">
+                {{ userInfo?.pseudo }}
+                <i
+                  *ngIf="userInfo?.profil_verify_id === 3"
+                  style="font-size: 14px; color: rgb(148 45 217)"
+                  class="fas fa-check-circle"
+                ></i>
+              </h5>
+
+              <ul class="p-b-meta-one">
+                <li>
+                  <span>{{ calculateAge(userInfo?.date_naissance) }} ans</span>
+                </li>
+                <li>
+                  <span>
+                    <i class="fas fa-map-marker-alt"></i
+                    >{{ userInfo?.localisation }} , Benin</span
+                  >
+                </li>
+              </ul>
+              <div class="p-b-meta-two justify-content-center">
+                <div class="left gap-2 d-flex align-items-center">
+                  <div class="icon">
+                    <ng-container [ngSwitch]="userInfo?.account_type">
+                      <ng-template ngSwitchCase="srx">💍</ng-template>
+                      <ng-template ngSwitchCase="fun">💋</ng-template>
+                      <ng-template ngSwitchCase="fun_pro">🍑 </ng-template>
+                    </ng-container>
+                  </div>
+                  <ng-container [ngSwitch]="userInfo?.account_type">
+                    <ng-template ngSwitchCase="srx"
+                      >Rélation sérieuse</ng-template
+                    >
+                    <ng-template ngSwitchCase="fun"> Juste fun </ng-template>
+                    <ng-template ngSwitchCase="fun_pro"> Escorte</ng-template>
+                  </ng-container>
+                </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <!-- <div class="right">
+                  <a
+                    *ngIf="role == 2"
+                    (click)="unlock()"
+                    class="text-white custom-button"
+                  >
+                    <i class="fab fa-cloudversify"></i> Débloquer ce profil
+                  </a>
+                  <a
+                    *ngIf="role == 3"
+                    [href]="checkLink"
+                    target="_blank"
+                    class="custom-button"
+                  >
+                    <i class="fab fa-lock"></i> Verifier mon compte !
+                  </a>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-main-content">
+            <div class="info-box" *ngIf="userInfo?.role_id === 3">
+              <div class="header">
+                <h4 class="title">Description Personnelle</h4>
+              </div>
+              <div class="content">
+                <p class="text">
+                  {{ userInfo?.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="profile-meta-box">
+            <ul class="p-m-b">
+              <li>
+                <a
+                  target="_blank"
+                  style="text-decoration: none; color: inherit; cursor: pointer"
+                  (click)="swalinfo('chat', userInfo?.pseudo)"
+                >
+                  <i class="far fa-envelope"></i>
+                  &nbsp;&nbsp;Chat
+                </a>
+              </li>
+              <li *ngIf="hasWhatSapp && !isWhatSappUnlock">
+                <a
+                  (click)="swalinfo('what', userInfo?.pseudo)"
+                  style="text-decoration: none; color: inherit; cursor: pointer"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                  WhatsApp
+                </a>
+              </li>
+              <li *ngIf="!hasWhatSapp">
+                <a
+                  (click)="swalinfo('noWhat', userInfo?.pseudo)"
+                  style="text-decoration: none; color: inherit; cursor: pointer"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                  WhatsApp
+                </a>
+              </li>
+              <li *ngIf="hasWhatSapp && isWhatSappUnlock">
+                <a
+                  (click)="wa.toggle($event)"
+                  style="cursor: pointer; text-decoration: none; color: inherit"
+                >
+                  <i class="fab fa-whatsapp"></i>
+                  WhatsApp
+                </a>
+                <p-overlayPanel #wa>
+                  <button
+                    ngxClipboard
+                    [cbContent]="userInfo?.whatsapp_number"
+                    class="custom-button"
+                    (cbOnSuccess)="onCopySuccess1()"
+                    (cbOnError)="onCopyError()"
+                  >
+                    Copier le numéro whatsApp &nbsp;
+                    <i *ngIf="!copy1" class="fas fa-copy"></i>
+                    <i *ngIf="copy1" class="fas fa-check"></i></button
+                  ><br />
+                  <a
+                    target="_blank"
+                    href="https://web.whatsapp.com/send?phone={{
+                      userInfo?.whatsapp_number
+                    }}"
+                    class="custom-button mt-3"
+                    style="
+                      background-image: linear-gradient(
+                        166deg,
+                        #21df52 0%,
+                        #dee2e6 100%
+                      ) !important;
+                    "
+                  >
+                    Joindre sur whatsApp &nbsp;
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                </p-overlayPanel>
+              </li>
+            </ul>
+          </div>
+          <!-- Pas premium -->
+          <div class="profile-uplodate-photo">
+            <h4 class="p-u-p-header" style="font-size: 22px">
+              <i class="fas fa-camera"></i> {{ userInfo?.pseudo }} en quelques
+              images
+            </h4>
+            <div class="content" *ngIf="!premium">
+              <ul class="infolist">
+                <div
+                  style="
+                    margin-top: 0.6cm;
+                    justify-content: center;
+                    display: flex;
+                  "
+                >
+                  <img
+                    style="height: 5cm"
+                    src="../../../assets/images/cadenas.png"
+                  />
+                </div>
+              </ul>
+
+              <div class="d-flex justify-content-center my-2">
+                <a
+                  *ngIf="role == 2"
+                  (click)="unlock()"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      rgb(148, 45, 217) 0%,
+                      #f44336 100%
+                    ) !important;
+                  "
+                  class="text-white custom-button"
+                >
+                  <i class="fab fa-cloudversify"></i> Débloquer ce profil
+                </a>
+                <a
+                  *ngIf="role == 3"
+                  [href]="checkLink"
+                  target="_blank"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      rgb(148, 45, 217) 0%,
+                      #f44336 100%
+                    ) !important;
+                  "
+                  class="custom-button"
+                >
+                  <i class="fab fa-lock"></i> Verifier mon compte !
+                </a>
+              </div>
+            </div>
+            <div *ngIf="premium">
+              <div class="row" *ngIf="galleries?.length > 0; else noUsers">
+                <div class="p-u-p-list" data-lightbox="gallery">
+                  <div class="my-col">
+                    <div class="img">
+                      <ng-image-slider
+                        #nav
+                        [images]="galleries"
+                        [infinite]="false"
+                        [autoSlide]="1"
+                        [imageSize]="{ width: 'auto', height: 'auto' }"
+                        slideImage="3"
+                      >
+                      </ng-image-slider>
+                      <!-- <img [src]="gallerie?.imageUrl" />
+                    <div class="overlay">
+                      <a
+                        [href]="gallerie?.imageUrl"
+                        [title]="userInfo?.pseudo"
+                        data-lightbox="gallery-image"
+                        ><i class="fas fa-plus"></i
+                      ></a>
+                    </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="blur-overlay" style="width:100%!important; border-radius: 17px;"></div> -->
+            <ng-template #noUsers>
+              <div class="row">
+                <div class="p-u-p-list">
+                  <div class="my-col d-flex justify-content-center">
+                    <h6
+                      class="text-danger"
+                      style="font-family: Poppins; font-size: 13px"
+                    >
+                      Aucune Image disponible !
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <!-- <div class="p-u-p-list" data-lightbox="gallery">
+              <div class="my-col" *ngFor="let gallerie of galleries">
+                <div class="img">
+                  <div
+                    class="blur-overlay"
+                    style="width: 100% !important; border-radius: 17px"
+                  ></div>
+                  <img [src]="gallerie.imageUrl" />
+                  <div class="overlay">
+                    <a
+                      [href]="gallerie.imageUrl"
+                      [title]="userInfo?.pseudo"
+                      data-lightbox="gallery-image"
+                      ><i class="fas fa-plus"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5 col-lg-6">
+        <div class="profile-main-content">
+          <div class="info-box" data-toggle="modal" data-target="#modalAction">
+            <div class="header">
+              <h4 class="title">Informations de base</h4>
+            </div>
+            <div class="content">
+              <ul class="infolist">
+                <div
+                  style="
+                    margin-top: 0.6cm;
+                    justify-content: center;
+                    display: flex;
+                  "
+                >
+                  <img
+                    style="height: 5cm"
+                    src="../../../assets/images/cadenas.png"
+                  />
+                </div>
+              </ul>
+              <div class="d-flex justify-content-center my-2">
+                <a
+                  *ngIf="role == 2"
+                  (click)="unlock()"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      rgb(148, 45, 217) 0%,
+                      #f44336 100%
+                    ) !important;
+                  "
+                  class="text-white custom-button"
+                >
+                  <i class="fab fa-cloudversify"></i> Débloquer ce profil
+                </a>
+                <a
+                  *ngIf="role == 3"
+                  [href]="checkLink"
+                  target="_blank"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      rgb(148, 45, 217) 0%,
+                      #f44336 100%
+                    ) !important;
+                  "
+                  class="custom-button"
+                >
+                  <i class="fab fa-lock"></i> Verifier mon compte !
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-main-content">
+          <div class="info-box" data-toggle="modal" data-target="#modalAction">
+            <div class="header">
+              <h4 class="title">Caracteristiques Physique</h4>
+            </div>
+            <div class="content">
+              <ul class="infolist">
+                <div
+                  style="
+                    margin-top: 0.6cm;
+                    justify-content: center;
+                    display: flex;
+                  "
+                >
+                  <img
+                    style="height: 5cm"
+                    src="../../../assets/images/cadenas.png"
+                  />
+                </div>
+              </ul>
+              <div class="d-flex justify-content-center my-2">
+                <a
+                  *ngIf="role == 2"
+                  (click)="unlock()"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      rgb(148, 45, 217) 0%,
+                      #f44336 100%
+                    ) !important;
+                  "
+                  class="text-white custom-button"
+                >
+                  <i class="fab fa-cloudversify"></i> Débloquer ce profil
+                </a>
+                <a
+                  *ngIf="role == 3"
+                  [href]="checkLink"
+                  target="_blank"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      rgb(148, 45, 217) 0%,
+                      #f44336 100%
+                    ) !important;
+                  "
+                  class="custom-button"
+                >
+                  <i class="fab fa-lock"></i> Verifier mon compte !
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggestion part -->
+    <!-- <div class="row justify-content-center">
+      <div class="col-xl-9 col-lg-11 col-md-4" style="margin-top: 1cm">
+        <div class="container-more">
+          <div class="header">
+            <h2>Profils Similaires</h2>
+            <button class="plus-button">Plus ></button>
+          </div>
+          <div class="grid">
+            <div class="profile" *ngFor="let member of similar_profiles">
+              <img [src]="this.getImageProfil(member?.photo_profil?.path)" />
+              <div class="profile-info">
+                <span class="profile-name">{{ member?.pseudo }}</span>
+                <span class="profile-age">28 ans</span>
+              </div>
+            </div>
+          </div>
+          <div class="footer">Plus de membres proposés ></div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="row justify-content-center">
+      <div class="col-xl-9 col-lg-11 col-md-4" style="margin-top: 1cm">
+        <div class="card border-0">
+          <div
+            class="card-header border-0 d-flex justify-content-between align-items-center bg-light"
+          >
+            <h5 class="mb-0">Profils Similaires à {{ userInfo?.pseudo }}</h5>
+            <a routerLink="/accueil" class="btn btn-link text-dark">Plus ></a>
+          </div>
+          <div class="card-body p-0">
+            <div class="scroll-container">
+              <div class="scroll d-flex flex-nowrap overflow-auto py-3 px-2">
+                <div
+                  class="profile me-3"
+                  *ngFor="let member of similar_profiles"
+                >
+                  <a
+                    [routerLink]="generateProfileLink(member.id)"
+                    class="profile-card"
+                  >
+                    <img
+                      class="img-fluid profile-sug-img"
+                      [defaultImage]="default"
+                      [lazyLoad]="getImageProfil(member?.photo_profil?.path)"
+                      alt="{{ member?.pseudo }}"
+                    />
+                    <div class="profile-info">
+                      <a class="profile-name">
+                        <ng-container [ngSwitch]="member?.account_type">
+                          <ng-template ngSwitchCase="srx">💍</ng-template>
+                          <ng-template ngSwitchCase="fun">💋</ng-template>
+                          <ng-template ngSwitchCase="fun_pro"
+                            >🍑
+                          </ng-template> </ng-container
+                        >{{ member?.pseudo }}
+                      </a>
+                      <span class="profile-age"
+                        >{{ calculateAge(member?.date_naissance) }}ans</span
+                      >
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer border-0 text-center bg-light">
+            <a routerLink="/accueil" class="text-muted text-decoration-none"
+              >Parcourir tous les profils ></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal d'appel à l'action -->
+<ng-template #content let-modal style="z-index: 1050 !important">
+  <div class="bg-content text-white">
+    <div *ngIf="!premium && !userSubscrip">
+      <div class="modal-header" style="border-radius: 1cm 1cm 0 0">
+        <h5 class="modal-title text-white text-center" id="myModalLabel">
+          Accès restreint .
+        </h5>
+        <button
+          (click)="closePopup()"
+          type="button"
+          class="close d-flex"
+          data-dismiss="modal"
+          aria-label="Close"
+          style="color: #fff; font-size: xx-large; outline: none"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: justify">
+        <!-- <img
+              src="https://img.freepik.com/vecteurs-premium/champ-mot-passe-illustration-numerique-3d-cadenas-rouge_348818-1794.jpg"
+              alt="Graphic"
+              class="img-fluid mb-3"
+            /> -->
+        <img
+          src="https://ton.twitter.com/onboarding/two_factor_enrollment_recommendation_prompt/header_v9.png"
+          alt="Graphic"
+          class="img-fluid mb-3"
+        />
+        <p>
+          Vous ne disposez pas d'assez de KISS . <br />
+          Pour pouvoir joindre
+          <b style="text-transform: uppercase">{{ userInfo?.pseudo }} </b>et
+          consulter son profil, il vous faut d'abord souscrire à un abonnement
+          ou acquérir des KISS.<br />
+          <a
+            class="text-dark"
+            routerLink="/faq"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            En savoir plus sur l'utilisation et le fonctionnement des KISS.
+          </a>
+        </p>
+        <br />
+        Veuillez d'abord vous approvisionnez
+        <a class="text-dark" target="_blank" routerLink="/checkout">ici</a> ou
+        souscrivez à un
+        <a class="text-dark" target="_blank" routerLink="/abonnement"
+          >abonnement</a
+        >.
+      </div>
+      <div
+        class="modal-footer d-flex justify-content-center"
+        style="border-radius: 0 0 1cm 1cm; border: none"
+      >
+        <button
+          type="button"
+          class="custom-button my-4"
+          style="
+            background-image: linear-gradient(166deg, #fff 0%, #dee2e6 100%);
+            color: #000;
+            width: 7cm;
+          "
+          (click)="subscribe()"
+        >
+          Recharger mon Portefeuille
+        </button>
+      </div>
+    </div>
+    <div *ngIf="premium && !userSubscrip">
+      <div class="modal-header" style="border-radius: 1cm 1cm 0 0">
+        <h5 class="modal-title text-white text-center" id="myModalLabel">
+          Profil non Débloqué
+        </h5>
+        <button
+          (click)="closePopup()"
+          type="button"
+          class="close d-flex"
+          data-dismiss="modal"
+          aria-label="Close"
+          style="color: #fff; font-size: xx-large; outline: none"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <img
+              src="https://img.freepik.com/vecteurs-premium/champ-mot-passe-illustration-numerique-3d-cadenas-rouge_348818-1794.jpg"
+              alt="Graphic"
+              class="img-fluid mb-3"
+            /> -->
+        <img
+          src="https://ton.twitter.com/onboarding/two_factor_enrollment_recommendation_prompt/header_v9.png"
+          alt="Graphic"
+          class="img-fluid mb-3"
+        />
+        <p>
+          <!-- Vous ne disposez pas d'assez de KISS . <br /> -->
+          L'accès à toutes les informations de
+          <b style="text-transform: uppercase">{{ userInfo?.pseudo }} </b>
+          neccessite <b class="text-primary">1 KISS.</b> <br />
+          Ceci permetra également de debloquer sa boîte de messagerie !
+          <a class="text-dark" routerLink="/faq" target="_blank">
+            En savoir plus l'utilisation et le fonctionnement des KISS.
+          </a>
+        </p>
+        <br />
+        Si vous ne disposer pas de KISS, vous pouvez vous en approvisionnez
+        <a target="_blank" class="text-dark" (click)="buyKiss()"
+          >maintenanant</a
+        >
+        ou
+        <a target="_blank" class="text-dark" (click)="subscribe()"
+          >souscrire à un abonnement</a
+        >
+      </div>
+      <div
+        class="modal-footer d-flex justify-content-center"
+        style="border-radius: 0 0 1cm 1cm; border: none"
+      >
+        <button
+          type="button"
+          class="custom-button my-4"
+          style="
+            background-image: linear-gradient(166deg, #fff 0%, #dee2e6 100%);
+            color: #000;
+            width: 7cm;
+          "
+          (click)="unlock()"
+        >
+          Débloquer Maintenant pour 1 KISS 🔐
+        </button>
+      </div>
+    </div>
+    <div *ngIf="this.unlockX">
+      <div class="modal-header" style="border-radius: 1cm 1cm 0 0">
+        <h5 class="modal-title text-white text-center" id="myModalLabel">
+          Veuillez d’abord confirmer votre compte !
+        </h5>
+        <button
+          (click)="closePopup()"
+          type="button"
+          class="close d-flex"
+          data-dismiss="modal"
+          aria-label="Close"
+          style="color: #fff; font-size: xx-large; outline: none"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <img
+              src="https://img.freepik.com/vecteurs-premium/champ-mot-passe-illustration-numerique-3d-cadenas-rouge_348818-1794.jpg"
+              alt="Graphic"
+              class="img-fluid mb-3"
+            /> -->
+        <img
+          src="https://ton.twitter.com/onboarding/two_factor_enrollment_recommendation_prompt/header_v9.png"
+          alt="Graphic"
+          class="img-fluid mb-3"
+        />
+        <p>
+          Vous n'avez pas encore soumis votre compte pour
+          <b class="text-primary">vérification.</b> .Ceci est nécessaire pour
+          acceder aux informations de
+          <b style="text-transform: uppercase">{{ userInfo?.pseudo }} </b> ainsi
+          qu'à sa boite de messagerie !
+          <br />
+          <a
+            class="text-dark"
+            routerLink="/faq"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            En savoir plus le proccessus de vérification et les restrictions qui
+            appliquées aux comptes non verifiés.
+          </a>
+        </p>
+        <br />
+        Démarrer maintenant le proccessus de vérification. Ceci vous prendra
+        qu'une minute !
+      </div>
+      <div
+        class="modal-footer d-flex justify-content-center"
+        style="border-radius: 0 0 1cm 1cm; border: none"
+      >
+        <button
+          type="button"
+          class="custom-button my-4"
+          style="
+            background-image: linear-gradient(166deg, #fff 0%, #dee2e6 100%);
+            color: #000;
+            width: 7cm;
+          "
+          (click)="agree()"
+        >
+          Vérifier mon profil !
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+  <!-- </div>
+  </div> -->
+</ng-template>
+<ng-template #contentInfo let-modal style="z-index: 1050 !important">
+  <div class="bg-white text-dark">
+    <div class="modal-header" style="border-radius: 1cm 1cm 0 0">
+      <h5 class="modal-title text-white text-center" id="myModalLabel">
+        Comment passer correctement le contrôle d'identité ?
+      </h5>
+      <button
+        (click)="closePopup()"
+        type="button"
+        class="close d-flex"
+        data-dismiss="modal"
+        aria-label="Close"
+        style="color: #fff; font-size: xx-large; outline: none"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align: justify">
+      <img
+        src="https://ton.twitter.com/onboarding/two_factor_enrollment_recommendation_prompt/header_v9.png"
+        alt="Graphic"
+        class="img-fluid mb-3"
+      />
+      <div>
+        <ul>
+          <li>Mettez-vous dans un environnement bien éclairé.</li>
+          <li>Utilisez une caméra fonctionnelle.</li>
+          <li>
+            Assurez-vous que votre visage est clairement visible et centré dans
+            le cadre.
+          </li>
+          <li>
+            Retirez tout accessoire qui pourrait obstruer votre visage, comme
+            des lunettes de soleil ou des chapeaux.
+          </li>
+          <li>Évitez les reflets gênants sur la lentille de la caméra.</li>
+          <li>
+            Assurez-vous que la qualité de l'image est suffisamment élevée pour
+            permettre une identification facile.
+          </li>
+          <li>Maintenez un regard naturel et direct vers la caméra.</li>
+          <li>
+            Vérifiez que votre connexion Internet est stable pour éviter des
+            retards dans le processus de vérification.
+          </li>
+        </ul>
+      </div>
+      <br />
+    </div>
+    <div
+      class="modal-footer d-flex justify-content-center"
+      style="border-radius: 0 0 1cm 1cm; border: none"
+    >
+      <button
+        type="button"
+        class="custom-button my-4"
+        style="
+          background-image: linear-gradient(166deg, #fff 0%, #dee2e6 100%);
+          color: #000;
+          width: 7cm;
+        "
+        (click)="agree()"
+      >
+        J'ai compris!
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #contentWhatsApp let-modal style="z-index: 1050 !important">
+  <div class="bg-white text-dark" style="border-radius: 1cm">
+    <div class="modal-header">
+      <button
+        (click)="closePopup()"
+        type="button"
+        class="close d-flex"
+        data-dismiss="modal"
+        aria-label="Close"
+        style="color: #000; font-size: xx-large; outline: none"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align: justify">
+      <br />
+      <div class="d-flex justify-content-between">
+        <div class="">
+          <b
+            >Numéro WhatsApp :
+
+            <span
+              class="mx-3"
+              style="
+                font-family: cursive;
+                color: mediumblue;
+                letter-spacing: 2px;
+              "
+              >{{
+                userInfo?.whatsapp_number
+                  ? userInfo?.whatsapp_number
+                  : userInfo?.phone_number
+              }}</span
+            ></b
+          >
+        </div>
+
+        <!-- <button
+          ngxClipboard
+          [cbContent]="
+            userInfo?.whatsapp_number
+              ? userInfo?.whatsapp_number
+              : userInfo?.phone_number
+          "
+          class="custom-button"
+          (cbOnSuccess)="onCopySuccess()"
+          (cbOnError)="onCopyError()"
+        >
+          Copier le numéro whatsApp &nbsp;
+          <i class="fas fa-copy"></i>
+        </button> -->
+      </div>
+
+      <br />
+      <hr />
+      <!-- <a
+        target="_blank"
+        href="https://web.whatsapp.com/send?phone=+229{{
+          userInfo?.whatsapp_number
+        }}"
+        class="custom-button mt-3"
+        style="
+          background-image: linear-gradient(
+            166deg,
+            #21df52 0%,
+            #dee2e6 100%
+          ) !important;
+        "
+      >
+        Cliquez pour Joindre directement sur whatsApp &nbsp;
+        <i class="fas fa-external-link-alt"></i>
+      </a> -->
+    </div>
+    <div
+      class="modal-footer d-flex justify-content-center"
+      style="border-radius: 0 0 1cm 1cm; border: none"
+    >
+      <button
+        type="button"
+        class="custom-button my-4"
+        ngxClipboard
+        [cbContent]="
+          userInfo?.whatsapp_number
+            ? userInfo?.whatsapp_number
+            : userInfo?.phone_number
+        "
+        style="
+          background-image: linear-gradient(
+            166deg,
+            var(--bs-link-hover-color) 0%,
+            #dee2e6 100%
+          );
+          color: #000;
+          width: 7cm;
+        "
+        (cbOnSuccess)="onCopySuccess()"
+        (cbOnError)="onCopyError()"
+      >
+        Copier!
+        <i *ngIf="!copy" class="fas fa-copy"></i>
+        <i *ngIf="copy" class="fas fa-check"></i>
+      </button>
+      <a
+        target="_blank"
+        href="https://web.whatsapp.com/send?phone={{
+          userInfo?.whatsapp_number
+        }}"
+        class="custom-button my-4"
+        style="
+          background-image: linear-gradient(166deg, #fff 0%, var(--teal) 100%);
+          color: var(--surface-900);
+          width: auto;
+        "
+      >
+        Continuer vers whatsApp
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+    </div>
+  </div>
+</ng-template>

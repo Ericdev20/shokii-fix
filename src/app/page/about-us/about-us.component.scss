@@ -1,0 +1,25 @@
+.hero-mobile-greeting {
+  font-size: 31px;
+  font-weight: 800;
+  line-height: 68px;
+  margin-bottom: 40px;
+  padding-left: 12px;
+}
+.font-p {
+  font-size: large;
+  line-height: 2;
+  /*font-weight: 501;*/
+}
+.color {
+  font-size: 40px;
+  background: linear-gradient(to right, #f32170, #ff6b08, #cf23cf, #eedd44);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+.zoom-hover {
+  transition: transform 0.5s;
+  cursor: pointer !important;
+}
+.zoom-hover:hover {
+  transform: scale(1.11);
+}

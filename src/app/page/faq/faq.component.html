@@ -1,0 +1,73 @@
+<section class="faq-section" style="margin-top: 4.5cm !important">
+  <div class="container">
+    <div class="col-xl-12 col-md-12 col-12">
+      <div class="row my-5 d-flex justify-content-center">
+        <div class="col-lg-6 col-sm-6 col-md-6 mx-lg-6">
+          <form
+            action="#"
+            method="get"
+            (input)="search()"
+            [formGroup]="searchForm"
+          >
+            <div
+              class="search-formm"
+              style="border-radius: 3cm; height: 1.3cm; width: auto"
+            >
+              <input
+                type="text"
+                class="intext"
+                name="search"
+                style="border-color: rgba(0, 0, 0, 0.02)"
+                placeholder="Recherche..."
+                formControlName="searchTerm"
+              />
+              <button type="submit" class="search-btnn">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="content">
+              <div class="section-header">
+                <h6 class="sub-title extra-padding">
+                  Avez-vous une question ?
+                </h6>
+                <h2 class="color size title">Nous avons des réponses !</h2>
+                <p class="text">
+                  Consulter ci-dessous les questions fréquemment posées .
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-area">
+          <div class="faq-wrapper">
+            <div
+              class="faq-item"
+              *ngFor="let faq of faqs"
+              [ngClass]="{ 'active open': faq.isOpen }"
+            >
+              <div class="faq-title" (click)="toggleFaq(faq)">
+                <h3 class="title">
+                  <b>{{ faq.questions }}</b>
+                </h3>
+                <span class="right-icon"></span>
+              </div>
+              <div class="faq-content" style="text-align: justify">
+                <p>
+                  <i style="line-height: 2; letter-spacing: 1px">{{
+                    faq.reponses
+                  }}</i>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,245 @@
+<section class="product-details-section">
+  <div class="overlay">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active fifth" id="fifth">
+              <div class="tab-content-wrapper-fifth">
+                <div class="top-content-fifth mb-30">
+                  <h4 class="title mb-30">Toutes mes notes</h4>
+                  <div class="row d-flex justify-content-around">
+                    <div class="col-lg-4">
+                      <div class="averages-review text-center">
+                        <div class="rating">
+                          <span>{{ averageRating }} </span>/5
+                        </div>
+                        <div class="review-block">
+                          <p class="star-review">
+                            <a class="star">
+                              <!-- <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i> -->
+                              <i
+                                class="fas fa-star filled"
+                                *ngFor="
+                                  let star of getFilledStarArray(averageRating)
+                                "
+                              ></i>
+                              <i
+                                class="fas fa-star-half-alt half"
+                                *ngIf="averageRating % 1 >= 0.5"
+                              ></i>
+                              <i
+                                class="far fa-star empty"
+                                *ngFor="
+                                  let star of getEmptyStarArray(averageRating)
+                                "
+                              ></i
+                            ></a>
+                            <a
+                              class="reviews"
+                              *ngIf="totalReviews > 0; else noReviews"
+                            >
+                              Votre profil a reçu
+                              <span>{{ totalReviews }}</span> avis de la part de
+                              nos utilisateurs !
+                            </a>
+                            <ng-template #noReviews>
+                              <a class="reviews">
+                                Vous n'avez encore reçu aucun avis pour le
+                                moment !
+                              </a>
+                            </ng-template>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="col-lg-6">
+                      <ul class="rating-list">
+                        <li class="rating-breakdown">
+                          <div class="rating-point">
+                            <span>5 étoiles</span>
+                          </div>
+
+                          <div class="progress">
+                            <div
+                              class="progress-bar full"
+                              role="progressbar"
+                            ></div>
+                          </div>
+                          <div class="review-count">
+                            <a href="#">({{ starCounts[5] }})</a>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="rating-list">
+                        <li class="rating-breakdown">
+                          <div class="rating-point">
+                            <span>4 étoiles</span>
+                          </div>
+
+                          <div class="progress">
+                            <div
+                              class="progress-bar eighty"
+                              role="progressbar"
+                            ></div>
+                          </div>
+                          <div class="review-count">
+                            <a href="#">({{ starCounts[4] }})</a>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="rating-list">
+                        <li class="rating-breakdown">
+                          <div class="rating-point">
+                            <span>3 étoiles</span>
+                          </div>
+
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar"></div>
+                          </div>
+                          <div class="review-count">
+                            <a href="#">(0)</a>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="rating-list">
+                        <li class="rating-breakdown">
+                          <div class="rating-point">
+                            <span>2 étoiles</span>
+                          </div>
+
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar"></div>
+                          </div>
+                          <div class="review-count">
+                            <a href="#">(0)</a>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="rating-list">
+                        <li class="rating-breakdown">
+                          <div class="rating-point">
+                            <span>1 étoile</span>
+                          </div>
+
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar"></div>
+                          </div>
+                          <div class="review-count">
+                            <a href="#">(0)</a>
+                          </div>
+                        </li>
+                      </ul>
+                    </div> -->
+                    <div class="col-lg-6">
+                      <ul
+                        class="rating-list"
+                        *ngFor="let star of [5, 4, 3, 2, 1, 0]"
+                      >
+                        <li class="rating-breakdown">
+                          <div class="rating-point">
+                            <span
+                              >{{ star }} étoile{{ star > 1 ? "s" : "" }}</span
+                            >
+                          </div>
+
+                          <div class="progress">
+                            <div
+                              class="progress-bar"
+                              [style.width]="getProgressWidth(star) + '%'"
+                              role="progressbar"
+                            ></div>
+                          </div>
+
+                          <div class="review-count">
+                            <a href="#">({{ starCounts[star] }})</a>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="container p-0">
+                  <div class="row">
+                    <div
+                      class="col-lg-4 col-md-6 mb-4"
+                      *ngFor="let notation of notations"
+                    >
+                      <div
+                        class="single-comment text-center p-3 border rounded"
+                      >
+                        <div class="comment-single">
+                          <div class="avatar mb-2">
+                            <img
+                              [defaultImage]="default"
+                              [lazyLoad]="
+                                getImageProfil(notation.user.photo_profil.path)
+                              "
+                              class="img-fluid rounded-circle"
+                              style="object-fit: cover"
+                            />
+                          </div>
+                          <div class="comnt-text">
+                            <div class="comnt-info">
+                              <h5>
+                                <a
+                                  [routerLink]="profileLink(notation?.user_id)"
+                                  >{{ notation?.user?.pseudo }}</a
+                                >
+                              </h5>
+                              <div class="review-area">
+                                <div class="stars">
+                                  <i
+                                    class="fas fa-star filled"
+                                    *ngFor="
+                                      let star of getFilledStarArray(
+                                        notation.rose
+                                      )
+                                    "
+                                  ></i>
+                                  <i
+                                    class="far fa-star empty"
+                                    *ngFor="
+                                      let star of getEmptyStarArray(
+                                        notation.rose
+                                      )
+                                    "
+                                  ></i>
+                                </div>
+                              </div>
+                              <p class="date-area">20 novembre 2018 à 20h31</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="row">
+                  <div class="col-lg-12">
+                    <div class="pagination-area text-center">
+                      <a href="#"
+                        ><i class="fas fa-angle-double-left"></i><span></span
+                      ></a>
+                      <a href="#">1</a>
+                      <a href="#">2</a>
+                      <a href="#" class="active">3</a>
+                      <a href="#">4</a>
+                      <a href="#">5</a>
+                      <a href="#"><i class="fas fa-angle-double-right"></i></a>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

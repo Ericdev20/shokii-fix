@@ -1,0 +1,159 @@
+<!-- ==========Preloader========== -->
+
+<!-- ==========Preloader========== -->
+
+<!-- ========== Login & Registation Section ========== -->
+<section
+  class="log-reg number"
+  style="
+    background-repeat: no-repeat;
+    overflow: hidden !important;
+    background-image: url('../../../assets/images/bg.png');
+    background-size: cover;
+  "
+>
+  <div class="top-menu-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="logo logox">
+            <a href=""
+              ><img
+                src="../../../assets/images/logo/shokii.png"
+                alt="logo"
+                style="width: 139px"
+            /></a>
+          </div>
+        </div>
+        <div class="col-lg-7"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="section-header inloginp mb-3">
+        <h2
+          class="title color"
+          style="
+            font-size: 40px;
+            color: rgb(242, 40, 118);
+            letter-spacing: 9px;
+            font-weight: 900;
+            font-family: cursive;
+          "
+        >
+          Bienvenue sur SHOKII
+        </h2>
+      </div>
+      <div class="col-lg-6">
+        <div class="log-reg-inner">
+          <div class="main-content inloginp" style="margin-top: 3cm !important">
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-text" id="inputGroup-sizing-lg">
+                        <img
+                          style="width: 20px"
+                          src="https://flagicons.lipis.dev/flags/1x1/bj.svg"
+                        />&nbsp;+229
+                      </span>
+
+                      <input
+                        style="
+                          color: #fff;
+                          background-color: var(--maskbg);
+                          box-shadow: none;
+                        "
+                        type="text"
+                        pattern="01[4-9]{8}"
+                        minlength="10"
+                        maxlength="10"
+                        class="form-control"
+                        formControlName="phoneNumber"
+                        placeholder="Numéro de téléphone"
+                        required
+                      />
+                    </div>
+                    <ul
+                      *ngIf="
+                        formGroup.get('phoneNumber').invalid &&
+                        formGroup.get('phoneNumber').touched
+                      "
+                      class="text-danger mt-1 font-weight-bold"
+                    >
+                      <li
+                        style="list-style: disc; margin-left: 25px"
+                        *ngIf="formGroup.get('phoneNumber').errors?.required"
+                      >
+                        Le numéro de téléphone est obligatoire.
+                      </li>
+
+                      <li
+                        style="list-style: disc; margin-left: 25px"
+                        *ngIf="formGroup.get('phoneNumber').errors?.pattern"
+                      >
+                        Le numéro doit commencer par
+                        <strong>01</strong> et doit être un numéro valide.
+                      </li>
+                      <li
+                        style="list-style: disc; margin-left: 25px"
+                        *ngIf="formGroup.get('phoneNumber').errors?.minlength"
+                      >
+                        Le numéro doit contenir 10 caractères.
+                      </li>
+                      <li
+                        style="list-style: disc; margin-left: 25px"
+                        *ngIf="formGroup.get('phoneNumber').errors?.maxlength"
+                      >
+                        Le numéro ne peut pas dépasser 10 caractères.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="button-wrapper" style="margin-top: 2cm">
+                <button
+                  type="submit"
+                  style="
+                    background-image: linear-gradient(
+                      166deg,
+                      #4ac391 0%,
+                      #e91e63 100%
+                    ) !important;
+                  "
+                  [disabled]="formGroup.invalid"
+                  class="custom-button"
+                >
+                  S'inscrire
+                </button>
+              </div>
+              <div class="or-content">
+                <p
+                  class="or-signup mt-lg-5"
+                  style="color: #fff; font-size: 19px; font-weight: 600"
+                >
+                  Avez-vous déjà un compte ?
+                  <a
+                    class="colors"
+                    routerLink="/login"
+                    style="
+                      font-size: 22px !important;
+                      font-weight: 600 !important;
+                    "
+                  >
+                    Connectez-vous !</a
+                  >
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br /><br /><br /><br />
+</section>
+
+<!-- ========== Login & Registation Section ========== -->

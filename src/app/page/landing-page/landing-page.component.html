@@ -1,0 +1,234 @@
+<div class="preloader" *ngIf="visible">
+  <div class="body">
+    <div class="relative">
+      <div class="corazon">❤️</div>
+      <div class="absolute aura1"></div>
+      <div class="absolute aura2"></div>
+      <div class="absolute aura3"></div>
+      <div class="absolute aura4"></div>
+    </div>
+  </div>
+</div>
+<!-- ==========Join-now-Section========== -->
+<section class="now-section mt-3">
+  <div class="hero">
+    <div class="floating-container">
+      <div
+        *ngFor="let element of floatingElements"
+        class="element"
+        [ngStyle]="{
+          'width.px': element.size,
+          'height.px': element.size,
+          'left.%': element.posX,
+          'top.%': element.posY,
+          'animation-delay.s': element.delay
+        }"
+      ></div>
+    </div>
+
+    <!-- <div class="floating-elements" id="floatingElements"></div> -->
+    <div class="noise"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="glowing-title fade-in text-white">
+          Pour de belles rencontres💑
+        </h1>
+
+        <p class="subtitle delay-1">
+          Découvrez une nouvelle dimension des rencontres où la magie opère
+          naturellement. Une expérience unique qui transcende les connexions
+          ordinaires.
+        </p>
+        <div class="stats fade-in delay-2">
+          <div class="stat-item" *ngFor="let stat of stats">
+            <div class="stat-number">
+              {{ stat.current | number }}{{ stat.suffix }}
+            </div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+        <!-- Affichage sur mobile -->
+        <div class="cta-container d-flex d-lg-none d-md-none fade-in delay-3">
+          <button
+            class="cta-button cta-primary"
+            *ngIf="!isLoggedIn"
+            routerLink="/signup"
+          >
+            Commencer l'Aventure
+          </button>
+          <button
+            class="cta-button cta-secondary"
+            *ngIf="!isLoggedIn"
+            routerLink="/login"
+          >
+            J'ai déjà un compte
+          </button>
+          <button
+            class="cta-button cta-primary"
+            *ngIf="isLoggedIn"
+            routerLink="/accueil"
+          >
+            Explorer les membres
+          </button>
+        </div>
+
+        <!-- Affichage sur PC & tablette -->
+        <div class="cta-container d-none d-md-flex d-lg-flex fade-in delay-3">
+          <button
+            class="cta-button cta-primary"
+            *ngIf="!isLoggedIn"
+            routerLink="/signup"
+          >
+            Commencer l'Aventure
+          </button>
+          <button
+            class="cta-button cta-secondary"
+            *ngIf="!isLoggedIn"
+            routerLink="/login"
+          >
+            J'ai déjà un compte
+          </button>
+
+          <button
+            class="cta-button cta-primary"
+            *ngIf="isLoggedIn"
+            routerLink="/accueil"
+          >
+            Explorer les membres
+          </button>
+          <button
+            class="cta-button cta-secondary"
+            *ngIf="isLoggedIn"
+            routerLink="/about-us"
+          >
+            En savoir plus !
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========How it work Section========== -->
+<section class="how-it-work-section" style="padding-top: 1cm">
+  <img class="shape1" src="assets/images/h-it-w/circle-shape.png" alt="" />
+  <img class="shape2" src="assets/images/h-it-w/bird.png" alt="" />
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content">
+          <div class="section-header">
+            <h2 class="title wow fadeInUp" style="font-size: 35px">
+              Comment ça fonctionne ?
+            </h2>
+            <p class="text wow fadeInUp">
+              Vous êtes à 4 étapes d'un excellent rendez-vous !
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-6" *ngFor="let step of steps">
+        <div
+          class="single-work-box wow fadeInUp"
+          [attr.data-wow-delay]="'0.' + step.number + 's'"
+        >
+          <div class="icon">
+            <img [src]="step.icon" alt="" />
+            <div class="number">{{ step.number }}</div>
+          </div>
+          <h4 class="title">{{ step.title }}</h4>
+          <div *ngIf="!isLoggedIn">
+            <a
+              class="custom-button"
+              id="pad"
+              [routerLink]="step.signupLink"
+              style="
+                background-image: linear-gradient(
+                  166deg,
+                  rgb(242, 40, 118) 0%,
+                  rgb(248 172 207) 100%
+                ) !important;
+              "
+              >{{ step.buttonLabel }}</a
+            >
+            <a
+              class="regis custom-button"
+              id="pad"
+              style="margin: 20px"
+              [routerLink]="step.loginLink"
+              >Se connecter !</a
+            >
+          </div>
+          <div *ngIf="isLoggedIn">
+            <a
+              class="regis custom-button"
+              id="pad"
+              style="margin: 20px"
+              routerLink="/accueil"
+              >Retour à l'accueil !</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========How it work Section========== -->
+
+<!-- ==========Feature-Section========== -->
+<section class="feature-section" style="margin-top: 0">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.1s">
+          <div class="icon">
+            <img src="assets/images/feature/icon01.png" alt="" />
+          </div>
+          <br />
+          <h4>100% Verifié</h4>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.2s">
+          <div class="icon">
+            <img src="assets/images/feature/icon02.png" alt="" />
+          </div>
+          <h4>Le plus sécurisé</h4>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.3s">
+          <div class="icon">
+            <img src="assets/images/feature/icon03.png" alt="" />
+          </div>
+          <h4>100% Confidentiel</h4>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="single-feature wow fadeInUp" data-wow-delay="0.4s">
+          <div class="icon">
+            <img src="assets/images/feature/icon04.png" alt="" />
+          </div>
+          <h4>Correspondance précise</h4>
+        </div>
+      </div>
+      <div class="text-center col-lg-3 col-sm-6 my-5">
+        <a
+          routerLink="about-us"
+          style="
+            background-image: linear-gradient(
+              166deg,
+              rgb(242, 40, 118) 0%,
+              #ffd740 100%
+            );
+          "
+          class="custom-button"
+          >En savoir plus <i class="flaticon-right"></i
+        ></a>
+      </div>
+    </div>
+  </div>
+</section>

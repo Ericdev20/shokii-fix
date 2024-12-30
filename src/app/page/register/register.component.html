@@ -1,0 +1,1469 @@
+<!-- <div class="register-container container-fluid d-flex align-items-center justify-content-center"> -->
+<div
+  class="register-container container-fluid d-flex align-items-center justify-content-center"
+>
+  <ng-container *ngIf="showPart1; else part2">
+    <ng-container [ngSwitch]="currentStep">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 regform-theme-light">
+            <div class="card p-3">
+              <div class="card-body">
+                <ng-template ngSwitchCase="1">
+                  <div [@fadeIn]>
+                    <a
+                      (click)="goback0()"
+                      style="
+                        display: flex !important;
+                        align-items: center;
+                        cursor: pointer;
+                        color: #3b368c;
+                      "
+                    >
+                      <mat-icon>arrow_back</mat-icon>
+                      &nbsp;&nbsp;Retour en arrière</a
+                    >
+                    <div class="my-5 d-lg-flex justify-content-between">
+                      <img
+                        style="
+                          width: 150px !important;
+                          height: 150px !important;
+                          border-radius: 75px;
+                        "
+                        src="../../../assets/images/femme-noire-souriante.jpeg"
+                        class="img-fluid"
+                      />
+                      <div
+                        class="my-4"
+                        style="display: flex; align-items: center"
+                      >
+                        <b
+                          style="
+                            letter-spacing: 3px;
+                            padding-left: 20px;
+                            font-size: 16px;
+                          "
+                          >Hello l'ami(e) 👋 , Bienvenue sur la meilleur
+                          plateforme de rencontre en ligne du Bénin.
+                          <br /><br /><br />
+                          <span style="color: rgb(242, 40, 118) !important"
+                            >Quel est votre sexe ?</span
+                          >
+                        </b>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button
+                        style="
+                          background-color: blue !important;
+                          height: 2cm;
+                          outline: none;
+                          border: none;
+                        "
+                        class="mt-3 btn btn-primary btn-block"
+                        (click)="setStatus('M')"
+                      >
+                        Homme
+                        <span style="font-size: 25px"
+                          >&nbsp;&nbsp;🧑&nbsp;</span
+                        >
+                      </button>
+                      <button
+                        style="
+                          background-color: var(--indigo-800) !important;
+                          height: 2cm;
+                          outline: none;
+                          border: none;
+                        "
+                        class="btn btn-primary btn-block"
+                        (click)="setStatus('F')"
+                      >
+                        Femme
+                        <span style="font-size: 25px"
+                          >&nbsp;&nbsp;👩&nbsp;</span
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template ngSwitchCase="2">
+                  <div [@fadeIn]>
+                    <a
+                      (click)="goBack()"
+                      style="
+                        display: flex !important;
+                        align-items: center;
+                        cursor: pointer;
+                        color: #3b368c;
+                      "
+                    >
+                      <mat-icon>arrow_back</mat-icon>
+                      &nbsp;&nbsp;Retour en arrière</a
+                    >
+                    <div class="my-5 d-lg-flex justify-content-between">
+                      <img
+                        style="
+                          width: 150px !important;
+                          height: 150px !important;
+                          border-radius: 75px;
+                        "
+                        src="../../../assets/images/femme-noire-souriante.jpeg"
+                        class="img-fluid"
+                      />
+                      <div
+                        class="my-4"
+                        style="display: flex; align-items: center"
+                      >
+                        <b
+                          style="
+                            letter-spacing: 3px;
+                            padding-left: 20px;
+                            font-size: 16px;
+                          "
+                          >Hello l'ami(e) 👋 , Bienvenue sur la meilleur
+                          plateforme de rencontre en ligne du Bénin.
+                          <br /><br /><br />
+                          <span style="color: rgb(242, 40, 118) !important"
+                            >Qu'attends-tu de SHOKII ?</span
+                          >
+                        </b>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button
+                        style="
+                          background-color: rgb(242, 40, 118) !important;
+                          height: 2cm;
+                          outline: none;
+                          border: none;
+                        "
+                        class="btn btn-primary btn-block"
+                        (click)="setRelationship('srx')"
+                      >
+                        Une rélation serieuse
+                        <span style="font-size: 25px"> 💍</span>
+                      </button>
+                      <button
+                        style="
+                          height: 2cm;
+                          outline: none;
+                          border: none;
+                          background-color: #6610f2;
+                        "
+                        class="mt-3 btn btn-primary btn-block"
+                        (click)="setRelationship('fun')"
+                      >
+                        Juste du fun
+                        <span style="font-size: 25px">💋</span>
+                      </button>
+                      <button
+                        *ngIf="!this.isMasculin"
+                        style="
+                          height: 2cm;
+                          outline: none;
+                          border: none;
+                          background-color: purple;
+                        "
+                        class="mt-3 btn btn-primary btn-block"
+                        (click)="setRelationship('fun_pro')"
+                      >
+                        Escorte
+                        <span style="font-size: 25px">🍑</span>
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+
+                <ng-template ngSwitchCase="3">
+                  <div [@fadeIn]>
+                    <a
+                      (click)="goBack()"
+                      class="align-content-center d-flex"
+                      style="
+                        display: flex !important;
+                        align-items: center;
+                        cursor: pointer;
+                        color: #3b368c;
+                      "
+                      ><mat-icon>arrow_back</mat-icon> &nbsp;&nbsp;Retour en
+                      arrière</a
+                    >
+                    <div class="my-5 d-lg-flex justify-content-between">
+                      <img
+                        style="
+                          width: 150px !important;
+                          height: 150px !important;
+                          border-radius: 75px;
+                        "
+                        src="../../../assets/images/femme-noire-souriante.jpeg"
+                        class="img-fluid"
+                      />
+                      <div
+                        class="my-4"
+                        style="display: flex; align-items: center"
+                      >
+                        <b
+                          style="
+                            letter-spacing: 3px;
+                            padding-left: 20px;
+                            font-size: 16px;
+                            line-height: 30px;
+                          "
+                        >
+                          <span
+                            style="
+                              color: rgb(242, 40, 118) !important;
+                              font-size: 19px;
+                            "
+                            >Quel votre adresse mail ?</span
+                          ></b
+                        >
+                      </div>
+                    </div>
+                    <form [formGroup]="emailForm" (ngSubmit)="codeSend()">
+                      <div class="col-md-12 d-flex my-3">
+                        <mat-form-field appearance="outline" class="my-5 w-100">
+                          <input
+                            matInput
+                            formControlName="email"
+                            placeholder="Ex : john.doe@gmail.com "
+                            (input)="trimSpaces($event)"
+                          />
+                          <mat-icon matSuffix>email</mat-icon>
+                          <mat-error
+                            *ngIf="emailForm?.get('email')?.hasError('email')"
+                          >
+                            <li>Email non valide .</li>
+                          </mat-error>
+
+                          <mat-error
+                            *ngIf="
+                              emailForm
+                                ?.get('email')
+                                ?.hasError('invalidGmail') &&
+                              emailForm.get('email').touched
+                            "
+                          >
+                            <li>
+                              L'adresse e-mail doit être un compte Gmail .
+                            </li>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <button
+                          type="submit"
+                          style="width: 100%; border-radius: 2cm; border: none"
+                          [disabled]="emailForm.invalid"
+                          class="my-3 mt-5 custom-button"
+                        >
+                          Continuer
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<!-- <div class="register-container container" style="overflow: hidden !important;"> -->
+
+<ng-template #part2>
+  <div
+    class="register-container container"
+    style="overflow: hidden !important"
+    [@fadeIn]
+  >
+    <div>
+      <!-- <button mat-raised-button (click)="isEditable = !isEditable">
+        {{ !isEditable ? "Editer" : "Valider" }}
+      </button> -->
+
+      <button
+        mat-raised-button
+        (click)="gobackToMail()"
+        *ngIf="stepIndex < 1"
+        style="
+          margin-top: 10px;
+          display: flex !important;
+          align-items: center;
+          cursor: pointer;
+          color: #3b368c;
+        "
+      >
+        <mat-icon>arrow_back</mat-icon>
+        &nbsp;&nbsp;Retour en arrière
+      </button>
+      <!-- <button mat-raised-button routerLink="/register/auth02">
+      auth02
+    </button> -->
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div
+          class="col-sm-8"
+          [ngStyle]="{ 'margin-top': stepMat ? '7cm' : 'initial' }"
+        >
+          <mat-stepper
+            linear
+            #stepper
+            (selectionChange)="onSelectionChange($event)"
+          >
+            <mat-step [stepControl]="firstFormGroup" [editable]="isEditable">
+              <form [formGroup]="firstFormGroup" (ngSubmit)="subform1()">
+                <ng-template matStepLabel
+                  >Informations Personnelles:
+                </ng-template>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div
+                      class="col-md-12 d-flex"
+                      [ngClass]="{
+                        'mb-5':
+                          firstFormGroup
+                            .get('pseudo')
+                            ?.hasError('invalidPseudo') &&
+                          firstFormGroup.get('pseudo')?.touched
+                      }"
+                    >
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label
+                          >Pseudo<sup
+                            >&nbsp;(seul votre pseudo sera visible sur
+                            SHOKII)&nbsp;</sup
+                          ></mat-label
+                        >
+                        <input
+                          matInput
+                          (change)="checkPseudo()"
+                          formControlName="pseudo"
+                          required
+                        />
+                        <mat-icon matSuffix>account_circle</mat-icon>
+                        <mat-error
+                          *ngIf="
+                            firstFormGroup.get('pseudo')?.hasError('required')
+                          "
+                        >
+                          Le pseudo est requis
+                        </mat-error>
+                        <mat-error
+                          *ngIf="
+                            firstFormGroup
+                              .get('pseudo')
+                              ?.hasError('invalidPseudo') &&
+                            firstFormGroup.get('pseudo')?.touched
+                          "
+                        >
+                          <b
+                            >Le Pseudo ne peut contenir que des lettres et des
+                            chiffres. Les caractères spéciaux, les espaces et
+                            les emojis ne sont pas autorisés.</b
+                          >
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6 d-flex">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Nom</mat-label>
+                      <input
+                        matInput
+                        formControlName="nom"
+                        [value]="firstFormGroup.get('nom')?.value || ''"
+                        required
+                      />
+                      <mat-icon matSuffix>person</mat-icon>
+
+                    </mat-form-field>
+                    
+                  </div>
+                  <div class="col-md-6 d-flex">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Prénom</mat-label>
+                      <input
+                        matInput
+                        formControlName="prenom"
+                        [value]="firstFormGroup.get('prenom')?.value || ''"
+                        required
+                      />
+                      <mat-icon matSuffix>person</mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div> -->
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12" style="top: -6px; color: darkgray">
+                      <label>Date de naissance *</label>
+                      <!-- <mat-form-field
+                      class="example-full-width"
+                      appearance="fill"
+                      class="w-100"
+                    >
+                      <mat-label>Date de naissance</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker"
+                        [min]="minDate"
+                        [max]="maxDate"
+                        [value]="firstFormGroup.get('naissance')?.value || ''"
+                        formControlName="naissance"
+                      />
+                      <mat-hint>JJ/MM/AAAA</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker"
+                      ></mat-datepicker-toggle>
+                       <mat-datepicker touchUi #picker></mat-datepicker>
+                    </mat-form-field> -->
+                      <input
+                        touchUi
+                        type="date"
+                        formControlName="naissance"
+                        placeholder="date de naissance"
+                        class="form-control"
+                        (change)="valideDate()"
+                        style="
+                          top: -6px;
+                          height: 56px;
+                          border-color: #00000061;
+                          box-shadow: none;
+                          position: relative;
+                        "
+                        [ngStyle]="{
+                          color: dateError ? 'red' : '',
+                          'border-color': dateError ? 'red' : ''
+                        }"
+                      />
+
+                      <!-- <p-calendar class="w-100" formControlName="naissance" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"></p-calendar> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="dateError">
+                  <span class="text-danger">
+                    <b>
+                      * Vous n'avez pas l'âge requis pour vous inscrire sur
+                      SHOKII .</b
+                    ></span
+                  >
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <!-- <p-cascadeSelect
+                      formControlName="ville"
+                      [options]="departement"
+                      optionLabel="cname"
+                      optionGroupLabel="name"
+                      [style]="{ minWidth: '14rem' }"
+                      [optionGroupChildren]="['cities']"
+                      placeholder="Vous résidez à :"
+                    ></p-cascadeSelect> -->
+                      <div class="my-input-box">
+                        <label for="city" class="mx-2">Ville : </label>
+                        <ng-select
+                          formControlName="ville"
+                          class="w-100"
+                          [placeholder]="'Entrer votre ville *'"
+                          notFoundText="Aucune ville trouvée"
+                        >
+                          <ng-option
+                            *ngFor="let ville of villes | orderBy : 'name'"
+                            [value]="ville.name"
+                            >{{ ville.name }}</ng-option
+                          >
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12" style="top: -6px; color: darkgray">
+                      <label class="mt-2"
+                        >Avez-vous un code parrainage ? (optionnel) :
+                      </label>
+                      <input
+                        type="text"
+                        formControlName="parrain"
+                        placeholder="Code de parrainage"
+                        class="form-control"
+                        (change)="checkParrain()"
+                        style="
+                          top: -6px;
+                          height: 56px;
+                          border-color: #00000061;
+                          box-shadow: none;
+                          position: relative;
+                        "
+                      />
+
+                      <!-- <p-calendar class="w-100" formControlName="naissance" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"></p-calendar> -->
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="display: flex; justify-content: center; margin: 20px"
+                >
+                  <button
+                    type="submit"
+                    mat-button
+                    matStepperNext
+                    [disabled]="dateError"
+                    style="
+                      background-image: linear-gradient(
+                        166deg,
+                        #3f51b5 0%,
+                        rgb(242, 40, 118) 100%
+                      );
+                      width: 5cm;
+                      border-radius: 3cm;
+                    "
+                    class="custom-button"
+                  >
+                    Suivant <i class="pi pi-arrow-circle-right"></i>
+                  </button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" [editable]="isEditable">
+              <form [formGroup]="secondFormGroup" enctype="multipart/form-data">
+                <ng-template matStepLabel>Compte</ng-template>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="col">
+                        <div
+                          class="mt-5 ml-4 mb-2 justify-content-center d-flex"
+                        >
+                          <h2>
+                            <b>Veuillez définir votre photo de profil !</b>
+                          </h2>
+                        </div>
+                        <br />
+
+                        <div class="row">
+                          <!-- <input type="file" name="photoProfil" formControlName="photoProfil"> -->
+                          <div
+                            class="col d-flex justify-content-center"
+                            *ngFor="let profil of profils"
+                          >
+                            <div class="picture">
+                              <button
+                                *ngIf="!profil.imageSelected"
+                                (click)="fileInput.click()"
+                              >
+                                <mat-icon
+                                  class="camera-icon"
+                                  style="
+                                    overflow: visible;
+                                    display: flex;
+                                    justify-content: center;
+                                  "
+                                  >linked_camera</mat-icon
+                                >
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  #fileInput
+                                  formControlName="photoProfil"
+                                  style="display: none"
+                                  (change)="onFileSelected1($event, profil)"
+                                />
+                              </button>
+
+                              <div
+                                class="profile-picture1"
+                                (mouseenter)="showButtons = true"
+                                (mouseleave)="showButtons = false"
+                              >
+                                <img
+                                  [src]="profil.imageUrl"
+                                  *ngIf="profil.imageSelected"
+                                  style="object-fit: cover"
+                                />
+                                <div
+                                  class="image-buttons"
+                                  *ngIf="profil.imageSelected"
+                                >
+                                  <button
+                                    class="bg-danger"
+                                    (click)="
+                                      removeImage(
+                                        secondFormGroup.get('photoProfil'),
+                                        profil
+                                      )
+                                    "
+                                  >
+                                    Supprimer
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col mt-5">
+                        <div class="row">
+                          <div class="col d-flex">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Nom</mat-label>
+                              <input
+                                matInput
+                                autocomplete="off webauthn"
+                                formControlName="nom"
+                              />
+                              <mat-icon matSuffix>person</mat-icon>
+                            </mat-form-field>
+                          </div>
+                          <div class="col d-flex">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Prenom</mat-label>
+                              <input
+                                matInput
+                                autocomplete="off webauthn"
+                                formControlName="prenom"
+                              />
+                              <mat-icon matSuffix>person</mat-icon>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col my-5">
+                        <div class="row">
+                          <div
+                            class="col d-flex"
+                            style="
+                              font-size: 20px;
+                              line-height: 41px;
+                              font-weight: 800;
+                            "
+                          >
+                            <div class="row">
+                              <div style="color: rgb(242, 40, 118)">
+                                Désirez-vous être contacté par whatsApp ?
+                              </div>
+                              <div class="ml-3">
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    formControlName="whatsapp"
+                                    value="true"
+                                  />
+                                  <label class="form-check-label">Oui</label>
+                                </div>
+
+                                <div class="form-check">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    formControlName="whatsapp"
+                                    value="false"
+                                  />
+                                  <label class="form-check-label">Non</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col my-4"
+                        [hidden]="
+                          secondFormGroup.get('whatsapp').value !== 'true'
+                        "
+                      >
+                        <div class="row">
+                          <div class="col d-flex">
+                            <input
+                              type="number"
+                              #phoneInput
+                              id="phone"
+                              class="form-control w-100"
+                              formControlName="whatsapp_number"
+                              placeholder="Numéro whatsApp"
+                              style="color: #898989; height: 51px"
+                            />
+                            <!-- <p-inputNumber class="w-100" inputId="integeronly">
+                          </p-inputNumber> -->
+                          </div>
+                        </div>
+                        <!-- <div
+                        *ngIf="
+                          secondFormGroup
+                            .get('whasapp_number')
+                            .hasError('required')
+                        "
+                      >
+                        Numéro WhatsApp requis
+                      </div> -->
+                      </div>
+                      <div class="col">
+                        <div class="row">
+                          <div class="col-md-6 mb-3 d-flex w-100">
+                            <p-password
+                              promptLabel="Très Faible"
+                              placeholder="Nouveau mot de passe"
+                              class="pass w-100"
+                              weakLabel="Faible"
+                              mediumLabel="Moyen"
+                              strongLabel="Fort"
+                              formControlName="password"
+                              [toggleMask]="true"
+                            >
+                              <ng-template pTemplate="footer">
+                                <hr />
+                                <ul
+                                  class="pl-2 ml-2 mt-0"
+                                  style="line-height: 1.5"
+                                >
+                                  <li>Au moins une minuscule</li>
+                                  <li>Au moins une majuscule</li>
+                                  <li>Au moins un chiffre</li>
+                                  <li>Minimum 8 caractères</li>
+                                </ul>
+                              </ng-template>
+                            </p-password>
+                          </div>
+                          <div class="col-md-6 mb-3 d-flex w-100">
+                            <p-password
+                              promptLabel="Très Faible"
+                              placeholder="Confirmer le mot de passe"
+                              class="pass w-100"
+                              weakLabel="Faible"
+                              mediumLabel="Moyen"
+                              strongLabel="Fort"
+                              formControlName="confirmPassword"
+                              [toggleMask]="true"
+                            ></p-password>
+                          </div>
+                          <mat-error
+                            *ngIf="
+                              secondFormGroup?.hasError('passwordMismatch')
+                            "
+                            >Les mots de passe ne correspondent pas</mat-error
+                          >
+                        </div>
+                        <div *ngIf="isMasculin">
+                          <div class="row mt-2">
+                            <div class="col">
+                              <mat-checkbox
+                                formControlName="termsAndConditions"
+                              >
+                                J'accepte
+                                <a target="_blank" routerLink="/terms-of-use"
+                                  >les conditions d'utilisation</a
+                                >
+                              </mat-checkbox>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col">
+                              <mat-checkbox formControlName="privacyPolicy">
+                                J'accepte la
+                                <a target="_blank" routerLink="/privacy-policy"
+                                  >politique de confidentialité</a
+                                >
+                              </mat-checkbox>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    style="display: flex; justify-content: center; margin: 20px"
+                    *ngIf="isMasculin"
+                  >
+                    <button
+                      type="submit"
+                      (click)="RegisterY()"
+                      mat-button
+                      style="width: 9cm; border-radius: 3cm"
+                      class="custom-button"
+                    >
+                      S'inscrire
+                    </button>
+                  </div>
+                  <div
+                    style="display: flex; justify-content: center; margin: 20px"
+                    *ngIf="!isMasculin"
+                  >
+                    <button
+                      mat-button
+                      class="custom-button"
+                      style="
+                        background-image: linear-gradient(
+                          166deg,
+                          #3f51b5 0%,
+                          rgb(242, 40, 118) 100%
+                        );
+                        width: 5cm;
+                        border-radius: 3cm;
+                      "
+                      (click)="check()"
+                      matStepperNext
+                    >
+                      Continuer <i class="pi pi-arrow-circle-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step
+              [stepControl]="thirdFormGroup"
+              [editable]="isEditable"
+              *ngIf="!isMasculin"
+            >
+              <form [formGroup]="thirdFormGroup" (ngSubmit)="subform2()">
+                <ng-template matStepLabel>Completons votre profil </ng-template>
+
+                <div class="container">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!-- <p-dropdown
+                        formControlName="description"
+                        [options]="descriptions"
+                        optionLabel="texte"
+                      ></p-dropdown> -->
+                        <!-- <mat-form-field appearance="outline" class="w-100">
+                          <mat-label
+                            >Qu'est ce qui vous decrit le mieux ?</mat-label
+                          >
+                          <mat-select formControlName="description">
+                            <mat-option>Choisissez une description</mat-option>
+                            <mat-option
+                              value="{{ description.texte }}"
+                              *ngFor="let description of descriptions"
+                            >
+                              {{ description.texte }}
+                            </mat-option>
+                            <mat-option value="Autres ..."></mat-option>>
+                          </mat-select>
+                        </mat-form-field> -->
+                        <label
+                          class="custom-label mb-2 block font-bold mb-3"
+                          for="horizontal"
+                          >Qu'est-ce qui vous décrit le mieux ? (Bio)*
+                        </label>
+                        <select
+                          formControlName="description"
+                          class="form-select select"
+                          aria-label="Large select example"
+                          style="height: 57px"
+                        >
+                          <option value="" disabled>
+                            Choisissez une description *
+                          </option>
+                          <option
+                            [value]="description.texte"
+                            *ngFor="let description of descriptions"
+                          >
+                            {{ description.texte }}
+                          </option>
+                          <option value="autres...">autres ...</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div
+                      class="row mt-5 mb-5"
+                      *ngIf="thirdFormGroup.controls.description.valid"
+                      [@fadeIn]
+                    >
+                      <div class="d-flex justify-content-center mb-5">
+                        <b class="text-center" style="font-size: large">
+                          Quelle est votre corpulence?
+                        </b>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <div
+                          class="radio text-center"
+                          data-value="grosse"
+                          (click)="onRadioChange('1')"
+                        >
+                          <img
+                            class="img-fluid bg-body rounded shadow-sm"
+                            src="../../../assets/images/apch.png"
+                            alt="Radio 1"
+                            style="height: 200px"
+                          />
+                          <b class="my-2 text-center">Apoutchou</b>
+                        </div>
+                        <div
+                          class="radio text-center"
+                          data-value="intermediaire"
+                          (click)="onRadioChange('3')"
+                        >
+                          <img
+                            class="img-fluid bg-body rounded shadow-sm"
+                            src="../../../assets/images/normal.png"
+                            alt="Radio 2"
+                            style="height: 100%"
+                          />
+                          <b class="my-2 text-center">Intermediaire</b>
+                        </div>
+                        <div
+                          class="radio text-center"
+                          data-value="mince"
+                          (click)="onRadioChange('2')"
+                        >
+                          <img
+                            class="img-fluid bg-body rounded shadow-sm"
+                            src="../../../assets/images/skinni.png"
+                            alt="Radio 2"
+                            style="height: 100%"
+                          />
+                          <b class="my-2">Skinny</b>
+                        </div>
+                      </div>
+                      <div class="mt-5 d-flex justify-content-center">
+                        <div class="row"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col-md-6 d-flex">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Teint</mat-label>
+                              <mat-select formControlName="teint">
+                                <mat-option value="Très Claire"
+                                  >Très Claire</mat-option
+                                >
+                                <mat-option value="Claire">Claire</mat-option>
+                                <mat-option value="Moyenne">Moyenne</mat-option>
+                                <mat-option value="Olive">Olive</mat-option>
+                                <mat-option value="Foncée "
+                                  >Foncée (chocolat)</mat-option
+                                >
+                                <mat-option value="Très Foncée"
+                                  >Très Foncée (brun foncé ou noir)</mat-option
+                                >
+                                <mat-option value="Ebène">Ebène</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-6 d-flex">
+                            <mat-form-field appearance="outline" class="w-100">
+                              <mat-label>Couleur Cheveux</mat-label>
+                              <mat-select formControlName="cheveux">
+                                <mat-option value="Olive">Olive</mat-option>
+                                <mat-option value="Noir">Noir</mat-option>
+                                <mat-option value="Clair">Clair</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <div class="row">
+                      <div class="col-sm-12 d-flex">
+                        <div
+                          class="col my-3 d-flex"
+                          style="justify-content: center; flex-wrap: wrap"
+                        >
+                          <div
+                            class="flex-auto my-3 col-md-4 col-sm-4 col-lg-4"
+                          >
+                            <label
+                              class="custom-label text-center block font-bold mb-3"
+                              for="horizontal"
+                              >Entrez ici votre taille
+                            </label>
+                            <p-inputNumber
+                              [formControl]="thirdFormGroup.controls.taille"
+                              [showButtons]="true"
+                              buttonLayout="horizontal"
+                              inputId="horizontal"
+                              spinnerMode="horizontal"
+                              [step]="1"
+                              placeholder="00"
+                              [min]="25"
+                              [max]="200"
+                              decrementButtonClass="p-button-danger"
+                              incrementButtonClass="p-button-primary"
+                              incrementButtonIcon="pi pi-plus"
+                              decrementButtonIcon="pi pi-minus"
+                              mode="decimal"
+                              [suffix]="'cm'"
+                              class="d-flex justify-content-center"
+                            ></p-inputNumber>
+                          </div>
+                          <div
+                            class="flex-auto my-3 col-md-4 col-sm-4 col-lg-4"
+                          >
+                            <label
+                              class="custom-label text-center block font-bold mb-3"
+                              for="horizontal"
+                              >Entrez ici votre Poids
+                            </label>
+
+                            <p-inputNumber
+                              [formControl]="thirdFormGroup.controls.poids"
+                              [showButtons]="true"
+                              buttonLayout="horizontal"
+                              inputId="horizontal"
+                              spinnerMode="horizontal"
+                              [step]="1"
+                              decrementButtonClass="p-button-danger"
+                              incrementButtonClass="p-button-primary"
+                              incrementButtonIcon="pi pi-plus"
+                              decrementButtonIcon="pi pi-minus"
+                              class="d-flex justify-content-center"
+                              mode="decimal"
+                              [suffix]="' kg'"
+                              placeholder="00"
+                              [min]="00"
+                            ></p-inputNumber>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  style="display: flex; justify-content: center; margin: 20px"
+                >
+                  <button
+                    mat-button
+                    class="custom-button"
+                    style="
+                      background-image: linear-gradient(
+                        166deg,
+                        #3f51b5 0%,
+                        rgb(242, 40, 118) 100%
+                      );
+                      width: 5cm;
+                      border-radius: 3cm;
+                    "
+                    matStepperNext
+                  >
+                    Continuer <i class="pi pi-arrow-circle-right"></i>
+                  </button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step
+              [stepControl]="fourthFormGroup"
+              [editable]="isEditable"
+              *ngIf="!isMasculin"
+            >
+              <form [formGroup]="fourthFormGroup">
+                <ng-template matStepLabel>Completons votre profil </ng-template>
+                <h1 class="m-5">
+                  <b>
+                    Ajouter quelques autres photos à votre gallerie
+                    <small>
+                      (Ces photos serviront à la confirmation de votre
+                      compte)</small
+                    >
+                    :
+                  </b>
+                </h1>
+
+                <div class="container">
+                  <div class="row">
+                    <div
+                      class="col-12 col-md-6"
+                      *ngFor="let box of boxes; let i = index"
+                    >
+                      <div class="container">
+                        <div class="box">
+                          <div class="button-container">
+                            <button
+                              class="add-button"
+                              *ngIf="!box.imageSelected"
+                              (click)="fileInput.click()"
+                            >
+                              <span>+</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                #fileInput
+                                formControlName="album{{ i }}"
+                                style="display: none"
+                                (change)="onFileSelected2($event, box)"
+                              />
+                            </button>
+                            <button
+                              class="add-button remove"
+                              *ngIf="box.imageSelected"
+                              (click)="
+                                removeImage(
+                                  fourthFormGroup.get('album' + i),
+                                  box
+                                )
+                              "
+                            >
+                              <span>x</span>
+                            </button>
+                          </div>
+                          <div class="profile-picture">
+                            <img
+                              [src]="box.imageUrl"
+                              *ngIf="box.imageSelected"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div *ngIf="!isMasculin">
+                    <div class="row mt-2">
+                      <div class="col">
+                        <mat-checkbox formControlName="termsAndConditions">
+                          J'accepte
+                          <a target="_blank" routerLink="terms-of-use"
+                            >les conditions d'utilisation</a
+                          >
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <mat-checkbox formControlName="privacyPolicy">
+                          J'accepte la
+                          <a target="_blank" routerLink="privacy-policy"
+                            >politique de confidentialité</a
+                          >
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div style="display: flex; justify-content: center; margin: 20px">
+                <button mat-button class="custom-button" (click)="test()" matStepperNext>
+                  Continuer <i class="pi pi-arrow-circle-right"></i>
+                </button>
+              </div> -->
+                <div
+                  style="display: flex; justify-content: center; margin: 20px"
+                >
+                  <button
+                    mat-button
+                    style="width: 9cm; border-radius: 3cm"
+                    class="custom-button"
+                    (click)="RegisterX()"
+                  >
+                    S'inscrire
+                  </button>
+                </div>
+              </form>
+            </mat-step>
+
+            <div>
+              <mat-step class="mt-5">
+                <ng-template matStepLabel>Done</ng-template>
+                <div class="d-flex justify-content-center align-content-center">
+                  <p>
+                    Inscription reuissie ! <br />
+                    Veuillez-vous connecter
+                  </p>
+                </div>
+                <div
+                  class="d-flex justify-content-center"
+                  style="margin: 20px; align-items: center; display: flex"
+                >
+                  <!-- <button class="custom-button" routerLink="/login">
+                  Se connecter maintenant <mat-icon>login</mat-icon>
+
+                </button> -->
+                  <button
+                    routerlink="/login"
+                    style="align-items: center; display: flex"
+                    class="custom-button"
+                    routerLink="/login"
+                  >
+                    Se connecter maintenant <mat-icon>login</mat-icon>
+                  </button>
+                  <!-- <button mat-button class="custom-button d-flex justify-content-end" matStepperNext>
+                Continuer <i class="pi pi-arrow-circle-right"></i>
+              </button> -->
+                </div>
+              </mat-step>
+            </div>
+          </mat-stepper>
+        </div>
+        <div class="col-sm-2"></div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- </ng-template> -->
+<!-- Modal d'appel à l'action -->
+<ng-template #content let-modal style="z-index: 1050 !important">
+  <div
+    class="card rounded border-2 align-content-center pt-3 d-flex"
+    style="background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)"
+  >
+    <div class="card-body" style="border-radius: 2cm; padding: 20px">
+      <p class="d-flex justify-content-center text-uppercase">
+        <b>Définissez la confidentialité de la photo</b>
+      </p>
+
+      <div class="d-flex justify-content-center">
+        <div class="profile-picture">
+          <img [src]="fileChoose?.imageUrl" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 py-4"><b>VISIBILITE : </b></div>
+        <div class="col-6">
+          <div class="form-group">
+            <div class="option">
+              <div class="s-input py-2 mr-3">
+                <input
+                  type="radio"
+                  name="visible"
+                  [(ngModel)]="visible"
+                  [value]="1"
+                  id="males"
+                />
+                <label for="males"><b>&nbsp; Public </b></label>
+              </div>
+              <div class="s-input">
+                <input
+                  type="radio"
+                  name="visible"
+                  [(ngModel)]="visible"
+                  [value]="0"
+                  id="females"
+                />
+                <label for="females"><b>&nbsp; Moi uniquement </b></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-dark me-3" (click)="cancelChoose(fileChoose)">
+          <i class="fas fa-crown"></i> &nbsp; Annuler
+        </button>
+
+        <button
+          class="btn btn-default"
+          style="background-color: rgb(242 40 118); color: #fff"
+          (click)="setVisibility(fileChoose)"
+        >
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #content1 let-modal style="z-index: 1050 !important">
+  <div
+    class="card rounded border-2 align-content-center pt-3 d-flex"
+    style="background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)"
+  >
+    <div class="card-body" style="border-radius: 2cm; padding: 20px">
+      <p class="d-flex justify-content-center text-uppercase">
+        <b>Retoucher votre photo .</b>
+      </p>
+
+      <div class="d-flex justify-content-center">
+        <div class="profile-picture">
+          <!-- <img [src]="fileChoose?.imageUrl" /> -->
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 5"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            output="base64"
+            (imageLoaded)="imageLoaded($event)"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+          ></image-cropper>
+        </div>
+      </div>
+
+      <!-- <img [src]="croppedImage" /> -->
+
+      <!-- <div class="row">
+        <div class="col-6 py-4"><b>VISIBILITE : </b></div>
+        <div class="col-6">
+          <div class="form-group">
+            <div class="option">
+              <div class="s-input py-2 mr-3">
+                <input
+                  type="radio"
+                  name="visible"
+                  [(ngModel)]="visible"
+                  [value]="1"
+                  id="males"
+                />
+                <label for="males"><b>&nbsp; Public </b></label>
+              </div>
+              <div class="s-input">
+                <input
+                  type="radio"
+                  name="visible"
+                  [(ngModel)]="visible"
+                  [value]="0"
+                  id="females"
+                />
+                <label for="females"><b>&nbsp; Moi uniquement </b></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-dark me-3" (click)="cancelChoose()">
+          <i class="fas fa-crown"></i> &nbsp; Annuler
+        </button>
+
+        <button
+          class="btn btn-default"
+          style="background-color: rgb(242 40 118); color: #fff"
+          (click)="savePP()"
+        >
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #verificationModal let-modal style="z-index: 1050 !important">
+  <div class="col text-center">
+    <div class="row">
+      <div class="col" style="margin-top: 1cm; margin-left: 22px">
+        <div class="title">Verification</div>
+        <hr />
+        <div class="" style="align-items: center">
+          <h6>
+            Saisissez le code de vérification à 6 chiffres que vous avez reçu
+            par e-mail :
+          </h6>
+        </div>
+        <hr />
+        <form action="" class="form mt-5" (ngSubmit)="verifyCode()">
+          <div class="d-flex justify-content-center">
+            <input
+              type="text"
+              class="otp"
+              id="otp1"
+              #otp1
+              autofocus
+              style="margin-left: 5px !important"
+              (input)="digitValidate($event, 1)"
+              (paste)="pasteCode($event)"
+              [ngModelOptions]="{ standalone: true }"
+              (keydown)="handleBackspace($event, 1)"
+              maxlength="1"
+              [(ngModel)]="code[0]"
+            />
+            <input
+              type="text"
+              class="otp"
+              id="otp2"
+              style="margin-left: 5px !important"
+              (input)="digitValidate($event, 2)"
+              (paste)="pasteCode($event)"
+              [ngModelOptions]="{ standalone: true }"
+              (keydown)="handleBackspace($event, 2)"
+              maxlength="1"
+              [(ngModel)]="code[1]"
+            />
+            <input
+              type="text"
+              class="otp"
+              id="otp3"
+              style="margin-left: 5px !important"
+              (input)="digitValidate($event, 3)"
+              (paste)="pasteCode($event)"
+              [ngModelOptions]="{ standalone: true }"
+              (keydown)="handleBackspace($event, 3)"
+              maxlength="1"
+              [(ngModel)]="code[2]"
+            />
+            <input
+              type="text"
+              class="otp"
+              id="otp4"
+              style="margin-left: 5px !important"
+              (input)="digitValidate($event, 4)"
+              (paste)="pasteCode($event)"
+              [ngModelOptions]="{ standalone: true }"
+              (keydown)="handleBackspace($event, 4)"
+              maxlength="1"
+              [(ngModel)]="code[3]"
+            />
+            <input
+              type="text"
+              class="otp"
+              id="otp5"
+              style="margin-left: 5px !important"
+              (input)="digitValidate($event, 5)"
+              (paste)="pasteCode($event)"
+              [ngModelOptions]="{ standalone: true }"
+              (keydown)="handleBackspace($event, 5)"
+              maxlength="1"
+              [(ngModel)]="code[4]"
+            />
+            <input
+              type="text"
+              class="otp"
+              id="otp6"
+              style="margin-left: 5px !important"
+              (input)="digitValidate($event, 6)"
+              (paste)="pasteCode($event)"
+              [ngModelOptions]="{ standalone: true }"
+              (keydown)="handleBackspace($event, 6)"
+              maxlength="1"
+              [(ngModel)]="code[5]"
+            />
+          </div>
+
+          <hr class="my-4" />
+          <button
+            type="submit"
+            class="btn btn-success text-white rounded-5 btn-block w-50 d-flex align-items-center justify-content-center m-auto mb-4 customBtn"
+          >
+            Verifier
+          </button>
+        </form>
+        <hr />
+        <a
+          (click)="resendMail()"
+          style="cursor: pointer"
+          class="text-primary mb-3"
+        >
+          Code non Reçu ?
+        </a>
+      </div>
+    </div>
+  </div>
+</ng-template>

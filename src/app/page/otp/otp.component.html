@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="row justify-content-center" style="
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      margin-bottom: 1cm !important;
+      margin-top: 4cm !important;
+    ">
+    <div class="col text-center">
+      <div class="row">
+
+        <div class="col bgWhite" style="margin-top: 1cm; margin-left: 22px">
+          <div class="title">Verification</div>
+          <hr>
+          <div class="" style="align-items: center">
+            <h3>
+              Un code à 4 chiffres à été envoyé au
+              <b class="text-info">{{phone_number}} </b>
+
+              Cela peut prendre jusqu'à 5 minutes .
+            </h3>
+          </div>
+          <hr>
+          <form action="" class="mt-5" (ngSubmit)="onSubmit()">
+            <div class="d-flex justify-content-center">
+
+              <input class="otp" type="text" (input)="digitValidate($event)" onfocus="true" (keyup)="tabChange(1)"
+                [ngModelOptions]="{ standalone: true }" maxlength="1" [(ngModel)]="code[0]" />
+              <input class="otp" type="text" (input)="digitValidate($event)" (keyup)="tabChange(2)"
+                [ngModelOptions]="{ standalone: true }" maxlength="1" [(ngModel)]="code[1]" />
+              <input class="otp" type="text" (input)="digitValidate($event)" (keyup)="tabChange(3)"
+                [ngModelOptions]="{ standalone: true }" maxlength="1" [(ngModel)]="code[2]" />
+              <input class="otp" type="text" (input)="digitValidate($event)" (keyup)="tabChange(4)"
+                [ngModelOptions]="{ standalone: true }" maxlength="1" [(ngModel)]="code[3]" />
+            </div>
+            <hr class="mt-4" />
+            <button type="submit"
+              class="btn btn-success btn-block w-50 d-flex align-items-center justify-content-center m-auto mb-4 customBtn">
+              Verifier
+            </button>
+          </form>
+          <a (click)="resendOTP()" style="cursor: pointer; " class="text-primary mb-3"> Code non Reçu ?
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-4 text-center">
+      <div class="row">
+        <div class="col-sm-12 mt-5 bgWhite">
+          <div class="title">Verify OTP</div>
+
+          <form action="" class="mt-5">
+            <input
+              class="otp"
+              type="text"
+              oninput="digitValidate(this)"
+              onkeyup="tabChange(1)"   [ngModelOptions]="{ standalone: true }"
+
+              maxlength="1"
+            />
+            <input
+              class="otp"
+              type="text"
+              oninput="digitValidate(this)"
+              onkeyup="tabChange(2)"   [ngModelOptions]="{ standalone: true }"
+
+              maxlength="1"
+            />
+            <input
+              class="otp"
+              type="text"
+              oninput="digitValidate(this)"
+              onkeyup="tabChange(3)"   [ngModelOptions]="{ standalone: true }"
+
+              maxlength="1"
+            />
+            <input
+              class="otp"
+              type="text"
+              oninput="digitValidate(this)"
+              onkeyup="tabChange(4)"   [ngModelOptions]="{ standalone: true }"
+
+              maxlength="1"
+            />
+          </form>
+          <hr class="mt-4" />
+          <button class="btn btn-primary btn-block mt-4 mb-4 customBtn">
+            Verify
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+-->

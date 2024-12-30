@@ -1,0 +1,172 @@
+<footer class="footer-section">
+  <img class="shape1" src="assets/images/footer/f-shape.png" alt="" />
+  <img class="shape2" src="assets/images/footer/flower01.png" alt="" />
+  <img class="shape3" src="assets/images/footer/right-shape.png" alt="" />
+  <div class="newslater-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="footer-links">
+      <div class="row d-none d-lg-block">
+        <div class="col-lg-12">
+          <hr class="hr" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-sm-6">
+          <div class="link-wrapper one">
+            <h4 class="f-l-title">Information</h4>
+            <ul class="f-solial-links">
+              <li>
+                <a routerLink="contact">
+                  <i class="fas fa-angle-double-right"></i> Nous contacter
+                </a>
+              </li>
+              <li>
+                <a routerLink="about-us">
+                  <i class="fas fa-angle-double-right"></i> A propos
+                </a>
+              </li>
+              <li>
+                <a routerLink="terms-of-use">
+                  <i class="fas fa-angle-double-right"></i> Condition
+                  d'utilisation
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <div class="link-wrapper two">
+            <h4 class="f-l-title">Compte</h4>
+            <ul class="f-solial-links" *ngIf="!isLoggedIn">
+              <li>
+                <a routerLink="signup">
+                  <i class="fas fa-angle-double-right"></i> Créer un compte
+                </a>
+              </li>
+              <li>
+                <a routerLink="login">
+                  <i class="fas fa-angle-double-right"></i> Se connecter
+                </a>
+              </li>
+            </ul>
+            <ul class="f-solial-links" *ngIf="isLoggedIn">
+              <li>
+                <a routerLink="myprofile">
+                  <i class="fas fa-angle-double-right"></i> Mon Profil
+                </a>
+              </li>
+              <li>
+                <a (click)="logout()">
+                  <i class="fas fa-angle-double-right"></i>Se Déconnecter
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <div class="link-wrapper three">
+            <h4 class="f-l-title">Centre d'aide</h4>
+            <ul class="f-solial-links">
+              <li>
+                <a routerLink="how-it-works">
+                  <i class="fas fa-angle-double-right"></i>Comment ça
+                  fonctionne?
+                </a>
+              </li>
+              <li>
+                <a routerLink="faq">
+                  <i class="fas fa-angle-double-right"></i>FAQ
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+          <div class="link-wrapper four">
+            <h4 class="f-l-title">legal</h4>
+            <ul class="f-solial-links">
+              <li>
+                <a routerLink="legal-notice">
+                  <i class="fas fa-angle-double-right"></i>Mention Légale
+                </a>
+              </li>
+              <li>
+                <a routerLink="privacy-policy">
+                  <i class="fas fa-angle-double-right"></i>Politique de
+                  Confidentialité
+                </a>
+              </li>
+
+              <li>
+                <a routerLink="contact">
+                  <i class="fas fa-angle-double-right"></i> Signaler un abus
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="copyright-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <hr class="hr2" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 align-self-center">
+          <div class="copyr-text">
+            <span>
+              Copyright © 2023-{{ date }} &nbsp;.Tous droits réservés .
+            </span>
+            <a href="/">SHOKII</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ul class="footer-social-links">
+            <li>
+              <a _target="blank" href="https://www.facebook.com/ShokiiBenin">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </li>
+            <li>
+              <a _target="blank" href="https://www.instagram.com/shokii229/">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </li>
+            <li>
+              <a routerLink="#">
+                <i style="font-weight: 900; font-size: 20px" class="fab fa-x"
+                  >X</i
+                >
+              </a>
+            </li>
+
+            <li>
+              <a _target="blank" href="https://www.tiktok.com/@kiss_shokii.com">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-tiktok"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"
+                  />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

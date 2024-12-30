@@ -1,0 +1,248 @@
+<section class="user-setting-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-12" style="margin-top: 3cm">
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+          style="background-color: rgb(148, 45, 217); color: #fff"
+        >
+          <strong>
+            <ul>
+              <li class="my-1">
+                ⏰ Les Chats envoyés entre vous et un autre utilisateur
+                disparaissent sous 7 jours après avoir été vus .
+              </li>
+              <hr />
+              <li class="my-1">
+                ❌ Veuillez ne pas diffusez vos informations confidentielles
+                dans les conversations.
+              </li>
+            </ul>
+          </strong>
+
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <main class="inbox-container">
+          <ul class="inbox-list">
+            <h1 class="text-primary d-flex justify-content-center">
+              <b style="color: rgb(242, 40, 118); font-family: cursive"
+                >Tous les messages ({{ total }})
+              </b>
+            </h1>
+            <div *ngIf="contacts.length > 0; else noContacts">
+              <li
+                *ngFor="
+                  let contact of contacts
+                    | paginate
+                      : {
+                          itemsPerPage: tableSize,
+                          currentPage: page,
+                          totalItems: total
+                        };
+                  let i = index
+                "
+                [ngClass]="{
+                  'unread-msg': contact.unread_messages_count !== 0
+                }"
+                class="inbox-item mx-2"
+                style="cursor: pointer"
+                (click)="markAllSeen(contact.last_message.from_id)"
+                routerLink="/inbox/{{ contact.id }}"
+              >
+                <!-- <li
+            *ngFor="let contact of contacts | paginate: { itemsPerPage: tableSize,currentPage: page,totalItems: count };let i = index "
+            class="inbox-item unread-msg mx-2" style="cursor: pointer;"(click)="markAllSeen(contact.last_message.from_id)" routerLink="/inbox/{{contact.id}}"> -->
+                <div class="profile-info">
+                  <img
+                    class="profile-image"
+                    [defaultImage]="default"
+                    [lazyLoad]="getImage(contact?.profile_photo)"
+                    alt="Logo de l'expéditeur"
+                  />
+                  <ng-container *ngIf="contact.role_id !== 1; else adminStat">
+                    <span class="active-chat" *ngIf="contact.status"></span>
+                    <span class="offline-chat" *ngIf="!contact.status"></span>
+                  </ng-container>
+                  <ng-template #adminStat>
+                    <span class="active-chat"></span>
+                  </ng-template>
+                  <!-- <span *ngIf="getStatus(contact.id)" class="active-chat"></span> -->
+                  <div class="profile-details">
+                    <ng-container *ngIf="contact.role_id !== 1; else adminName">
+                      <!-- Profile name for non-admin users -->
+                      <h3
+                        class="profile-name"
+                        style="
+                          font-weight: bold !important;
+                          letter-spacing: 1px;
+                        "
+                      >
+                        {{ contact.pseudo }}
+                      </h3>
+                    </ng-container>
+
+                    <ng-template #adminName>
+                      <h4
+                        class="profile-name"
+                        style="
+                          font-weight: bold !important;
+                          letter-spacing: 1px;
+                        "
+                      >
+                        Assistant SHOKII
+                        <!-- <span></span> -->
+                        <!-- <span style="width: 12px"
+                          ><img src="../../../assets/images/badge.png"
+                        /></span> -->
+                      </h4>
+                    </ng-template>
+
+                    <p
+                      class="last-message"
+                      [hidden]="contact.last_message.attachment !== null"
+                    >
+                      <span
+                        *ngIf="
+                          user_id === contact.last_message.from_id;
+                          else ndUser
+                        "
+                        >Vous :
+                      </span>
+                      <ng-template #ndUser>
+                        <!-- <div *ngIf="contact?.role_id === 1">Assistant :</div> -->
+                        <div *ngIf="contact?.role_id !== 1">
+                          {{ contact?.pseudo }} :
+                        </div>
+                      </ng-template>
+
+                      {{ truncateText4(contact.last_message.body) }}
+                    </p>
+                    <!-- <h1 *ngIf="user_id===contact.last_message.from_id">Vous êtes le dernier </h1> -->
+                    <p
+                      class="last-message text-primary"
+                      [hidden]="contact.last_message.body !== ''"
+                    >
+                      Image📷🖼️ !
+                    </p>
+                  </div>
+                </div>
+                <div style="display: grid">
+                  <div
+                    class="badge-span"
+                    *ngIf="contact.unread_messages_count !== 0"
+                  >
+                    <span
+                      class="badge badge-pill badge-default"
+                      style="
+                        background: linear-gradient(
+                          166deg,
+                          rgb(242, 40, 118) 0%,
+                          rgb(148, 45, 217) 100%
+                        );
+                      "
+                    >
+                      {{ contact.unread_messages_count }}</span
+                    >
+                  </div>
+                  <div class="message-date">
+                    {{ formatDate(contact.last_message.created_at) }}
+                  </div>
+                  <div
+                    class="message-seen"
+                    *ngIf="
+                      contact.id != contact.last_message.from_id &&
+                      contact.last_message.seen
+                    "
+                  >
+                    <img
+                      class=""
+                      style="
+                        border-radius: 50px;
+                        height: 14px;
+                        width: 14px;
+                        object-fit: cover;
+                      "
+                      [defaultImage]="default"
+                      [lazyLoad]="getImage(contact?.profile_photo)"
+                      alt="Logo de l'expéditeur"
+                    />
+                  </div>
+                </div>
+              </li>
+            </div>
+            <ng-template #noContacts>
+              <div *ngIf="!noContactsFound">
+                <li
+                  class="inbox-item mx-2"
+                  style="cursor: pointer"
+                  *ngFor="let i of [1, 2, 3, 4, 5]"
+                >
+                  <div style="width: 100%" class="profile-info">
+                    <p-skeleton
+                      class="profile-image"
+                      shape="circle"
+                      size="4rem"
+                      styleClass="mr-5"
+                    ></p-skeleton>
+                    <div
+                      class="profile-details"
+                      style="width: 100%; margin-left: 10px"
+                    >
+                      <h3 class="profile-name">
+                        <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                      </h3>
+
+                      <p class="last-message text-primary">
+                        <p-skeleton width="100%"></p-skeleton>
+                      </p>
+                      <p class="last-message text-primary">
+                        <p-skeleton width="75%"></p-skeleton>
+                      </p>
+                    </div>
+                  </div>
+                  <div style="display: grid">
+                    <div class="message-date">
+                      <p-skeleton width="15%"></p-skeleton>
+                    </div>
+                  </div>
+                </li>
+              </div>
+              <div
+                class="text-center card no-users-message my-5"
+                *ngIf="noContactsFound"
+              >
+                <p>
+                  <img
+                    src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQdPxiaiLvV9b6bfahdJ9Wu8xJdXRkMW1IygQS3_RwdwO2obRU7"
+                  />
+                </p>
+                <b class="text-danger my-4 border-0" style="font-size: large"
+                  >Aucun message disponible.</b
+                >
+              </div>
+            </ng-template>
+          </ul>
+          <div
+            class="d-flex justify-content-center mb-5"
+            *ngIf="contacts.length > 0"
+          >
+            <pagination-controls
+              previousLabel=" Pré"
+              nextLabel="Suiv"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>

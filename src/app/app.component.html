@@ -1,0 +1,13 @@
+<a href="#" class="scrollToTop">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<app-header-after-auth
+  *ngIf="isLoggedIn && !isHeaderFooterHidden()"
+></app-header-after-auth>
+<app-header *ngIf="!isLoggedIn && !isHeaderFooterHidden()"></app-header>
+<app-loader *ngIf="!isLoaderHidden()"></app-loader>
+
+<router-outlet></router-outlet>
+
+<app-footer *ngIf="!isHeaderFooterHidden()"></app-footer>

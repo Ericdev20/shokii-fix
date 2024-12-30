@@ -1,0 +1,124 @@
+<section class="user-setting-section" style="margin-top: 3cm">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-md-12 col-12">
+        <div class="color page-title d-flex justify-content-center text-center">
+          <span class="color" style="font-size: unset"
+            >Historique de mes transactions</span
+          >
+        </div>
+        <div class="input-info-box mt-3">
+          <div class="my-table">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="justify-content-center text-center">DATE</th>
+                    <th class="justify-content-center text-center">ACHAT</th>
+                    <th class="justify-content-center text-center">STATUS</th>
+                    <th class="justify-content-center text-center">
+                      TYPE D'ABONNEMENT
+                    </th>
+                    <th class="justify-content-center text-center">MONTANT</th>
+                    <th class="justify-content-center text-center">
+                      NOMBRE KISS
+                    </th>
+                    <th class="justify-content-center text-center">VALIDITE</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let transaction of transactions">
+                    <td class="text-center gray">
+                      {{ formatDateTime(transaction?.created_at) }}
+                    </td>
+                    <td
+                      class="text-center"
+                      [ngClass]="getTransactionTypeClass(transaction?.type)"
+                    >
+                      {{ transaction?.type }}
+                    </td>
+                    <td
+                      class="text-center"
+                      [ngClass]="getStatusClass(transaction?.statut)"
+                    >
+                      <ng-container [ngSwitch]="transaction?.statut">
+                        <ng-template ngSwitchCase="SUCCESSFUL"
+                          ><span>Succès</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="approved"
+                          ><span>Succès</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="transferred"
+                          ><span>Succès</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="FAILED"
+                          ><span>Échec</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="declined"
+                          ><span>Échec</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="canceled"
+                          ><span>Échec</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="refunded"
+                          ><span>Remboursé</span></ng-template
+                        >
+                        <ng-template ngSwitchCase="PENDING">
+                          <div class="loading-text">
+                            <p>
+                              En cours
+                              <span class="dot-one"> .</span>
+                              <span class="dot-two"> .</span>
+                              <span class="dot-three"> .</span>
+                            </p>
+                          </div>
+                        </ng-template>
+                        <ng-template ngSwitchCase="pending">
+                          <div class="loading-text">
+                            <p>
+                              En cours
+                              <span class="dot-one"> .</span>
+                              <span class="dot-two"> .</span>
+                              <span class="dot-three"> .</span>
+                            </p>
+                          </div>
+                        </ng-template>
+                        <ng-template ngSwitchDefault
+                          ><span>Statut inconnu</span></ng-template
+                        >
+                      </ng-container>
+                    </td>
+                    <td class="text-center text-info">
+                      {{ transaction?.typeAbonnement || "--" }}
+                    </td>
+                    <td class="text-center dark">
+                      {{ transaction?.amount }} Fcfa
+                    </td>
+                    <td class="text-center gray">{{ transaction?.kiss }}</td>
+                    <td class="text-center text-warning">
+                      {{
+                        transaction?.fin
+                          ? formatDateTime(transaction.fin)
+                          : "--"
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                *ngIf="transactions.length === 0"
+                class="d-flex justify-content-center text-center text-size-lg text-danger"
+              >
+                <b> Aucune transaction effectuée. </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noTransactions>
+    <div class="page-title d-flex justify-content-center text-center"></div>
+  </ng-template>
+</section>

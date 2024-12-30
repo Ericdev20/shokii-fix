@@ -1,0 +1,80 @@
+<div class="message-user-left" [hidden]="message.from_id !== loggedInUserId">
+  <div class="message-user-left-img">
+    <img [defaultImage]="default" [lazyLoad]="profileImage" alt="" />
+  </div>
+  <div
+    class="message-user-left-text d-grid"
+    *ngIf="message.attachment === null && message.body.length > 0"
+  >
+    <strong> {{ message.body }}</strong>
+    <div style="display: flex; justify-content: flex-end">
+      <i
+        *ngIf="message.seen"
+        class="fas fa-check-double"
+        style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+      ></i>
+      <i
+        *ngIf="!message.seen"
+        class="fas fa-check"
+        style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+      ></i>
+    </div>
+  </div>
+  <div
+    class="message-user-left-text image-message d-grid"
+    *ngIf="
+    message.attachment !== null && message.body.trim().length === 0
+  "
+  >
+    <p-image
+      [src]="getImage(message.attachment)"
+      alt="Image"
+      [defaultImage]="defaultMsgImg"
+      [lazyLoad]="getImage(message.attachment)"
+      width="100"
+      [preview]="true"
+    >
+    </p-image>
+
+    <!-- <img [src]="getImage(message.attachment)" alt="" /> -->
+    <div style="display: flex; justify-content: flex-end">
+      <i
+        *ngIf="message.seen"
+        class="fas fa-check-double"
+        style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+      ></i>
+      <i
+        *ngIf="!message.seen"
+        class="fas fa-check"
+        style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+      ></i>
+    </div>
+  </div>
+  <div
+    class="message-user-left-text image-message d-grid"
+    *ngIf="
+    message.attachment === null && message.body.trim().length === 0
+  "
+  >
+    <strong> <i>Message indisponible !</i></strong>
+    <!-- <img [src]="getImage(message.attachment)" alt="" /> -->
+    <div style="display: flex; justify-content: flex-end">
+      <i
+        *ngIf="message.seen"
+        class="fas fa-check-double"
+        style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+      ></i>
+      <i
+        *ngIf="!message.seen"
+        class="fas fa-check"
+        style="margin-left: 16px; color: rgba(0, 0, 0, 0.14)"
+      ></i>
+    </div>
+  </div>
+
+  <small *ngIf="message.send" style="max-width: 98px">
+    <i *ngIf="message.seen" class="fas fa-check-double"></i>
+    envoyé le {{ formatDate(message.created_at) }}</small
+  >
+  <small *ngIf="!message.send">envoie en cours ... </small>
+</div>
